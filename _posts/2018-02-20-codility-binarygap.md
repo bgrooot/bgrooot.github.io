@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Codility - Binary Gap
+title: Codility - BinaryGap
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingQ6NJRH-F2X)  
