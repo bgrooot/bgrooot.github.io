@@ -31,3 +31,22 @@ class Solution {
     }
 }
 ```
+  
+이런 신묘한 방법이...!
+  
+[RESULT](https://app.codility.com/demo/results/trainingQGX4PB-JGY)
+
+```java
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] A, int K) {
+        int[] B = new int[A.length];
+        for (int i = 0; i < A.length; i++) {
+            B[(i + K) % A.length] = A[i];
+        }
+        
+        return B;
+    }
+}
+```
