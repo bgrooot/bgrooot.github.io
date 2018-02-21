@@ -26,7 +26,7 @@ class Solution {
 }
 ```
 
-문제를 잘못읽어 배열 크기 산정을 잘못했다.
+문제를 잘못 읽어 배열 크기 산정을 잘못했다.
 
 [RESULT](https://app.codility.com/demo/results/training9HAYQ2-JDV)
 
