@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Codility - PermMissingElem
+date: 2018-02-21 20:37:1 +0900
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingRVBEZW-857)
