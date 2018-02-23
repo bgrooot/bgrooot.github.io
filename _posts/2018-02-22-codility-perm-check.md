@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Codility - PermCheck
+date: 2018-02-22 00:02:40 +0900
 ---
 
 [RESULT](https://app.codility.com/demo/results/training363E4W-TMB)
