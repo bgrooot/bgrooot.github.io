@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Codility - FrogJmp
+date: 2018-02-21 22:46:52 +0900
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingN6HX3N-84Y)
