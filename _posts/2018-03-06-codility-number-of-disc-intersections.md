@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Codility - NumberOfDiscIntersections
-date: 2017-03-06 15:40:29 +0900
+date: 2018-03-06 15:40:29 +0900
 ---
 
 난이도가 MEDIUM만 되어도 꽤나 어렵다. 우선 완전 탐색부터...  
