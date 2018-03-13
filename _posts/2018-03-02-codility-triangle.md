@@ -17,7 +17,7 @@ class Solution {
             int Q = A[i + 1];
             int R = A[i + 2];
             
-            if (P + Q > R && Q + R > P && R + P > Q) {
+            if ((long) P + Q > R && (long) Q + R > P && (long) R + P > Q) {
                 return 1;
             }        
         }
