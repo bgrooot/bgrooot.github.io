@@ -4,7 +4,7 @@ title: Codility - Triangle
 date: 2018-03-02 17:18:20 +0900
 ---
 
-[RESULT](https://app.codility.com/demo/results/training8BTU76-2FK)
+[RESULT](https://app.codility.com/demo/results/trainingJNA3ST-S9F)
 
 ```java
 import java.util.*;
