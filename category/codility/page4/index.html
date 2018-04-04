@@ -63,6 +63,94 @@
       
     
       
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
     
       
         
@@ -172,6 +260,8 @@
     
    
     
+      <a class="sidebar-nav-item" href="/category/gibberish">Gibberish</a>
+    
       <a class="sidebar-nav-item active" href="/category/codility">Codility</a>
     
   </nav>
@@ -198,38 +288,29 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/02/21/codility-tape-equilibrium/">
-        Codility - TapeEquilibrium
+      <a href="/codility/2018/03/16/codility-nesting/">
+        Codility - Nesting
       </a>
     </h1>
 
-    <time datetime="2018-02-21T00:00:00+09:00" class="post-date">21 February 2018</time>
+    <time datetime="2018-03-16T23:06:10+09:00" class="post-date">16 March 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/training8QKXXN-A6N">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingMQQCGV-Y5A">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">frontSum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">rearSum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">minSum</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">rearSum</span> <span class="o">+=</span> <span class="n">a</span><span class="o">;</span>
-        <span class="o">}</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">frontSum</span> <span class="o">+=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-            <span class="n">rearSum</span> <span class="o">-=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-            <span class="kt">int</span> <span class="n">diffSum</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">frontSum</span> <span class="o">-</span> <span class="n">rearSum</span><span class="o">);</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">minSum</span> <span class="o">&gt;</span> <span class="n">diffSum</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">minSum</span> <span class="o">=</span> <span class="n">diffSum</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="n">String</span> <span class="n">S</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">==</span> <span class="sc">'('</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">stack</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span> <span class="o">||</span> <span class="sc">'('</span> <span class="o">!=</span> <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">())</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
             <span class="o">}</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">minSum</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
@@ -241,7 +322,7 @@
 
 <div class="pagination">
   
-    <span class="pagination-item older">Older</span>
+    <a class="pagination-item older" href="/category/codility/page5">Older</a>
   
   
     <a class="pagination-item newer" href="/category/codility/page3">Newer</a>
