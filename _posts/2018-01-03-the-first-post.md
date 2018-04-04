@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 첫 글
+category: gibberish
 ---
 
 &nbsp;&nbsp;이 블로그를 개설한 이유는 나를 최대한 GEEK한(?) 사람처럼 보이게 하기 위해서다. 원래 나는 블로그에 글 쓰는 것도 정말 귀찮아하고 이런 짓 할 시간에 누워서 TV나 보는 사람인데, 이력서를 쓰다가 홈페이지란을 비워두고 싶지 않아서 만들게 되었다. 그리고 그 이미지 포장작업의 일환으로 [JSON Resume](http://jsonresume.org)로 이력서를 작성해보았다. 내가 이력서까지 왜 JSON으로 작업하고 있나하는 회의감이 들었지만 어쨌든 간에 하고나니까 뿌듯한 건 있다. 테마로 [light-classy-responsive](https://github.com/myh1000/jsonresume-theme-light-classy-responsive) 라는 테마를 조금 변형해서 사용했는데, 로컬 테마로 퍼블리싱하는 기능은 제공하지 않는다.
