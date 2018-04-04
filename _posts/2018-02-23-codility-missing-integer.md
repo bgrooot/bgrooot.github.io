@@ -2,6 +2,7 @@
 layout: post
 title: Codility - Missing Integer
 date: 2018-02-23 00:12:46 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingJ63MTC-SEJ)

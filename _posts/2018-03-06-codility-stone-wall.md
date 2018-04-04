@@ -2,6 +2,7 @@
 layout: post
 title: Codility - StoneWall
 date: 2018-03-06 21:59:00 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingETAVVP-7PG)

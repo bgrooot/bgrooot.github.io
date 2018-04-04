@@ -2,6 +2,7 @@
 layout: post
 title: Codility - Max Counters
 date: 2018-02-23 22:45:15 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingRW92U4-VB2)

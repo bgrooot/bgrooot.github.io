@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Codility - OddOccurrencesInArray
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/training4F8KB5-R7G)  

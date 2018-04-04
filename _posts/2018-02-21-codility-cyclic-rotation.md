@@ -2,6 +2,7 @@
 layout: post
 title: Codility - CyclicRotation
 date: 2018-02-21 22:23:32 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/training3AHGSD-NMF)  

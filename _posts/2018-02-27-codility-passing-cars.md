@@ -2,6 +2,7 @@
 layout: post
 title: Codility - PassingCars
 date: 2018-02-27 21:17:45 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingK4JVNG-YNQ)

@@ -2,6 +2,7 @@
 layout: post
 title: Codility - CountDiv
 date: 2018-02-26 21:36:34 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingTF9UCU-JUZ)

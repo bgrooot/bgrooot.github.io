@@ -2,6 +2,7 @@
 layout: post
 title: Codility - Brackets
 date: 2018-03-07 11:22:02 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/training989CHX-VJ9)
