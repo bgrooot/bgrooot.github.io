@@ -23,7 +23,7 @@
     {% endfor %}
    
     {% for cat in site.categories %}
-      <a class="sidebar-nav-item{% if page.category == cat.first %} active{% endif %}" href="{{ site.url }}/category/{{ cat | first | url_encode }}">{{ cat | first }}</a>
+      <a class="sidebar-nav-item{% if page.category == cat.first %} active{% endif %}" href="{{ site.baseurl }}/category/{{ cat | first | url_encode }}">{{ cat | first }}</a>
     {% endfor %}
   </nav>
 
