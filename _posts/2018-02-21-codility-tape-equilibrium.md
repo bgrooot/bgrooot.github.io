@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Codility - TapeEquilibrium
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/training8QKXXN-A6N)

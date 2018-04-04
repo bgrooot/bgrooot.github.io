@@ -2,6 +2,7 @@
 layout: post
 title: Codility - FrogRiverOne
 date: 2018-02-23 22:23:36 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/training363E4W-TMB)

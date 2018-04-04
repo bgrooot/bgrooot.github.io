@@ -2,6 +2,7 @@
 layout: post
 title: Codility - EquiLeader
 date: 2018-03-27 00:08:08 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingVU4J47-PMR)

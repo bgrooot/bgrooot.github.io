@@ -6,7 +6,7 @@ title:               n류 개발자
 tagline:             (n=3)
 url:                 http://grooot.guthub.io
 paginate:            1
-baseurl:             ""
+baseurl:             ''
 
 # Assets
 #
@@ -30,3 +30,4 @@ github:
 plugins:
   - jekyll-paginate
   - jekyll-gist
+  - jekyll-category-pages

@@ -2,6 +2,7 @@
 layout: post
 title: Codility - Dominator
 date: 2018-03-18 23:22:25 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingEPE6UZ-3VZ)
