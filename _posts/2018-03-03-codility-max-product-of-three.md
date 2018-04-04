@@ -2,6 +2,7 @@
 layout: post
 title: Codility - MaxProductOfThree
 date: 2018-03-03 22:53:24 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/training4QKGBE-GMY)
