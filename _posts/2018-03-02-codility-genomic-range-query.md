@@ -2,6 +2,7 @@
 layout: post
 title: Codility - GenomicRangeQuery
 date: 2018-03-02 14:15:39 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingJYE6E4-7KY)
