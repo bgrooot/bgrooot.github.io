@@ -1,0 +1,28 @@
+<p><a href="https://app.codility.com/demo/results/trainingN6HX3N-84Y">RESULT</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">X</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">D</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="o">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">X</span><span class="o">)</span> <span class="o">/</span> <span class="n">D</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">X</span><span class="o">)</span> <span class="o">%</span> <span class="n">D</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">count</span><span class="o">++;</span>   
+        <span class="o">}</span>
+        
+        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>내가 왜 굳이 이렇게 짰을까?</p>
+
+<p><a href="https://app.codility.com/demo/results/trainingEJQFDG-EPU/">RESULT</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">X</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">D</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">ceil</span><span class="o">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">X</span><span class="o">)</span> <span class="o">/</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span> <span class="n">D</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>

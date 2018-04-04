@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    
+      사내 자바스크립트 라이브러리 회고 &middot; n류 개발자
+    
+  </title>
+
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+  <link rel="alternate" type="application/atom+xml" title="n류 개발자" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p></p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+   
+    
+      <a class="sidebar-nav-item active" href="/category/gibberish">Gibberish</a>
+    
+      <a class="sidebar-nav-item" href="/category/codility">Codility</a>
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+    </p>
+  </div>
+</div>
+
+    <div class="wrap">
+      <div class="container content">
+        <header class="masthead">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">n류 개발자</a>
+            <small>(n=3)</small>
+          </h3>
+        </header>
+
+        <main>
+          <article class="post">
+  <h1 class="post-title">사내 자바스크립트 라이브러리 회고</h1>
+  <time datetime="2018-02-05T00:00:00+09:00" class="post-date">05 February 2018</time>
+  <p>  예전에 작업했던 스크립트 라이브러리를 정리하면서 (역시나 왜 하고 있나 하는 자괴감이 들지만) 그 때 생각하면서 몇 자 적어본다.</p>
+
+<p>  첫 회사에 입사하고 3개월 정도 수습 기간이 끝나고 였나… 느닷없이 자바스크립트 라이브러리 개발 TF로 발령(?) 되게 된다. 그리고 과장 좀 보태면 내 인생은 그렇게 바뀌게 되었다. 전에 신입사원들 대상으로 자바스크립트 개발부장이 스터디를 시킨 적이 있는데 그것이 전조였던 거 같고 그중 내가 뽑히게 되었었다. 그때가 2012년도였으니까 자바스크립트의 주가가 치솟던 때였을 것이고 뭔가를 해보고 싶으셨던 게 아닐까 싶다. 여하튼 TF 구성원은 나 포함 주니어 2명, 시니어 1명, 마크업 담당 1명, 총괄 1명 총 5명이었고 처음 취지는 업무 오버헤드가 마크업에서 항상 걸려 개발이 늦어지니 비 개발자들도 HTML만 가지고 페이지 구성을 할 수 있게 해보자는 것이었다. 취지는 나쁘지 않았다고 생각한다. 취지만…</p>
+
+<p>  결론부터 얘기하자면 취지와는 다르게 사용되었다. 시연도 여러 번 했었지만, 기획자나 디자이너가 원하는 것과는 다르다는 생각이 많이 들었다. (그들은 대부분 HTML조차 만지고 싶어하지 않는다.)비 개발자들을 위한 라이브러리였지만, 개발자들이(주로 내가) 사용했다. 기존 페이지는 대부분 정적 페이지였는데 정적으로 서비스하기 까다로운 페이지들, 예를 들면, 개편될 때 기존 스타일로 서비스되는 문제를 해결하기 위해 과거 기사 페이지들에 사용되었고, 태블릿, 모바일 앱의 웹 뷰에 사용되었다. (그때 총괄 부장님이 소극적으로 사용되던 것에 한이 맺혔었는지 추후에 이걸 가지고 웹 페이지 저작 툴을 만드는 프로젝트를 하게 된다. 이것도 할 얘기가 참 많지만 다음에…)</p>
+
+<p>  결론은 대충 저렇고 과정은 정말로 우여곡절도 많았고, 답답하기도 했고, 술이 많이 늘었었다. 물론 배운 것도 참 많다. 자바스크립트에 대한 나의 인식을 완전히 바꾼 계기가 되었고, 지금은 프론트엔드를 UI 개발 말고는 할 일 없어 소홀하지만 자바스크립트는 마음의 고향 같은 느낌이다. 이때 더글라스 크락포드의 Javascript:The Good Parts를 정말 감명 깊게 봤었다. 언어의 장점, 단점을 작가가 명확한 논지로 설명하는데 카타르시스가 느껴질 정도였다. (그리고 얇다.)그리고 가디언이나 뉴욕타임스에 기술 블로그들을 보는 것도 좋았고 공부할 수 있는 시간이 참 많았었다.</p>
+
+<p>  결국, 미래가 없을 것 같은 프로그램을 계속 개발해야 하는 것에 지쳐서 이직하게 되었고, 그 때 TF에 참여한 사람들은 나를 포함해서 전부 지금은 자의든 타의든 그만두거나 다른 회사에 재직중이다. 가끔 그 때를 생각하면 추억보정이 되는건지 아련한 느낌이 많이 든다. 조만간 광화문에 술이나 한 잔 하러 가야겠다.</p>
+
+</article>
+
+
+<aside class="related">
+  <h3>Related posts</h3>
+  <ul class="related-posts">
+    
+      <li>
+        <a href="/codility/2018/03/27/codility-equi-leader/">
+          Codility - EquiLeader
+          <small><time datetime="2018-03-27T00:08:08+09:00">27 March 2018</time></small>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/codility/2018/03/18/codility-dominator/">
+          Codility - Dominator
+          <small><time datetime="2018-03-18T23:22:25+09:00">18 March 2018</time></small>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/codility/2018/03/17/codility-fish/">
+          Codility - Fish
+          <small><time datetime="2018-03-17T01:23:48+09:00">17 March 2018</time></small>
+        </a>
+      </li>
+    
+  </ul>
+</aside>
+
+
+        </main>
+
+        <footer class="footer">
+          <small>
+          </small>
+        </footer>
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    
+  </body>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</html>
