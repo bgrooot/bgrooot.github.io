@@ -2,6 +2,7 @@
 layout: post
 title: Codility - Fish
 date: 2018-03-17 01:23:48 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/trainingXHPHJW-P64)
