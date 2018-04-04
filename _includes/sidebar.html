@@ -22,7 +22,7 @@
       {% endif %}
     {% endfor %}
    
-    {% for cat in site.categories %}
+    {% for cat in site.categories | sort: 'first'  %}
       <a class="sidebar-nav-item{% if page.category == cat.first %} active{% endif %}" href="{{ site.baseurl }}/category/{{ cat | first | url_encode }}">{{ cat | first | capitalize }}</a>
     {% endfor %}
   </nav>
