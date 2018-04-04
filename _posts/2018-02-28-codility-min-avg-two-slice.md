@@ -2,6 +2,7 @@
 layout: post
 title: Codility - MinAvgTwoSlice
 date: 2018-02-28 18:19:00 +0900
+category: codility
 ---
 
 [RESULT](https://app.codility.com/demo/results/training7V4U6S-Z73)
