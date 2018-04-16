@@ -1,5 +1,5 @@
 ---
-layout post
+layout: post
 title: Codility - MaxDoubleSliceSum
 date: 2018-04-16 23:09:21 +0900
 category: codility
