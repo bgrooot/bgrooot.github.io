@@ -4,8 +4,7 @@ title: 하이버네이트 프로그래밍
 Date: 2018-04-05 00:59:47 +0900
 category: book
 ---
-
-![](http://image.yes24.com/momo/TopCate74/MidCate05/7346554.jpg)  
+![](/img/harnessing-hibernate.jpg){: .center}  
 
 자바 ORM을 책으로 공부해야겠다는 생각은 늘 하고 있었는데 마침 회사에 굴러다니던(?) 책이 있어서 보기 시작했다.  
 

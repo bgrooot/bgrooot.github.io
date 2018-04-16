@@ -23,3 +23,13 @@
     opacity: .5;
   }
 }
+
+@media (max-width: 60rem) {
+    .masthead-title {
+        text-align: center;
+    }
+
+    .masthead-title small {
+        display: none;
+    }
+}
