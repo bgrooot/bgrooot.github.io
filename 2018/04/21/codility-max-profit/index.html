@@ -7,7 +7,7 @@
 
   <title>
     
-      Codility - Distinct &middot; n류 개발자
+      Codility - MaxProfit &middot; n류 개발자
     
   </title>
 
@@ -282,7 +282,7 @@
     
       <a class="sidebar-nav-item" href="/category/gibberish">Gibberish</a>
     
-      <a class="sidebar-nav-item active" href="/category/codility">Codility</a>
+      <a class="sidebar-nav-item" href="/category/codility">Codility</a>
     
       <a class="sidebar-nav-item" href="/category/book">Book</a>
     
@@ -305,20 +305,23 @@
 
         <main>
           <article class="post">
-  <h1 class="post-title">Codility - Distinct</h1>
-  <time datetime="2018-03-02T14:40:56+09:00" class="post-date">02 March 2018</time>
-  <p><a href="https://app.codility.com/demo/results/trainingWW5HZ7-ACQ">RESULT</a></p>
+  <h1 class="post-title">Codility - MaxProfit</h1>
+  <time datetime="2018-04-21T00:00:00+09:00" class="post-date">21 April 2018</time>
+  <p><a href="https://app.codility.com/demo/results/trainingPEU2EU-78G">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">maxProfit</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">minShareSlice</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">minShareSlice</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">minShareSlice</span><span class="o">,</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+            <span class="n">maxProfit</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxProfit</span><span class="o">,</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">-</span> <span class="n">minShareSlice</span><span class="o">);</span>
         <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">set</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+
+        <span class="k">return</span> <span class="n">maxProfit</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
@@ -331,13 +334,6 @@
   <ul class="related-posts">
     
       <li>
-        <a href="/2018/04/21/codility-max-profit/">
-          Codility - MaxProfit
-          <small><time datetime="2018-04-21T00:00:00+09:00">21 April 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
         <a href="/codility/2018/04/16/codility-max-double-slice-sum/">
           Codility - MaxDoubleSliceSum
           <small><time datetime="2018-04-16T23:09:21+09:00">16 April 2018</time></small>
@@ -348,6 +344,13 @@
         <a href="/book/2018/04/05/book-hibernate-programing/">
           하이버네이트 프로그래밍
           <small><time datetime="2018-04-05T00:00:00+09:00">05 April 2018</time></small>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/codility/2018/03/27/codility-equi-leader/">
+          Codility - EquiLeader
+          <small><time datetime="2018-03-27T00:08:08+09:00">27 March 2018</time></small>
         </a>
       </li>
     
