@@ -159,6 +159,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -308,38 +316,73 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/02/21/codility-tape-equilibrium/">
-        Codility - TapeEquilibrium
+      <a href="/codility/2018/02/21/codility-perm-missing-elem/">
+        Codility - PermMissingElem
       </a>
     </h1>
 
-    <time datetime="2018-02-21T00:00:00+09:00" class="post-date">21 February 2018</time>
+    <time datetime="2018-02-21T20:37:01+09:00" class="post-date">21 February 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/training8QKXXN-A6N">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingRVBEZW-857">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">frontSum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">rearSum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">minSum</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
-        
+        <span class="kt">boolean</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="mi">100002</span><span class="o">];</span>
         <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">rearSum</span> <span class="o">+=</span> <span class="n">a</span><span class="o">;</span>
+            <span class="n">array</span><span class="o">[</span><span class="n">a</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
         <span class="o">}</span>
         
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">frontSum</span> <span class="o">+=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-            <span class="n">rearSum</span> <span class="o">-=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-            <span class="kt">int</span> <span class="n">diffSum</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">frontSum</span> <span class="o">-</span> <span class="n">rearSum</span><span class="o">);</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">minSum</span> <span class="o">&gt;</span> <span class="n">diffSum</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">minSum</span> <span class="o">=</span> <span class="n">diffSum</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">i</span><span class="o">;</span>   
             <span class="o">}</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">minSum</span><span class="o">;</span>
+        <span class="k">return</span> <span class="mi">100001</span><span class="o">;</span>   
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>문제를 잘못 읽어 배열 크기 산정을 잘못했다.</p>
+
+<p><a href="https://app.codility.com/demo/results/training9HAYQ2-JDV">RESULT</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">boolean</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">2</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">array</span><span class="o">[</span><span class="n">a</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">i</span><span class="o">;</span>   
+            <span class="o">}</span>
+        <span class="o">}</span>
+        
+        <span class="k">return</span> <span class="mi">100001</span><span class="o">;</span>   
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>다른 풀이를 보지 않았다면 생각해 낼 수 있었을까?</p>
+
+<p><a href="https://app.codility.com/demo/results/trainingESVKRT-VN6">RESULT</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="o">(</span><span class="kt">long</span><span class="o">)</span> <span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">2</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sum</span> <span class="o">-=</span> <span class="n">a</span><span class="o">;</span>
+        <span class="o">}</span>
+        
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">sum</span><span class="o">;</span>   
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
