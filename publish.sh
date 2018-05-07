@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git checkout source
+git commit -am 'publish new post'
 git branch -D master
 git checkout -b master 
 git filter-branch --subdirectory-filter _site/ -f
