@@ -167,6 +167,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -326,47 +334,47 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/02/23/codility-max-counters/">
-        Codility - Max Counters
+      <a href="/codility/2018/02/26/codility-count-div/">
+        Codility - CountDiv
       </a>
     </h1>
 
-    <time datetime="2018-02-23T22:45:15+09:00" class="post-date">23 February 2018</time>
+    <time datetime="2018-02-26T21:36:34+09:00" class="post-date">26 February 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingRW92U4-VB2">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingTF9UCU-JUZ">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">counter</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">maxCountVal</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">a</span><span class="o">--;</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">counter</span><span class="o">[</span><span class="n">a</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">maxCountVal</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">counter</span><span class="o">[</span><span class="n">a</span><span class="o">]</span> <span class="o">=</span> <span class="n">maxCountVal</span><span class="o">;</span>
-                <span class="o">}</span>
-                
-                <span class="n">counter</span><span class="o">[</span><span class="n">a</span><span class="o">]++;</span>   
-                
-                <span class="k">if</span> <span class="o">(</span><span class="n">max</span> <span class="o">&lt;</span> <span class="n">counter</span><span class="o">[</span><span class="n">a</span><span class="o">])</span> <span class="o">{</span>
-                    <span class="n">max</span> <span class="o">=</span> <span class="n">counter</span><span class="o">[</span><span class="n">a</span><span class="o">];</span>
-                <span class="o">}</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">maxCountVal</span> <span class="o">=</span> <span class="n">max</span><span class="o">;</span>
-            <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span> <span class="n">B</span><span class="o">,</span> <span class="kt">int</span> <span class="n">K</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">A</span> <span class="o">&gt;</span> <span class="n">K</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">A</span> <span class="o">%</span> <span class="n">K</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">K</span> <span class="o">&lt;</span> <span class="n">B</span>  <span class="o">&amp;&amp;</span> <span class="n">A</span> <span class="o">%</span> <span class="n">K</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">K</span><span class="o">;</span>
         <span class="o">}</span>
         
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">counter</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">counter</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">maxCountVal</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">counter</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">maxCountVal</span><span class="o">;</span>
-            <span class="o">}</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="o">(</span><span class="n">B</span> <span class="o">-</span> <span class="n">A</span><span class="o">)</span> <span class="o">/</span> <span class="n">K</span><span class="o">;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">A</span> <span class="o">%</span> <span class="n">K</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">:</span> <span class="n">r</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>A보다 큰 K로 나누어 떨어지는 수를 찾고 그 수와 B사이의 수를 찾는 전략을 사용했다.<br />
+이것도 조건을 찾느라 꽤나 고생했는데 풀이를 보고는 머리의 한계를 통렬히 느꼈다…</p>
+
+<p><a href="https://app.codility.com/demo/results/trainingUBPJ9P-PZ2">RESULT</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span> <span class="n">B</span><span class="o">,</span> <span class="kt">int</span> <span class="n">K</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="o">(</span><span class="n">B</span> <span class="o">/</span> <span class="n">K</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">A</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">r</span> <span class="o">-=</span> <span class="o">(</span><span class="n">A</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">counter</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">r</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>

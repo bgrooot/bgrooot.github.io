@@ -1,6 +1,7 @@
 #!/bin/bash
 
-git commit -am 'publish new post'
+git add .
+git commit -m 'publish new post'
 git branch -D master
 git checkout -b master 
 git filter-branch --subdirectory-filter _site/ -f
