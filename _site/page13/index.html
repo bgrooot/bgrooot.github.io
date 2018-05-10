@@ -167,6 +167,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -324,25 +332,81 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/03/03/codility-max-product-of-three/">
-        Codility - MaxProductOfThree
+      <a href="/codility/2018/03/06/codility-number-of-disc-intersections/">
+        Codility - NumberOfDiscIntersections
       </a>
     </h1>
 
-    <time datetime="2018-03-03T22:53:24+09:00" class="post-date">03 March 2018</time>
+    <time datetime="2018-03-06T15:40:29+09:00" class="post-date">06 March 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/training4QKGBE-GMY">RESULT</a></p>
+    <p>난이도가 MEDIUM만 되어도 꽤나 어렵다. 우선 완전 탐색부터…<br />
+원의 오른쪽 보다 다른 원의 왼쪽이 같거나 작을 때 교차된다고 판단한다.</p>
+
+<p><a href="https://app.codility.com/demo/results/trainingHWF3C6-FXM">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">A</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">((</span><span class="kt">long</span><span class="o">)</span> <span class="n">i</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">j</span> <span class="o">-</span> <span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span>
+                    <span class="n">count</span><span class="o">++;</span>    
+                <span class="o">}</span>           
+            <span class="o">}</span>
+        <span class="o">}</span>
         
-        <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">answer1</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">answer2</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">2</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">3</span><span class="o">];</span>
-        <span class="k">return</span> <span class="n">answer1</span> <span class="o">&gt;</span> <span class="n">answer2</span> <span class="o">?</span> <span class="n">answer1</span> <span class="o">:</span> <span class="n">answer2</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>여러 솔루션들이 있었는데 개인적으로는 이 방법이 가장 직관적인 것 같았다.<br />
+왼쪽 좌표를 정렬 한 뒤에 오른쪽 좌표보다 작은 좌표는 교차한다고 판단하는 방법이다.<br />
+오른쪽 좌표보다 작은 좌표를 찾을 때 이진탐색으로 찾는다.<br />
+정렬할 때 Stream API로 정렬했었는데 역시나 속도가 안나온다.</p>
+
+<p><a href="https://app.codility.com/demo/results/trainingDKEAPS-VDF">RESULT</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">long</span><span class="o">[][]</span> <span class="n">interval</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">long</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">][</span><span class="mi">2</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">interval</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> 
+            <span class="n">interval</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="kt">long</span><span class="o">)</span> <span class="n">i</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+        
+        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">interval</span><span class="o">,</span> <span class="k">new</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="kt">long</span><span class="o">[]&gt;()</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="kt">long</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">long</span><span class="o">[]</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="n">Long</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span><span class="n">b</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">long</span> <span class="n">target</span> <span class="o">=</span> <span class="n">interval</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">1</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+            
+            <span class="k">while</span> <span class="o">(</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">interval</span><span class="o">[</span><span class="n">mid</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">&lt;=</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="n">mid</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+                    <span class="n">start</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                   <span class="n">end</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            
+            <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">10000000</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        
+        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
