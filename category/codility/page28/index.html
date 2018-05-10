@@ -7,7 +7,7 @@
 
   <title>
     
-      Codility - CountFactors &middot; n류 개발자
+      codility &middot; n류 개발자
     
   </title>
 
@@ -328,63 +328,59 @@
         </header>
 
         <main>
-          <article class="post">
-  <h1 class="post-title">Codility - CountFactors</h1>
-  <time datetime="2018-05-10T22:45:16+09:00" class="post-date">10 May 2018</time>
-  <p><a href="https://app.codility.com/demo/results/trainingDEE7GM-4CJ">RESULT</a></p>
+          
+
+<div class="posts">
+  
+  <article class="post">
+    <h1 class="post-title">
+      <a href="/codility/2018/02/20/codility-binary-gap/">
+        Codility - BinaryGap
+      </a>
+    </h1>
+
+    <time datetime="2018-02-20T00:00:00+09:00" class="post-date">20 February 2018</time>
+
+    <p><a href="https://app.codility.com/demo/results/trainingQ6NJRH-F2X">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">root</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toBinaryString</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">longestGap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
         
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">root</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">/</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">count</span><span class="o">++;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">==</span> <span class="sc">'0'</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">gap</span><span class="o">++;</span>        
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">gap</span> <span class="o">&gt;</span> <span class="n">longestGap</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">longestGap</span> <span class="o">=</span> <span class="n">gap</span><span class="o">;</span>
                 <span class="o">}</span>
+                
+                <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
             <span class="o">}</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">longestGap</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-</article>
 
+  </article>
+  
+</div>
 
-<aside class="related">
-  <h3>Related posts</h3>
-  <ul class="related-posts">
-    
-      <li>
-        <a href="/codility/2018/05/10/codility-min-perimeter-rectangle/">
-          Codility - MinPerimeterRectangle
-          <small><time datetime="2018-05-10T23:29:43+09:00">10 May 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/codility/2018/05/07/codiliy-max-slice-sum/">
-          Codility - MaxSliceSum
-          <small><time datetime="2018-05-07T23:06:01+09:00">07 May 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/2018/04/21/codility-max-profit/">
-          Codility - MaxProfit
-          <small><time datetime="2018-04-21T00:00:00+09:00">21 April 2018</time></small>
-        </a>
-      </li>
-    
-  </ul>
-</aside>
-
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    <a class="pagination-item newer" href="/category/codility/page27">Newer</a>
+  
+</div>
 
         </main>
 
