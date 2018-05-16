@@ -7,7 +7,7 @@
 
   <title>
     
-      Codility - MinPerimeterRectangle &middot; n류 개발자
+      n류 개발자 &middot; (n=3)
     
   </title>
 
@@ -318,7 +318,7 @@
     
       <a class="sidebar-nav-item" href="/category/gibberish">Gibberish</a>
     
-      <a class="sidebar-nav-item active" href="/category/codility">Codility</a>
+      <a class="sidebar-nav-item" href="/category/codility">Codility</a>
     
       <a class="sidebar-nav-item" href="/category/book">Book</a>
     
@@ -340,58 +340,34 @@
         </header>
 
         <main>
-          <article class="post">
-  <h1 class="post-title">Codility - MinPerimeterRectangle</h1>
-  <time datetime="2018-05-10T23:29:43+09:00" class="post-date">10 May 2018</time>
-  <p><a href="https://app.codility.com/demo/results/trainingYDY6KG-YMR">RESULT</a></p>
+          <div class="posts">
+  
+  <article class="post">
+    <h1 class="post-title">
+      <a href="/gibberish/2018/01/03/the-first-post/">
+        첫 글
+      </a>
+    </h1>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+    <time datetime="2018-01-03T00:00:00+09:00" class="post-date">03 January 2018</time>
 
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">root</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">root</span><span class="o">;</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="o">((</span><span class="n">i</span> <span class="o">+</span> <span class="o">(</span><span class="n">N</span> <span class="o">/</span> <span class="n">i</span><span class="o">))</span> <span class="o">*</span> <span class="mi">2</span><span class="o">);</span>
-            <span class="o">}</span>    
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
+    <p>  이 블로그를 개설한 이유는 나를 최대한 GEEK한(?) 사람처럼 보이게 하기 위해서다. 원래 나는 블로그에 글 쓰는 것도 정말 귀찮아하고 이런 짓 할 시간에 누워서 TV나 보는 사람인데, 이력서를 쓰다가 홈페이지란을 비워두고 싶지 않아서 만들게 되었다. 그리고 그 이미지 포장작업의 일환으로 <a href="http://jsonresume.org">JSON Resume</a>로 이력서를 작성해보았다. 내가 이력서까지 왜 JSON으로 작업하고 있나하는 회의감이 들었지만 어쨌든 간에 하고나니까 뿌듯한 건 있다. 테마로 <a href="https://github.com/myh1000/jsonresume-theme-light-classy-responsive">light-classy-responsive</a> 라는 테마를 조금 변형해서 사용했는데, 로컬 테마로 퍼블리싱하는 기능은 제공하지 않는다.</p>
 
-</article>
+<p>  서른 살 쯤 부터는 내 자신을 잘 파악하게 되어 내가 꾸준히 글을 안 쓸 것 이라는 것을 누구보다도 잘 안다. (실제로 이 파일을 만든 날짜와 수정날짜가 다르다. 그렇기 대문에 쓰고 싶었던 내용과 지금 쓰고 싶은 내용이 다르다.) 주로 쓰게 될 내용은… 올해는 최대한 책을 많이 읽기로 하였으니 독서 일기를 많이 쓰게 될 것 같다.</p>
 
 
-<aside class="related">
-  <h3>Related posts</h3>
-  <ul class="related-posts">
-    
-      <li>
-        <a href="/codility/2018/05/15/codility-flags/">
-          Codility - Flags
-          <small><time datetime="2018-05-15T23:53:37+09:00">15 May 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/codility/2018/05/10/codility-count-factors/">
-          Codility - CountFactors
-          <small><time datetime="2018-05-10T22:45:16+09:00">10 May 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/codility/2018/05/07/codiliy-max-slice-sum/">
-          Codility - MaxSliceSum
-          <small><time datetime="2018-05-07T23:06:01+09:00">07 May 2018</time></small>
-        </a>
-      </li>
-    
-  </ul>
-</aside>
+  </article>
+  
+</div>
 
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    <a class="pagination-item newer" href="/page32">Newer</a>
+  
+</div>
 
         </main>
 

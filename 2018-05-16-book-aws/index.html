@@ -7,7 +7,7 @@
 
   <title>
     
-      Codility - MinPerimeterRectangle &middot; n류 개발자
+      예제를 통해 쉽게 따라하는 - 아마존 웹 서비스(Amazon Web Services) &middot; n류 개발자
     
   </title>
 
@@ -318,9 +318,9 @@
     
       <a class="sidebar-nav-item" href="/category/gibberish">Gibberish</a>
     
-      <a class="sidebar-nav-item active" href="/category/codility">Codility</a>
+      <a class="sidebar-nav-item" href="/category/codility">Codility</a>
     
-      <a class="sidebar-nav-item" href="/category/book">Book</a>
+      <a class="sidebar-nav-item active" href="/category/book">Book</a>
     
   </nav>
 
@@ -341,25 +341,15 @@
 
         <main>
           <article class="post">
-  <h1 class="post-title">Codility - MinPerimeterRectangle</h1>
-  <time datetime="2018-05-10T23:29:43+09:00" class="post-date">10 May 2018</time>
-  <p><a href="https://app.codility.com/demo/results/trainingYDY6KG-YMR">RESULT</a></p>
+  <h1 class="post-title">예제를 통해 쉽게 따라하는 - 아마존 웹 서비스(Amazon Web Services)</h1>
+  <time datetime="" class="post-date"></time>
+  <p><img src="/img/aws.jpg" alt="" class="center" /></p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<p>역시 회사에서 굴러다니던 책.</p>
 
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">root</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">root</span><span class="o">;</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">N</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="o">((</span><span class="n">i</span> <span class="o">+</span> <span class="o">(</span><span class="n">N</span> <span class="o">/</span> <span class="n">i</span><span class="o">))</span> <span class="o">*</span> <span class="mi">2</span><span class="o">);</span>
-            <span class="o">}</span>    
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<p>AWS에 대한 관심은 있었고 AWS상에서 작업해야될 일이 있을 것 같아서 보게 되었다.<br />
+주로 사용하게 되는 서비스들(IAM, S3, VPC, EC2, RDS, ELB, CloudFront)에 대한 간단한 소개와 과금 방식 그리고 실습 위주로 구성된 입문용 책이다.<br />
+아마존에서 매월 교육을 진행해서 몇 차례 다녀 왔는데 이것 말고도 AWS는 배울 수 있는 자료가 많은 것 같다.</p>
 
 </article>
 
@@ -367,27 +357,6 @@
 <aside class="related">
   <h3>Related posts</h3>
   <ul class="related-posts">
-    
-      <li>
-        <a href="/codility/2018/05/15/codility-flags/">
-          Codility - Flags
-          <small><time datetime="2018-05-15T23:53:37+09:00">15 May 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/codility/2018/05/10/codility-count-factors/">
-          Codility - CountFactors
-          <small><time datetime="2018-05-10T22:45:16+09:00">10 May 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/codility/2018/05/07/codiliy-max-slice-sum/">
-          Codility - MaxSliceSum
-          <small><time datetime="2018-05-07T23:06:01+09:00">07 May 2018</time></small>
-        </a>
-      </li>
     
   </ul>
 </aside>
