@@ -179,6 +179,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -350,106 +358,38 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/03/27/codility-equi-leader/">
-        Codility - EquiLeader
+      <a href="/codility/2018/04/16/codility-max-double-slice-sum/">
+        Codility - MaxDoubleSliceSum
       </a>
     </h1>
 
-    <time datetime="2018-03-27T00:08:08+09:00" class="post-date">27 March 2018</time>
+    <time datetime="2018-04-16T23:09:21+09:00" class="post-date">16 April 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingVU4J47-PMR">RESULT</a></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+    <p><a href="https://app.codility.com/demo/results/trainingJ7MRMR-HDC">RESULT</a></p>
 
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">firstCountMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">secondCountMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-        <span class="kt">int</span> <span class="n">firstLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">secondLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">secondCountMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">secondLeader</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">a</span><span class="o">))</span> <span class="o">{</span>
-                <span class="n">secondLeader</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">firstCountMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">firstCountMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-            <span class="n">secondCountMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">firstCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">firstLeader</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">firstCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="o">{</span>
-                <span class="n">firstLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>                 
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">secondLeader</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="o">{</span>
-                <span class="n">secondLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>      
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">firstCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">firstLeader</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&amp;&amp;</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">secondLeader</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&amp;&amp;</span> <span class="n">firstLeader</span> <span class="o">==</span> <span class="n">secondLeader</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>    
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>첫번째 방법는 Map을 이용해 숫자가 나타나는 갯수를 카운팅하여 Leader값을 계산하고<br />
-두번쨰 방법은 Leader가 되는 수는 다른 수들 보다 반 넘게 나타난다는 점을 이용해서 Leader값을 계산 하는 방식이다.<br />
-그리고 두 부분으로 나눈 경우에도 전체의 Leader값과 동일하다는 것을 이용한다.</p>
-
-<p>내 생각으로는 Map과 일반 계산식으로의 시간 복잡도가 <script type="math/tex">O(n)</script> 으로 동일 할 것 같았는데 아니였다.<br />
-다른 언어의 솔루션에서는 이런 방법으로 풀었을 때 통과하는 것 같은데…  
-아무튼 자료를 참고하여 풀었기 때문에 나중에 다시 풀면 풀 수 있을까 싶다.  
-언젠가는 꼭 material을 번역하면서 차근차근 다시 봐야겠다.</p>
-
-<p><a href="https://app.codility.com/demo/results/trainingVU4J47-PMR">RESULT</a></p>
+<p>각 위치를 경계로 미리 구해놓은 전과 후의 최대값의 부분을 더해 그 중에서의 최대값을 구하는 로직.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-                <span class="n">size</span><span class="o">++;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">size</span><span class="o">++;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">size</span><span class="o">--;</span>
-            <span class="o">}</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">fowardMaxSum</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">backwardMaxSum</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">maxSum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">fowardMaxSum</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">fowardMaxSum</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="mi">0</span><span class="o">);</span>
         <span class="o">}</span>
         
-        <span class="kt">int</span> <span class="n">leaderCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">leaderCount</span><span class="o">++;</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="n">backwardMaxSum</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">backwardMaxSum</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="mi">0</span><span class="o">);</span>
         <span class="o">}</span>
         
-        <span class="kt">int</span> <span class="n">firstLeaderCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
-                <span class="n">firstLeaderCount</span><span class="o">++;</span>    
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">firstLeaderCount</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&amp;&amp;</span> <span class="n">leaderCount</span> <span class="o">-</span> <span class="n">firstLeaderCount</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>
-            <span class="o">}</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">maxSum</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxSum</span><span class="o">,</span> <span class="n">fowardMaxSum</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">backwardMaxSum</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">]);</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">maxSum</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>

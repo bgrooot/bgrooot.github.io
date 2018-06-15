@@ -7,7 +7,7 @@
 
   <title>
     
-      Codility - MaxProductOfThree &middot; n류 개발자
+      codility &middot; n류 개발자
     
   </title>
 
@@ -352,56 +352,59 @@
         </header>
 
         <main>
-          <article class="post">
-  <h1 class="post-title">Codility - MaxProductOfThree</h1>
-  <time datetime="2018-03-03T22:53:24+09:00" class="post-date">03 March 2018</time>
-  <p><a href="https://app.codility.com/demo/results/training4QKGBE-GMY">RESULT</a></p>
+          
+
+<div class="posts">
+  
+  <article class="post">
+    <h1 class="post-title">
+      <a href="/codility/2018/02/20/codility-binary-gap/">
+        Codility - BinaryGap
+      </a>
+    </h1>
+
+    <time datetime="2018-02-20T00:00:00+09:00" class="post-date">20 February 2018</time>
+
+    <p><a href="https://app.codility.com/demo/results/trainingQ6NJRH-F2X">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">A</span><span class="o">);</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toBinaryString</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">longestGap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
         
-        <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">answer1</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">answer2</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">2</span><span class="o">]</span> <span class="o">*</span> <span class="n">A</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">3</span><span class="o">];</span>
-        <span class="k">return</span> <span class="n">answer1</span> <span class="o">&gt;</span> <span class="n">answer2</span> <span class="o">?</span> <span class="n">answer1</span> <span class="o">:</span> <span class="n">answer2</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">==</span> <span class="sc">'0'</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">gap</span><span class="o">++;</span>        
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">gap</span> <span class="o">&gt;</span> <span class="n">longestGap</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">longestGap</span> <span class="o">=</span> <span class="n">gap</span><span class="o">;</span>
+                <span class="o">}</span>
+                
+                <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        
+        <span class="k">return</span> <span class="n">longestGap</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-</article>
 
+  </article>
+  
+</div>
 
-<aside class="related">
-  <h3>Related posts</h3>
-  <ul class="related-posts">
-    
-      <li>
-        <a href="/codility/2018/06/15/codility-peek/">
-          Codility - Peek
-          <small><time datetime="2018-06-15T22:30:14+09:00">15 June 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/book/2018/05/16/book-aws/">
-          예제를 통해 쉽게 따라하는 - 아마존 웹 서비스(Amazon Web Services)
-          <small><time datetime="2018-05-16T00:00:00+09:00">16 May 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/codility/2018/05/15/codility-flags/">
-          Codility - Flags
-          <small><time datetime="2018-05-15T23:53:37+09:00">15 May 2018</time></small>
-        </a>
-      </li>
-    
-  </ul>
-</aside>
-
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    <a class="pagination-item newer" href="/category/codility/page29">Newer</a>
+  
+</div>
 
         </main>
 

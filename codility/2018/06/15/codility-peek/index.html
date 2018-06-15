@@ -7,7 +7,7 @@
 
   <title>
     
-      Codility - Distinct &middot; n류 개발자
+      Codility - Peek &middot; n류 개발자
     
   </title>
 
@@ -353,20 +353,44 @@
 
         <main>
           <article class="post">
-  <h1 class="post-title">Codility - Distinct</h1>
-  <time datetime="2018-03-02T14:40:56+09:00" class="post-date">02 March 2018</time>
-  <p><a href="https://app.codility.com/demo/results/trainingWW5HZ7-ACQ">RESULT</a></p>
+  <h1 class="post-title">Codility - Peek</h1>
+  <time datetime="2018-06-15T22:30:14+09:00" class="post-date">15 June 2018</time>
+  <p><a href="https://app.codility.com/demo/results/trainingDZA6NM-XV9">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">peekList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">peekList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                <span class="n">i</span><span class="o">++;</span>
+            <span class="o">}</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">set</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">/</span> <span class="n">i</span><span class="o">;</span>
+                <span class="kt">int</span> <span class="n">foundCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                
+                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">peek</span> <span class="o">:</span> <span class="n">peekList</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">peek</span> <span class="o">/</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">foundCount</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">break</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    
+                    <span class="k">if</span> <span class="o">(</span><span class="n">peek</span> <span class="o">/</span> <span class="n">i</span> <span class="o">==</span> <span class="n">foundCount</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">foundCount</span><span class="o">++;</span>            
+                    <span class="o">}</span>
+                <span class="o">}</span>
+                
+                <span class="k">if</span> <span class="o">(</span><span class="n">foundCount</span> <span class="o">&gt;=</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="n">size</span><span class="o">;</span>        
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>       
+        
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
@@ -379,13 +403,6 @@
   <ul class="related-posts">
     
       <li>
-        <a href="/codility/2018/06/15/codility-peek/">
-          Codility - Peek
-          <small><time datetime="2018-06-15T22:30:14+09:00">15 June 2018</time></small>
-        </a>
-      </li>
-    
-      <li>
         <a href="/book/2018/05/16/book-aws/">
           예제를 통해 쉽게 따라하는 - 아마존 웹 서비스(Amazon Web Services)
           <small><time datetime="2018-05-16T00:00:00+09:00">16 May 2018</time></small>
@@ -396,6 +413,13 @@
         <a href="/codility/2018/05/15/codility-flags/">
           Codility - Flags
           <small><time datetime="2018-05-15T23:53:37+09:00">15 May 2018</time></small>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/codility/2018/05/10/codility-min-perimeter-rectangle/">
+          Codility - MinPerimeterRectangle
+          <small><time datetime="2018-05-10T23:29:43+09:00">10 May 2018</time></small>
         </a>
       </li>
     
