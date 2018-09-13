@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 발등 골절 후기
-category: Gibberish
+category: gibberish
 ---
 
 발등 골절 후 2달이 지난 후에 써보는 후기.  
