@@ -4,7 +4,7 @@ title: Codility - ChocolatesByNumbers
 category: codility
 ---
 
-[RESULT](https://app.codility.com/demo/results/trainingMEFJ9R-RWT)
+[RESULT](https://app.codility.com/demo/results/trainingAXMVME-255)
 
 ```java
 import java.util.*;
