@@ -7,7 +7,7 @@
 
   <title>
     
-      n류 개발자 &middot; (n=3)
+      Codility - ChocolatesByNumbers &middot; n류 개발자
     
   </title>
 
@@ -362,7 +362,7 @@
     
       <a class="sidebar-nav-item" href="/category/gibberish">Gibberish</a>
     
-      <a class="sidebar-nav-item" href="/category/codility">Codility</a>
+      <a class="sidebar-nav-item active" href="/category/codility">Codility</a>
     
       <a class="sidebar-nav-item" href="/category/book">Book</a>
     
@@ -384,54 +384,63 @@
         </header>
 
         <main>
-          <div class="posts">
-  
-  <article class="post">
-    <h1 class="post-title">
-      <a href="/codility/2018/02/27/codility-passing-cars/">
-        Codility - PassingCars
-      </a>
-    </h1>
-
-    <time datetime="2018-02-27T21:17:45+09:00" class="post-date">27 February 2018</time>
-
-    <p><a href="https://app.codility.com/demo/results/trainingK4JVNG-YNQ">RESULT</a></p>
+          <article class="post">
+  <h1 class="post-title">Codility - ChocolatesByNumbers</h1>
+  <time datetime="2018-09-21T00:00:00+09:00" class="post-date">21 September 2018</time>
+  <p><a href="https://app.codility.com/demo/results/trainingZVJNW6-EBH">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">zeroCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">zeroCount</span><span class="o">++;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">count</span> <span class="o">+=</span> <span class="n">zeroCount</span><span class="o">;</span>
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1000000000</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-            <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">,</span> <span class="kt">int</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">N</span> <span class="o">/</span> <span class="n">gcd</span><span class="o">(</span><span class="n">N</span><span class="o">,</span> <span class="n">M</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">gcd</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">tmp</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">a</span> <span class="o">%</span> <span class="n">b</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">%</span> <span class="n">b</span><span class="o">;</span>
         <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">b</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
 
-  </article>
-  
-</div>
+</article>
 
-<div class="pagination">
-  
-    <a class="pagination-item older" href="/page27">Older</a>
-  
-  
-    <a class="pagination-item newer" href="/page25">Newer</a>
-  
-</div>
+
+<aside class="related">
+  <h3>Related posts</h3>
+  <ul class="related-posts">
+    
+      <li>
+        <a href="/codility/2018/09/16/codility-count-semiprimes/">
+          Codility - CountSemiprimes
+          <small><time datetime="2018-09-16T00:00:00+09:00">16 September 2018</time></small>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/gibberish/2018/09/10/gibberish-foot-fracture-epilogue/">
+          발등 골절 후기
+          <small><time datetime="2018-09-10T00:00:00+09:00">10 September 2018</time></small>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/codility/2018/09/10/codility-count-non-divisible/">
+          Codility - CountNonDivisible
+          <small><time datetime="2018-09-10T00:00:00+09:00">10 September 2018</time></small>
+        </a>
+      </li>
+    
+  </ul>
+</aside>
+
 
         </main>
 
