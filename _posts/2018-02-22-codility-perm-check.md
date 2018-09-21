@@ -5,7 +5,7 @@ date: 2018-02-22 00:02:40 +0900
 category: codility
 ---
 
-[RESULT](https://app.codility.com/demo/results/training363E4W-TMB)
+[RESULT](https://app.codility.com/demo/results/trainingAXMVME-255)
 
 ```java
 import java.util.*;
