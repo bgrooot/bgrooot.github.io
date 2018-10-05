@@ -199,6 +199,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -388,51 +396,31 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/09/10/codility-count-non-divisible/">
-        Codility - CountNonDivisible
+      <a href="/gibberish/2018/09/10/gibberish-foot-fracture-epilogue/">
+        발등 골절 후기
       </a>
     </h1>
 
     <time datetime="2018-09-10T00:00:00+09:00" class="post-date">10 September 2018</time>
 
-    <p>오랜만의 코딜리티… 근 2달만이다.  <br />
-<del>그 동안 여러가지 일이 있었다.</del></p>
+    <p>발등 골절 후 2달이 지난 후에 써보는 후기.<br />
+귀찮지만 심심해서(?) 써본다.</p>
 
-<p><a href="https://app.codility.com/demo/results/training48YVSX-VGN">RESULT</a></p>
+<h1 id="사건-발단">사건 발단</h1>
+<p>2018년 6월 23일날 토요일… 김포에서 하는 결혼식을 가기위해 아침 일칙부터 일어났었다. 와이프 친척의 결혼식이였기 때문에 장인 ᛫ 장모님이 우리 집에 오셨고
+새로 산 카시트를 차에 싣기위해 카시트를 들고 지하 1층 주차장으로 내려갔으나 차가 없었다. 그렇다면.. 지하 2층에 있겠거니하고 계단으로 가려고 생각했었다.
+~(그런 생각은 하지 말았어야 했는데)~ 계단을 거의 다 내려왔을 때 쯤 마지막 발을 내딛었을 때 오른발을 접질렸다.</p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<p>가장 먼저 든 생각은 역대급으로 심하게 접질렸다고 생각했고 통증이 있었지만 잠깐 그러겠거니하고 운전대에 올랐다. 결혼식장에서도 절룩거리면서 음식은 가져다 잘 먹었고
+돌아오는 길에도 통증이 계속 되고 집에 도착해서 신발을 벗어보니 발이 곰발바닥 마냥 부어있었다. (이 때부터 뭔가 잘못됬다고 느낀거 같다.) 토요일이 였기 때문에 응급실로 가게되었고 골절을 진단받으며 반깁스와 목발신세를 지게되면서 지금까지도 고통을 받고있다.</p>
 
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">answer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">uniqueMap</span> <span class="o">=</span> <span class="n">setUniqueMap</span><span class="o">(</span><span class="n">A</span><span class="o">);</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-            
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">*</span><span class="n">j</span><span class="o">&lt;=</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">%</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">count</span> <span class="o">+=</span> <span class="n">uniqueMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-                    <span class="k">if</span> <span class="o">(</span><span class="n">j</span> <span class="o">!=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">/</span> <span class="n">j</span><span class="o">)</span> <span class="n">count</span> <span class="o">+=</span> <span class="n">uniqueMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">/</span> <span class="n">j</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-                <span class="o">}</span>    
-            <span class="o">}</span>
-            
-            <span class="n">answer</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">count</span><span class="o">;</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">answer</span><span class="o">;</span>
-    <span class="o">}</span>
-    
-     <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">setUniqueMap</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">uniqueMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">uniqueMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">uniqueMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-        <span class="o">}</span>
+<h1 id="사건-경과">사건 경과</h1>
+<p>내 다리는 반깁스에서 → 깁스 → 보조기를 거쳤고 1달이 넘게 목발과 한 다리로만 살았다. (다친 다리가 점점 얆아지더라..) 반깁스로는 2주, 깁스는 4주 정도 하고 있었던 것 같다. 다치고 나서는 다리가 땡땡 부어서 잘 때는 다리에 배게를 두고 잤다. 조금만 올리고 있어도 붓기가 확실히 금방 빠졌다. 다리가 부었을 때는 저릿저릿하고 앉아 있지도 못하겠더라. 다리는 처음 겪어보는 골절인데 정말 더디게 낮는다. 하루단위로는 잘 느껴지지 않고 일주일 정도로는 낮긴 낮는데 평소에는 쉽게 하던 것 들도 하지 못해 도대체 언제 걸을 수 있나하는 답답함이 많이 들었다. 깁스를 푸르고도 바로 걷지도 못했다. 의사는 걸으라는데 걸을 수 있어야 걷지 아파 죽겠는데… 나는 주말이여서 시내의 종합병원 응급실로 간 후 그 곳에서 진료를 계속 받았는데 다른 곳으로 갈걸 그랬다. 병원과의 거리도 그렇고 결정적으로 의사 선생님이 별로였다. 골절이라 뭐 특별히 진료 해주는 것은 없겠다만 지금 내 상황과는 조금 다른 판에 박힌 말을 하는 느낌이나 보조기를 구입하라고 권유한 것 점 등 병원을 다닐 수록 신뢰가 많이 깍이는 느낌이였다.</p>
 
-        <span class="k">return</span> <span class="n">uniqueMap</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<p>출 ᛫ 퇴근도 참 힘들었다. 차를 얻어 타거나 택시타고 지하철역까지 간 후 20분 정도를 가야하는데 운이 나빠 자리에 앉지 못할 때가 있는데 그냥 지하철 바닥에 앉아서 갈까 하는 생각이 많이 들었다. 대부분의 사람들이 목발을 짚고있어도 알아봐 주고 비켜주거나 하지는 않았다. 물론 고맙게도 그렇게 해주신 분들도 있었다. 주로 노약자석 쪽에 탔었는데 오히려 일반석 보다 노약자석에 앉아 계신 분들이 더 잘 비켜주기도 했다. 그 사람들이 밉거나 하지는 않다. 애초에 그럴 것이라 생각하고 아무런 기대도 하지 않았고 대부분 핸드폰을 보느라 아예 보지 못한 사람이 대다수 일 것이다. 아무튼 간에 힘들어서 마침 일도 없고 그만두겠다고 얘기 한 후기도 해서(…) 일 있을 때만 출근하겠다고 하고 일주일에 2 ~ 3번만 출근했었다.</p>
+
+<h1 id="사건-결말">사건 결말</h1>
+<p>아직 다 낮지는 않았다. 그렇지만 이제는 보통 걸음걸이의 속도를 회복했고 걸었을 때의 통증도 거의 없지만 발이 붓는 현상은 아직 있다. 그리고 발목의 가동 범위가 줄었고 요상하게도 발끝으로 딛었을 때의 통증이 있다. 발을 다치고 여러가지를 느꼈지만 여러모로 몸 아프면 정말 나만 고생한다는 것과 가장의 무게를 다시 한번 느끼게 되었다. 목발이 조금만 물기가 있어도 미끄러지는 건지 지하주차장에서 목발이 미끄러져 크게 넘어진 적이 있었는데 아픈 것도 아픈 거지만 서러워서 주저 앉아서 목놓아 울고싶었다. 100년만의 최악의 여름이였다는데… 이 보다 더 나쁜 여름은 내 인생에서 없었으면 한다.</p>
 
   </article>
   
