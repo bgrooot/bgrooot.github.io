@@ -7,7 +7,7 @@ category: codility
 [RESULT](https://app.codility.com/demo/results/training4D4R6R-VPA)
 
 이해가 잘 안가는 어려운 문제다.  
-참고했던 것 중에는 [요 설명](http://zuu.kr/jusf)이 가장 낫다.
+참고했던 것 중에는 [요 설명](http://www.davidespataro.it/solution-to-the-codility-common-prime-divisors-set-problem)이 가장 낫다.
 요약하자면,
 - 소수의 약수 집합이 같으려면 두 집합이 서로에게 속해야한다.
 - 최대 공약수를 빼면서 포함되고 있는지를 포함한다
