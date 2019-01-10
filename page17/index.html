@@ -211,6 +211,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -412,109 +420,25 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/03/27/codility-equi-leader/">
-        Codility - EquiLeader
+      <a href="/book/2018/04/05/book-hibernate-programing/">
+        하이버네이트 프로그래밍
       </a>
     </h1>
 
-    <time datetime="2018-03-27T00:08:08+09:00" class="post-date">27 March 2018</time>
+    <time datetime="2018-04-05T00:00:00+09:00" class="post-date">05 April 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingVU4J47-PMR">RESULT</a></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+    <p><img src="/img/harnessing-hibernate.jpg" alt="" class="center" /></p>
 
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">firstCountMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">secondCountMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-        <span class="kt">int</span> <span class="n">firstLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">secondLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">secondCountMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">secondLeader</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">a</span><span class="o">))</span> <span class="o">{</span>
-                <span class="n">secondLeader</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">firstCountMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">firstCountMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-            <span class="n">secondCountMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">firstCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">firstLeader</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">firstCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="o">{</span>
-                <span class="n">firstLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>                 
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">secondLeader</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="o">{</span>
-                <span class="n">secondLeader</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>      
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">firstCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">firstLeader</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&amp;&amp;</span> <span class="n">secondCountMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">secondLeader</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&amp;&amp;</span> <span class="n">firstLeader</span> <span class="o">==</span> <span class="n">secondLeader</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>    
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<p>자바 ORM을 책으로 공부해야겠다는 생각은 늘 하고 있었는데 마침 회사에 굴러다니던(?) 책이 있어서 보기 시작했다.</p>
 
-<p>첫번째 방법는 Map을 이용해 숫자가 나타나는 갯수를 카운팅하여 Leader값을 계산하고<br />
-두번쨰 방법은 Leader가 되는 수는 다른 수들 보다 반 넘게 나타난다는 점을 이용해서 Leader값을 계산 하는 방식이다.<br />
-그리고 두 부분으로 나눈 경우에도 전체의 Leader값과 동일하다는 것을 이용한다.</p>
+<p>책의 내용은 XML이나 어노테이션을 활용하여 Artist, Track, Album등의 객체를 모델링을 하고 HQL과 크리테리아 쿼리, 그리고 스프링에서 사용할 수 있는 방법을 소개하고 있다.
+설정 방법 부터 직접 따라할 수 있는 코드가 많아 입문용으로 적합할 듯한 서적이다. 
+사실 나의 경우는 이 책만으로는 하이버네이트에를 잘 이해할 수 없었기 때문에 조만간 책 한권을 더 봐야 할 것 같다는 생각이 들었다.</p>
 
-<p>내 생각으로는 Map과 일반 계산식으로의 시간 복잡도가 <script type="math/tex">O(n)</script> 으로 동일 할 것 같았는데 아니였다.<br />
-다른 언어의 솔루션에서는 이런 방법으로 풀었을 때 통과하는 것 같은데…  
-아무튼 자료를 참고하여 풀었기 때문에 나중에 다시 풀면 풀 수 있을까 싶다.  
-언젠가는 꼭 material을 번역하면서 차근차근 다시 봐야겠다.</p>
+<p>예제를 따라하다가 LazyInitilizeException이 발생했고 해결을 위해 검색하다 OSIV(Open Session In View)에 대해서도 알게 되었고 안티패턴이니 하는 논쟁과 더불어
+스프링 부트에서는 기본적으로 적용되어 있다는 데 왜 나는지를 찾게 되었다.(에러는 lombock에서 생성된 toString()으로 인하여 발생했었다.)</p>
 
-<p><a href="https://app.codility.com/demo/results/trainingVU4J47-PMR">RESULT</a></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-                <span class="n">size</span><span class="o">++;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">size</span><span class="o">++;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">size</span><span class="o">--;</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="kt">int</span> <span class="n">leaderCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">leaderCount</span><span class="o">++;</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="kt">int</span> <span class="n">firstLeaderCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="o">{</span>
-                <span class="n">firstLeaderCount</span><span class="o">++;</span>    
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">firstLeaderCount</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">&amp;&amp;</span> <span class="n">leaderCount</span> <span class="o">-</span> <span class="n">firstLeaderCount</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<p>새로운 기술에대한 책이나 글을 접할때마다 느끼는 거지만(이미 회자되는 기술일 수록 많이) 나는 이걸 언제 써보나 하는 생각이 들 때가 많다. 하이버네이트는 예전 부터 한번 잘 사용해 보고 싶다는 생각을 가지고 있었는데 아주 다행스럽게도 신규 프로젝트를 진행할 일이 생길 것 같아 많이 다뤄 볼 수 있을 것 같다.</p>
 
   </article>
   

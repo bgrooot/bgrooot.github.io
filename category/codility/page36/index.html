@@ -211,6 +211,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -414,36 +422,29 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/02/20/codility-binary-gap/">
-        Codility - CountSemiprimes
+      <a href="/codility/2018/02/20/codility-odd-occurrences-in-array/">
+        Codility - OddOccurrencesInArray
       </a>
     </h1>
 
     <time datetime="2018-02-20T00:00:00+09:00" class="post-date">20 February 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingQ6NJRH-F2X">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/training4F8KB5-R7G">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">toBinaryString</span><span class="o">(</span><span class="n">N</span><span class="o">);</span>
-        <span class="kt">int</span> <span class="n">longestGap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">==</span> <span class="sc">'0'</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">gap</span><span class="o">++;</span>        
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">set</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">a</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">set</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
             <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">gap</span> <span class="o">&gt;</span> <span class="n">longestGap</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">longestGap</span> <span class="o">=</span> <span class="n">gap</span><span class="o">;</span>
-                <span class="o">}</span>
-                
-                <span class="n">gap</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
             <span class="o">}</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">longestGap</span><span class="o">;</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">set</span><span class="o">.</span><span class="na">toArray</span><span class="o">()[</span><span class="mi">0</span><span class="o">];</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
@@ -455,7 +456,7 @@
 
 <div class="pagination">
   
-    <span class="pagination-item older">Older</span>
+    <a class="pagination-item older" href="/category/codility/page37">Older</a>
   
   
     <a class="pagination-item newer" href="/category/codility/page35">Newer</a>

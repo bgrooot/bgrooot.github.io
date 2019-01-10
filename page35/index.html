@@ -211,6 +211,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -412,38 +420,31 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/02/21/codility-frog-jmp/">
-        Codility - FrogJmp
+      <a href="/codility/2018/02/22/codility-perm-check/">
+        Codility - PermCheck
       </a>
     </h1>
 
-    <time datetime="2018-02-21T22:46:52+09:00" class="post-date">21 February 2018</time>
+    <time datetime="2018-02-22T00:02:40+09:00" class="post-date">22 February 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingN6HX3N-84Y">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingAXMVME-255">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">X</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">D</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="o">(</span><span class="n">Y</span> <span class="o">-</span> <span class="n">X</span><span class="o">)</span> <span class="o">/</span> <span class="n">D</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">X</span><span class="o">)</span> <span class="o">%</span> <span class="n">D</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">count</span><span class="o">++;</span>   
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>내가 왜 굳이 이렇게 짰을까?</p>
-
-<p><a href="https://app.codility.com/demo/results/trainingEJQFDG-EPU/">RESULT</a></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">X</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">D</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">ceil</span><span class="o">((</span><span class="n">Y</span> <span class="o">-</span> <span class="n">X</span><span class="o">)</span> <span class="o">/</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span> <span class="n">D</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">set</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">i</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        
+        <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
