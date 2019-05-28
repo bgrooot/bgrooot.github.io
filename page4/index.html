@@ -219,6 +219,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -428,112 +436,39 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/12/04/codility-fib-flog/">
-        Codility - FibFlog
+      <a href="/codility/2019/01/07/ladder/">
+        Codility - Ladder
       </a>
     </h1>
 
-    <time datetime="2018-12-04T00:00:00+09:00" class="post-date">04 December 2018</time>
+    <time datetime="2019-01-07T00:00:00+09:00" class="post-date">07 January 2019</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingGPZ6UE-VNF">RESULT</a></p>
-
-<p>처음에 작성했던 코드는 성능에서 까였는데 개구리가 도착해도 탐색을 계속했기 때문.<br />
-최소의 점프 횟수를 찾는 것이기 때문에 처음 도착했을 때 종료하도록 했다.</p>
+    <p><a href="https://app.codility.com/demo/results/trainingW4K5MR-6BF">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">fib</span>  <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">50001</span><span class="o">];</span>
 
-    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">question</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">fibonacci</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-    <span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">memoization</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
-    <span class="kd">private</span> <span class="n">Queue</span><span class="o">&lt;</span><span class="n">JumpState</span><span class="o">&gt;</span> <span class="n">probability</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">B</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">fib</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">fib</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">question</span> <span class="o">=</span> <span class="n">A</span><span class="o">;</span>
-        <span class="n">fibonacci</span> <span class="o">=</span> <span class="n">getFibonacci</span><span class="o">(</span><span class="n">question</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
 
-        <span class="n">testProbability</span><span class="o">(</span><span class="n">question</span><span class="o">.</span><span class="na">length</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-
-        <span class="k">while</span> <span class="o">(!</span><span class="n">probability</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
-            <span class="n">JumpState</span> <span class="n">p</span> <span class="o">=</span> <span class="n">probability</span><span class="o">.</span><span class="na">poll</span><span class="o">();</span>
-
-            <span class="k">if</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getIndex</span><span class="o">()</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="na">getJump</span><span class="o">();</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">testProbability</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">getIndex</span><span class="o">(),</span> <span class="n">p</span><span class="o">.</span><span class="na">getJump</span><span class="o">());</span>
-            <span class="o">}</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">3</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">fib</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">fib</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="n">fib</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="n">fib</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="o">])</span> <span class="o">%</span> <span class="n">getPow</span><span class="o">(</span><span class="mi">30</span><span class="o">);</span>
         <span class="o">}</span>
 
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">testProbability</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">f</span><span class="o">&lt;=</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">fibonacci</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">fibonacci</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-            <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">f</span><span class="o">;</span>
-
-            <span class="k">if</span> <span class="o">(</span><span class="n">isLeafIndex</span><span class="o">(</span><span class="n">index</span><span class="o">))</span> <span class="o">{</span>
-                <span class="n">JumpState</span> <span class="n">jumpState</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JumpState</span><span class="o">(</span><span class="n">index</span><span class="o">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-
-                <span class="k">if</span> <span class="o">(!</span><span class="n">memoization</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">index</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="n">probabilityClearIfFound</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
-                    <span class="n">probability</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">jumpState</span><span class="o">);</span>
-                    <span class="n">memoization</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">index</span><span class="o">);</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isLeafIndex</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span> <span class="o">(</span><span class="n">isValid</span><span class="o">(</span><span class="n">index</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">question</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">==</span> <span class="mi">1</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">question</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">probabilityClearIfFound</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">probability</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">getFibonacci</span><span class="o">(</span><span class="kt">int</span> <span class="n">maxNumber</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">fibonacci</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-        <span class="kt">int</span> <span class="n">first</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">second</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-
-        <span class="n">fibonacci</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">first</span><span class="o">);</span>
-
-        <span class="k">do</span> <span class="o">{</span>
-            <span class="n">fibonacci</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">second</span><span class="o">);</span>
-            <span class="n">second</span> <span class="o">=</span> <span class="n">first</span> <span class="o">+</span> <span class="n">second</span><span class="o">;</span>
-            <span class="n">first</span> <span class="o">=</span> <span class="n">second</span> <span class="o">-</span> <span class="n">first</span><span class="o">;</span>
-
-        <span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">second</span> <span class="o">&lt;=</span> <span class="n">maxNumber</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-
-        <span class="k">return</span> <span class="n">fibonacci</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">JumpState</span> <span class="o">{</span>
-        <span class="kd">private</span> <span class="kt">int</span> <span class="n">index</span><span class="o">;</span>
-        <span class="kd">private</span> <span class="kt">int</span> <span class="n">jump</span><span class="o">;</span>
-
-        <span class="kd">public</span> <span class="nf">JumpState</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">,</span> <span class="kt">int</span> <span class="n">jump</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">jump</span> <span class="o">=</span> <span class="n">jump</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">res</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">fib</span><span class="o">[</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">%</span> <span class="n">getPow</span><span class="o">(</span><span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
         <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getIndex</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">index</span><span class="o">;</span>
-        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+    <span class="o">}</span>
 
-        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getJump</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">jump</span><span class="o">;</span>
-        <span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getPow</span><span class="o">(</span><span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">b</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>

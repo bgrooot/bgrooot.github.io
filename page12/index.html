@@ -219,6 +219,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -428,96 +436,20 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/05/15/codility-flags/">
-        Codility - Flags
+      <a href="/book/2018/05/16/book-aws/">
+        예제를 통해 쉽게 따라하는 - 아마존 웹 서비스(Amazon Web Services)
       </a>
     </h1>
 
-    <time datetime="2018-05-15T23:53:37+09:00" class="post-date">15 May 2018</time>
+    <time datetime="2018-05-16T00:00:00+09:00" class="post-date">16 May 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingU9W998-SJH">RESULT</a></p>
+    <p><img src="/img/aws.jpg" alt="" class="center" /></p>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<p>역시 회사에서 굴러다니던 책.</p>
 
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">peekList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
-                <span class="n">peekList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-                <span class="n">i</span><span class="o">++;</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="kt">int</span> <span class="n">maxFlagCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;=</span><span class="n">peekList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-            <span class="kt">int</span> <span class="n">prevIndex</span> <span class="o">=</span> <span class="n">peekList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
-            
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">peekList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">count</span><span class="o">&lt;</span><span class="n">i</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">peekList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">)</span> <span class="o">-</span> <span class="n">prevIndex</span> <span class="o">&gt;=</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">count</span><span class="o">++;</span>
-                    <span class="n">prevIndex</span> <span class="o">=</span> <span class="n">peekList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-           
-            <span class="n">maxFlagCount</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxFlagCount</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">maxFlagCount</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>러닝타임을 어떻게 줄일 수가 있지 고민했는데 반감법(bisection)을 요렇게 적용하는 것이구나</p>
-
-<p><a href="https://app.codility.com/demo/results/trainingWFVNW5-CK2">RESULT</a></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">peekList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
-                <span class="n">peekList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-                <span class="n">i</span><span class="o">++;</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="kt">int</span> <span class="n">maxFlagCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">peekList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
-        
-        <span class="k">if</span> <span class="o">(</span><span class="n">end</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">end</span><span class="o">;</span>
-        <span class="o">}</span>
-        
-        <span class="k">while</span> <span class="o">(</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">flag</span> <span class="o">=</span> <span class="o">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">end</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
-            <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-            <span class="kt">int</span> <span class="n">prevIndex</span> <span class="o">=</span> <span class="n">peekList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
-            
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">peekList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">count</span><span class="o">&lt;</span><span class="n">flag</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">peekList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">)</span> <span class="o">-</span> <span class="n">prevIndex</span> <span class="o">&gt;=</span> <span class="n">flag</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">count</span><span class="o">++;</span>
-                    <span class="n">prevIndex</span> <span class="o">=</span> <span class="n">peekList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">j</span><span class="o">);</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">flag</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">start</span> <span class="o">=</span> <span class="n">flag</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-                <span class="n">maxFlagCount</span> <span class="o">=</span> <span class="n">count</span><span class="o">;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">end</span> <span class="o">=</span> <span class="n">flag</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>               
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">maxFlagCount</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<p>AWS에 대한 관심은 있었고 AWS상에서 작업해야될 일이 있을 것 같아서 보게 되었다.<br />
+주로 사용하게 되는 서비스들(IAM, S3, VPC, EC2, RDS, ELB, CloudFront)에 대한 간단한 소개와 과금 방식 그리고 실습 위주로 구성된 입문용 책이다.<br />
+아마존에서 매월 교육을 진행해서 몇 차례 다녀 왔는데 이것 말고도 AWS는 배울 수 있는 자료가 많은 것 같다.</p>
 
   </article>
   
