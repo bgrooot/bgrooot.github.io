@@ -4,7 +4,7 @@ title: Testivus On Test Coverage
 category: gibberish
 ---
 
-최근에 회사에서 작은 규모로 ~2명이서~ 스터디를 하고 있다.  
+최근에 회사에서 작은 규모로 ~~2명이서~~ 스터디를 하고 있다.  
 나는 파이썬을 배우고, 스프링에 대해 궁금한 점을 나에게 물어보면 간략히 조사해서 발표하는 식으로 진행하고 있는데 적정한 테스트 코드 커버리지 범위에 대한 얘기가 나와서 그것에 대해 한번 찾아보다가 
 [재밌는 글](https://stackoverflow.com/questions/90002/what-is-a-reasonable-code-coverage-for-unit-tests-and-why/9002)
 을 발견해서 아래에 적어보려고 한다.  
