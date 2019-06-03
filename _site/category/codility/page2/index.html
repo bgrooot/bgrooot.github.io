@@ -223,6 +223,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -438,55 +446,98 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2019/01/10/min-max-division/">
-        Codility - MinMaxDivisions
+      <a href="/codility/2019/05/28/codility-nailingplanks/">
+        Codility - NailingPlanks
       </a>
     </h1>
 
-    <time datetime="2019-01-10T00:00:00+09:00" class="post-date">10 January 2019</time>
+    <time datetime="2019-05-28T00:00:00+09:00" class="post-date">28 May 2019</time>
 
-    <p><a href="https://app.codility.com/demo/results/training3MEQQJ-B5R">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingVX8AYH-4S7">RESULT</a></p>
 
-<p>어렵다.<br />
-원하는 값을 찾기 위해 이진탐색을 적용한 것도 생각지도 못했으며<br />
-구간으로 찾는 값을 구성할 수 있는지 판별하는 로직도 직관적으로 와닿지 않는다.<br />
-한달 뒤에 다시 푸려면 풀 수있을까?</p>
+<p>Codility의 문제들은 <strong>RESPECTABLE</strong> 정도만 되어도 참 어렵다.<br />
+TLE가 왜 나는지 모르겠어서 한참을 헤맸다.</p>
+
+<p>못을 위치 순으로 정렬 한 후에(문제의 조건이 널빤지를 다 박을 수 있는 못의 인덱스 이므로 이전의  순서를 기억하게 한다.), 널빤지를 순회하면서 못을 박을 수 있는 가장 작은 인덱스를 찾고, 찾은 인덱스들 중에 가장 큰 수가 전체 널빤지를 박을 수 있는 최소의 못의 수이다.</p>
+
+<p>그리고 아직도 직관적으로 이해되지는 않지만, 널빤지를 순회하면서 찾은 가장 작은 인덱스가 이전에 찾은 인덱스보다 작을 경우는 더 탐색할 필요가 없기 때문에 종료 조건을 걸어야 시간초과를 피할 수 있다.</p>
+
+<p>아 하나 더, 못의 위치와 인덱스를 저장하기위해 Object의 List로 만들고 정렬해서 사용 했었는데… 배열을 사용하지 않으면 시간 내에 통과하지 못한다.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">K</span><span class="o">,</span> <span class="kt">int</span> <span class="n">M</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-    	<span class="kt">int</span> <span class="n">low</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">A</span><span class="o">).</span><span class="na">max</span><span class="o">().</span><span class="na">getAsInt</span><span class="o">();</span>
-    	<span class="kt">int</span> <span class="n">up</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">A</span><span class="o">).</span><span class="na">sum</span><span class="o">();</span>
-    	<span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">up</span><span class="o">;</span>
 
-    	<span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&lt;=</span> <span class="n">up</span><span class="o">)</span> <span class="o">{</span>
-    		<span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">up</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
-    		<span class="k">if</span> <span class="o">(</span><span class="n">isDivision</span><span class="o">(</span><span class="n">K</span><span class="o">,</span> <span class="n">mid</span><span class="o">,</span> <span class="n">A</span><span class="o">))</span> <span class="o">{</span>
-    			<span class="n">res</span> <span class="o">=</span> <span class="n">mid</span><span class="o">;</span>
-    			<span class="n">up</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-    		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-    			<span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-    		<span class="o">}</span>
-    	<span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[][]</span> <span class="n">nailArray</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">maxIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
 
-    	<span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">B</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">C</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">setNailArray</span><span class="o">(</span><span class="n">C</span><span class="o">);</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">tryNail</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">maxIndex</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isDivision</span><span class="o">(</span><span class="kt">int</span> <span class="n">K</span><span class="o">,</span> <span class="kt">int</span> <span class="n">target</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-    	<span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-    	<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-    	<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="nl">a:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-    		<span class="n">sum</span> <span class="o">+=</span> <span class="n">a</span><span class="o">;</span>
-    		<span class="k">if</span> <span class="o">(</span><span class="n">sum</span> <span class="o">&gt;</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
-    			<span class="n">sum</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-    			<span class="n">count</span><span class="o">++;</span>
-    		<span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">tryNail</span><span class="o">(</span><span class="kt">int</span> <span class="n">start</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">boolean</span> <span class="n">success</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">minIndex</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">successIndex</span> <span class="o">=</span> <span class="n">nailArray</span><span class="o">.</span><span class="na">length</span><span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">from</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">to</span> <span class="o">=</span> <span class="n">nailArray</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;;</span>
 
-    		<span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">&gt;</span> <span class="n">K</span><span class="o">)</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-    	<span class="o">}</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">from</span> <span class="o">&lt;=</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">Math</span><span class="o">.</span><span class="na">ceil</span><span class="o">((</span><span class="kt">float</span><span class="o">)</span> <span class="o">(</span><span class="n">from</span> <span class="o">+</span> <span class="n">to</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">);</span>
+            <span class="kt">int</span><span class="o">[]</span> <span class="n">nail</span> <span class="o">=</span> <span class="n">nailArray</span><span class="o">[</span><span class="n">index</span><span class="o">];</span>
 
-    	<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">start</span> <span class="o">&gt;</span> <span class="n">nail</span><span class="o">[</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">from</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">end</span> <span class="o">&lt;</span> <span class="n">nail</span><span class="o">[</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
+                <span class="n">to</span> <span class="o">=</span> <span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">to</span> <span class="o">=</span> <span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="n">successIndex</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
+                <span class="n">success</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">success</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">successIndex</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">nailArray</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="kt">int</span><span class="o">[]</span> <span class="n">nail</span> <span class="o">=</span> <span class="n">nailArray</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">nail</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">nail</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">minIndex</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">minIndex</span> <span class="o">=</span> <span class="n">nail</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+                <span class="o">}</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">minIndex</span> <span class="o">&lt;=</span> <span class="n">maxIndex</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">minIndex</span> <span class="o">&gt;</span> <span class="n">maxIndex</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">maxIndex</span> <span class="o">=</span> <span class="n">minIndex</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">success</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setNailArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">C</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">nailArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">C</span><span class="o">.</span><span class="na">length</span><span class="o">][</span><span class="mi">2</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">C</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">nailArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">count</span><span class="o">++;</span>
+            <span class="n">nailArray</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">C</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+        <span class="o">}</span>
+ 
+        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">nailArray</span><span class="o">,</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="n">y</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>

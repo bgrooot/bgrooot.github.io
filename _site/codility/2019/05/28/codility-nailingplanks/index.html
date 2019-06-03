@@ -223,6 +223,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -444,6 +452,8 @@ TLE가 왜 나는지 모르겠어서 한참을 헤맸다.</p>
 
 <p>그리고 아직도 직관적으로 이해되지는 않지만, 널빤지를 순회하면서 찾은 가장 작은 인덱스가 이전에 찾은 인덱스보다 작을 경우는 더 탐색할 필요가 없기 때문에 종료 조건을 걸어야 시간초과를 피할 수 있다.</p>
 
+<p>아 하나 더, 못의 위치와 인덱스를 저장하기위해 Object의 List로 만들고 정렬해서 사용 했었는데… 배열을 사용하지 않으면 시간 내에 통과하지 못한다.</p>
+
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
@@ -530,6 +540,13 @@ TLE가 왜 나는지 모르겠어서 한참을 헤맸다.</p>
   <ul class="related-posts">
     
       <li>
+        <a href="/codility/2019/06/03/codility-count-distinct-slice/">
+          Codility - CountDistinctSlices
+          <small><time datetime="2019-06-03T00:00:00+09:00">03 June 2019</time></small>
+        </a>
+      </li>
+    
+      <li>
         <a href="/gibberish/2019/01/16/testivus-on-test-coverage/">
           Testivus On Test Coverage
           <small><time datetime="2019-01-16T00:00:00+09:00">16 January 2019</time></small>
@@ -540,13 +557,6 @@ TLE가 왜 나는지 모르겠어서 한참을 헤맸다.</p>
         <a href="/codility/2019/01/10/min-max-division/">
           Codility - MinMaxDivisions
           <small><time datetime="2019-01-10T00:00:00+09:00">10 January 2019</time></small>
-        </a>
-      </li>
-    
-      <li>
-        <a href="/codility/2019/01/07/ladder/">
-          Codility - Ladder
-          <small><time datetime="2019-01-07T00:00:00+09:00">07 January 2019</time></small>
         </a>
       </li>
     
