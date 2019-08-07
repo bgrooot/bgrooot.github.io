@@ -1,11 +1,13 @@
 <p><a href="https://app.codility.com/demo/results/trainingVX8AYH-4S7">RESULT</a></p>
 
-<p>Codility의 문제들은 <em>RESPECTABLE</em>정도만 되어도 참 어렵다.<br />
+<p>Codility의 문제들은 <strong>RESPECTABLE</strong> 정도만 되어도 참 어렵다.<br />
 TLE가 왜 나는지 모르겠어서 한참을 헤맸다.</p>
 
 <p>못을 위치 순으로 정렬 한 후에(문제의 조건이 널빤지를 다 박을 수 있는 못의 인덱스 이므로 이전의  순서를 기억하게 한다.), 널빤지를 순회하면서 못을 박을 수 있는 가장 작은 인덱스를 찾고, 찾은 인덱스들 중에 가장 큰 수가 전체 널빤지를 박을 수 있는 최소의 못의 수이다.</p>
 
 <p>그리고 아직도 직관적으로 이해되지는 않지만, 널빤지를 순회하면서 찾은 가장 작은 인덱스가 이전에 찾은 인덱스보다 작을 경우는 더 탐색할 필요가 없기 때문에 종료 조건을 걸어야 시간초과를 피할 수 있다.</p>
+
+<p>아 하나 더, 못의 위치와 인덱스를 저장하기위해 Object의 List로 만들고 정렬해서 사용 했었는데… 배열을 사용하지 않으면 시간 내에 통과하지 못한다.</p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 

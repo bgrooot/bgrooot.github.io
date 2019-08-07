@@ -227,6 +227,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -444,99 +452,25 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/03/02/codility-genomic-range-query/">
-        Codility - GenomicRangeQuery
+      <a href="/codility/2018/03/02/codility-distinct/">
+        Codility - Distinct
       </a>
     </h1>
 
-    <time datetime="2018-03-02T14:15:39+09:00" class="post-date">02 March 2018</time>
+    <time datetime="2018-03-02T14:40:56+09:00" class="post-date">02 March 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingJYE6E4-7KY">RESULT</a></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">solution</span><span class="o">(</span><span class="n">String</span> <span class="n">S</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">P</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">Q</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">answer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">P</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">P</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">minFactor</span> <span class="o">=</span> <span class="mi">4</span><span class="o">;</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">P</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">Q</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="kt">int</span> <span class="n">factor</span> <span class="o">=</span> <span class="n">getImpactorFactor</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">j</span><span class="o">));</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">minFactor</span> <span class="o">&gt;</span> <span class="n">factor</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">minFactor</span> <span class="o">=</span> <span class="n">factor</span><span class="o">;</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-            
-            <span class="n">answer</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">minFactor</span><span class="o">;</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">answer</span><span class="o">;</span>
-    <span class="o">}</span>
-    
-    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getImpactorFactor</span><span class="o">(</span><span class="kt">char</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">switch</span> <span class="o">(</span><span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">case</span> <span class="sc">'A'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
-            <span class="k">case</span> <span class="sc">'C'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">2</span><span class="o">;</span>
-            <span class="k">case</span> <span class="sc">'G'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">3</span><span class="o">;</span>
-            <span class="k">case</span> <span class="sc">'T'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">4</span><span class="o">;</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>보통의 방법으로 루프를 사용하여 O(N * M)으로 해결하는 방법.<br />
-아래는 각 문자열에서 나타낸 갯수를 세어 각 문자에서의 문자 갯수 스냅샷을 기록한다.<br />
-그리고 문제의 시작, 종료 인덱스의 스냅샷의 값이 낮은 순서로 문자 갯수를 빼서(해딩 구간에 문자가 나타났다면) 결과를 구하는 방식이다.</p>
-
-<p><a href="https://app.codility.com/demo/results/trainingQAMQWH-G7G">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingWW5HZ7-ACQ">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">solution</span><span class="o">(</span><span class="n">String</span> <span class="n">S</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">P</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">Q</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span><span class="o">[]</span> <span class="n">answer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span> <span class="o">[</span><span class="n">P</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
-        <span class="kt">int</span><span class="o">[][]</span> <span class="n">memo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">5</span><span class="o">][</span><span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
-        
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="n">memo</span><span class="o">[</span><span class="n">j</span><span class="o">][</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">memo</span><span class="o">[</span><span class="n">j</span><span class="o">][</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
-            <span class="o">}</span>
-            
-            <span class="n">memo</span><span class="o">[</span><span class="n">getImpactorFactor</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">))][</span><span class="n">i</span><span class="o">]++;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
         <span class="o">}</span>
         
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">P</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">memo</span><span class="o">[</span><span class="n">j</span><span class="o">][</span><span class="n">Q</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">-</span> <span class="n">memo</span><span class="o">[</span><span class="n">j</span><span class="o">][</span><span class="n">P</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                    <span class="n">answer</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
-                    <span class="k">break</span><span class="o">;</span>
-                <span class="o">}</span>
-            <span class="o">}</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="n">answer</span><span class="o">;</span>
-    <span class="o">}</span>
-    
-    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getImpactorFactor</span><span class="o">(</span><span class="kt">char</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">switch</span> <span class="o">(</span><span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">case</span> <span class="sc">'A'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
-            <span class="k">case</span> <span class="sc">'C'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">2</span><span class="o">;</span>
-            <span class="k">case</span> <span class="sc">'G'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">3</span><span class="o">;</span>
-            <span class="k">case</span> <span class="sc">'T'</span><span class="o">:</span>
-                <span class="k">return</span> <span class="mi">4</span><span class="o">;</span>
-        <span class="o">}</span>
-        
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">set</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
