@@ -227,6 +227,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -446,35 +454,38 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/03/06/codility-stone-wall/">
-        Codility - StoneWall
+      <a href="/codility/2018/03/07/codility-brakets/">
+        Codility - Brackets
       </a>
     </h1>
 
-    <time datetime="2018-03-06T21:59:00+09:00" class="post-date">06 March 2018</time>
+    <time datetime="2018-03-07T11:22:02+09:00" class="post-date">07 March 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingETAVVP-7PG">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/training989CHX-VJ9">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">H</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="n">String</span> <span class="n">S</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">&gt;</span> <span class="n">stack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;&gt;();</span>
         
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">h</span> <span class="o">:</span> <span class="n">H</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">while</span> <span class="o">(!</span><span class="n">stack</span><span class="o">.</span><span class="na">empty</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">stack</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">h</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">char</span> <span class="n">s</span> <span class="o">:</span> <span class="n">S</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="sc">'('</span> <span class="o">==</span> <span class="n">s</span> <span class="o">||</span> <span class="sc">'['</span> <span class="o">==</span> <span class="n">s</span> <span class="o">||</span> <span class="sc">'{'</span> <span class="o">==</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>   
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">stack</span><span class="o">.</span><span class="na">empty</span><span class="o">())</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>    
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="kt">char</span> <span class="n">pop</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+                <span class="k">if</span> <span class="o">((</span><span class="sc">'('</span> <span class="o">==</span> <span class="n">pop</span> <span class="o">&amp;&amp;</span> <span class="sc">')'</span> <span class="o">!=</span> <span class="n">s</span><span class="o">)</span> <span class="o">||</span>
+                    <span class="o">(</span><span class="sc">'['</span> <span class="o">==</span> <span class="n">pop</span> <span class="o">&amp;&amp;</span> <span class="sc">']'</span> <span class="o">!=</span> <span class="n">s</span><span class="o">)</span> <span class="o">||</span>
+                    <span class="o">(</span><span class="sc">'{'</span> <span class="o">==</span> <span class="n">pop</span> <span class="o">&amp;&amp;</span> <span class="sc">'}'</span> <span class="o">!=</span> <span class="n">s</span><span class="o">)</span>
+                <span class="o">)</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+                <span class="o">}</span>
             <span class="o">}</span>
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">stack</span><span class="o">.</span><span class="na">empty</span><span class="o">()</span> <span class="o">||</span> <span class="n">stack</span><span class="o">.</span><span class="na">peek</span><span class="o">()</span> <span class="o">!=</span> <span class="n">h</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>
-            <span class="o">}</span>
-            
-            <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">h</span><span class="o">);</span>
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">stack</span><span class="o">.</span><span class="na">empty</span><span class="o">()</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
