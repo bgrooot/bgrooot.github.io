@@ -4,7 +4,7 @@
   category: codility
 ---
 
-[RESULT] (https://app.codility.com/demo/results/trainingF4ZCT7-ZXA)
+[RESULT](https://app.codility.com/demo/results/trainingF4ZCT7-ZXA)
 
 ```java
 import java.util.*;
