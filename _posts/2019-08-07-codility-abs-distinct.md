@@ -4,7 +4,7 @@
   category: codility
 ---
 
-그냥 이렇게 풀면 안되나 해서 풀었던 방법.  
+그냥 이렇게 풀면 안 되나 해서 풀었던 방법.  
 [RESULT](https://app.codility.com/demo/results/trainingA8478A-QW7)
 
 ```java
