@@ -243,6 +243,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -478,25 +486,31 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2018/03/02/codility-distinct/">
-        Codility - Distinct
+      <a href="/codility/2018/03/02/codility-triangle/">
+        Codility - Triangle
       </a>
     </h1>
 
-    <time datetime="2018-03-02T14:40:56+09:00" class="post-date">02 March 2018</time>
+    <time datetime="2018-03-02T17:18:20+09:00" class="post-date">02 March 2018</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingWW5HZ7-ACQ">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingJNA3ST-S9F">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">A</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">P</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">R</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="o">];</span>
+            
+            <span class="k">if</span> <span class="o">((</span><span class="kt">long</span><span class="o">)</span> <span class="n">P</span> <span class="o">+</span> <span class="n">Q</span> <span class="o">&gt;</span> <span class="n">R</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kt">long</span><span class="o">)</span> <span class="n">Q</span> <span class="o">+</span> <span class="n">R</span> <span class="o">&gt;</span> <span class="n">P</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kt">long</span><span class="o">)</span> <span class="n">R</span> <span class="o">+</span> <span class="n">P</span> <span class="o">&gt;</span> <span class="n">Q</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="o">}</span>        
         <span class="o">}</span>
         
-        <span class="k">return</span> <span class="n">set</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
