@@ -251,6 +251,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -494,71 +502,42 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2019/08/07/codility-abs-distinct/">
-        Codility - AbsDistinct
+      <a href="/codility/2019/08/08/codility-min-abs-sum-of-two/">
+        Codility - MinAbsSumOfTwo
       </a>
     </h1>
 
-    <time datetime="2019-08-07T00:00:00+09:00" class="post-date">07 August 2019</time>
+    <time datetime="2019-08-08T00:00:00+09:00" class="post-date">08 August 2019</time>
 
-    <p>그냥 이렇게 풀면 안 되나 해서 풀었던 방법.<br />
-<a href="https://app.codility.com/demo/results/trainingA8478A-QW7">RESULT</a></p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
-
-<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">set</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;();</span>
-
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">a</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">set</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">a</span><span class="o">)));</span>
-        <span class="o">}</span>
-
-        <span class="k">return</span> <span class="n">set</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p><em>Caterpillar Method</em>를 사용한 방법.<br />
-성능은 이 경우는 양 끝단에서 범위를 줄이기 때문에 더 빠르다.<br />
-<a href="https://app.codility.com/demo/results/trainingHW22JG-N6N">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingF4ZCT7-ZXA">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
 
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">head</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
 
-        <span class="k">while</span> <span class="o">(</span><span class="n">head</span> <span class="o">&lt;=</span> <span class="n">tail</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">head</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">[</span><span class="n">head</span><span class="o">]</span> <span class="o">==</span> <span class="n">A</span><span class="o">[</span><span class="n">head</span><span class="o">-</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
-                <span class="n">head</span><span class="o">++;</span>
-                <span class="k">continue</span><span class="o">;</span>
-            <span class="o">}</span> 
-            
-            <span class="k">if</span> <span class="o">(</span><span class="n">tail</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">[</span><span class="n">tail</span><span class="o">]</span> <span class="o">==</span> <span class="n">A</span><span class="o">[</span><span class="n">tail</span><span class="o">+</span><span class="mi">1</span><span class="o">])</span> <span class="o">{</span>
-                <span class="n">tail</span><span class="o">--;</span>
-                <span class="k">continue</span><span class="o">;</span>
+        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">A</span><span class="o">);</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">left</span><span class="o">]</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">right</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">absSum</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">sum</span><span class="o">);</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">absSum</span> <span class="o">&lt;</span> <span class="n">min</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">min</span> <span class="o">=</span> <span class="n">absSum</span><span class="o">;</span>
             <span class="o">}</span>
 
-            <span class="kt">long</span> <span class="n">absHead</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">head</span><span class="o">]));</span>
-            <span class="kt">long</span> <span class="n">absTail</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">Long</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">tail</span><span class="o">]));</span>
-
-            <span class="k">if</span> <span class="o">(</span><span class="n">absHead</span> <span class="o">==</span> <span class="n">absTail</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">tail</span><span class="o">--;</span>
-                <span class="n">head</span><span class="o">++;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">absHead</span> <span class="o">&lt;</span> <span class="n">absTail</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">tail</span><span class="o">--;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">sum</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">left</span><span class="o">++;</span>
             <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">head</span><span class="o">++;</span>
+                <span class="n">right</span><span class="o">--;</span>
             <span class="o">}</span>
-
-            <span class="n">count</span><span class="o">++;</span>
         <span class="o">}</span>
 
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">min</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>

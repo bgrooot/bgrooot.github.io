@@ -251,6 +251,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -492,36 +500,42 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2019/08/13/codility-max-nonoverlapping-segments/">
-        Codility- MaxNonoverlappingSegments
+      <a href="/codility/2019/08/20/codility-number-solitaire/">
+        Codility - NumberSolitaire
       </a>
     </h1>
 
-    <time datetime="2019-08-13T00:00:00+09:00" class="post-date">13 August 2019</time>
+    <time datetime="2019-08-20T00:00:00+09:00" class="post-date">20 August 2019</time>
 
-    <p><a href="https://app.codility.com/demo/results/training5EJCP3-EAV">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingVK586S-S83">RESULT</a></p>
+
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">;</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">memo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">100001</span><span class="o">];</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">B</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="n">start</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">;</span>
+        <span class="k">return</span> <span class="nf">getMaxDiceSum</span><span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="o">}</span>
 
-        <span class="k">while</span> <span class="o">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>
-                <span class="n">index</span><span class="o">++;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">index</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">B</span><span class="o">[</span><span class="n">start</span><span class="o">])</span> <span class="o">{</span>
-                <span class="n">count</span><span class="o">++;</span>
-                <span class="n">start</span> <span class="o">=</span> <span class="n">index</span><span class="o">;</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">index</span><span class="o">++;</span>
-            <span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getMaxDiceSum</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">maxSum</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MIN_VALUE</span><span class="o">;</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">A</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
         <span class="o">}</span>
 
-        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="mi">6</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">maxSum</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxSum</span><span class="o">,</span> <span class="n">getMaxDiceSum</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+        <span class="o">}</span>
+
+        <span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">+</span> <span class="n">maxSum</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
