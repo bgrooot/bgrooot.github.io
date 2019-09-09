@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-09-09T13:34:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">n류 개발자</title><author><name>Mark Otto</name><email>markdotto@gmail.com</email></author><entry><title type="html">Codility - MinAbsSum</title><link href="http://localhost:4000/codility/2019/08/30/codility-minabssum/" rel="alternate" type="text/html" title="Codility - MinAbsSum" /><published>2019-08-30T00:00:00+09:00</published><updated>2019-08-30T00:00:00+09:00</updated><id>http://localhost:4000/codility/2019/08/30/codility-minabssum</id><content type="html" xml:base="http://localhost:4000/codility/2019/08/30/codility-minabssum/">&lt;p&gt;&lt;a href=&quot;https://app.codility.com/demo/results/trainingXHM2YD-TP9&quot;&gt;RESULT&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-09-09T13:37:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">n류 개발자</title><author><name>Mark Otto</name><email>markdotto@gmail.com</email></author><entry><title type="html">Codility - MinAbsSum</title><link href="http://localhost:4000/codility/2019/08/30/codility-minabssum/" rel="alternate" type="text/html" title="Codility - MinAbsSum" /><published>2019-08-30T00:00:00+09:00</published><updated>2019-08-30T00:00:00+09:00</updated><id>http://localhost:4000/codility/2019/08/30/codility-minabssum</id><content type="html" xml:base="http://localhost:4000/codility/2019/08/30/codility-minabssum/">&lt;p&gt;&lt;a href=&quot;https://app.codility.com/demo/results/trainingXHM2YD-TP9&quot;&gt;RESULT&lt;/a&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
@@ -66,16 +66,7 @@
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;내가 이해한 바를 적어보면, 문제는 주어진 수들의 합이나 차의 절대값이 가장 수를 찾는 것이다. 바꿔말하면 주어진 집합을&lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;, 부분집합을 &lt;script type=&quot;math/tex&quot;&gt;U&lt;/script&gt; 라 하고, &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; 에서 &lt;script type=&quot;math/tex&quot;&gt;U&lt;/script&gt; 를 제외한 나머지 수의 집합인 &lt;script type=&quot;math/tex&quot;&gt;C&lt;/script&gt; 두 부분으로 나눌때 $$&lt;/td&gt;
-      &lt;td&gt;SUM(U) - SUM(C)&lt;/td&gt;
-      &lt;td&gt;$$ 가 가장 작은 것. 즉, 가능한 부분집합들을 찾고 그 부분집합과 나머지 집합의 차가 가장 작은 수를 찾는 것이다.&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;p&gt;내가 이해한 바를 적어보면, 문제는 주어진 수들의 합이나 차의 절대값이 가장 수를 찾는 것이다. 바꿔말하면 주어진 집합을&lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt;, 부분집합을 &lt;script type=&quot;math/tex&quot;&gt;U&lt;/script&gt; 라 하고, &lt;script type=&quot;math/tex&quot;&gt;S&lt;/script&gt; 에서 &lt;script type=&quot;math/tex&quot;&gt;U&lt;/script&gt; 를 제외한 나머지 수의 집합인 &lt;script type=&quot;math/tex&quot;&gt;C&lt;/script&gt; 두 부분으로 나눌때 &lt;script type=&quot;math/tex&quot;&gt;|SUM(U) - SUM(C)|&lt;/script&gt; 가 가장 작은 것. 즉, 가능한 부분집합들을 찾고 그 부분집합과 나머지 집합의 차가 가장 작은 수를 찾는 것이다.&lt;/p&gt;
 
 &lt;p&gt;부분집합의 차를 구하기 위해 집합의 모든 수를 다 더한 전체합을 이용한다.&lt;br /&gt;
 전체합에서 구하려는 부분집합에 2를 곱하고 빼서 차를 구한다.&lt;br /&gt;
