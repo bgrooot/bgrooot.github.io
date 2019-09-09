@@ -251,6 +251,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -492,48 +500,45 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2019/06/03/codility-count-distinct-slice/">
-        Codility - CountDistinctSlices
+      <a href="/codility/2019/08/02/codility-count-triangles/">
+        Codility - CountTriangles
       </a>
     </h1>
 
-    <time datetime="2019-06-03T00:00:00+09:00" class="post-date">03 June 2019</time>
+    <time datetime="2019-08-02T00:00:00+09:00" class="post-date">02 August 2019</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingZKKKY3-C82">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingF2MCJ8-MJ4">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-
     <span class="kd">private</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[]</span> <span class="n">memo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">;</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">M</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">initMemo</span><span class="o">(</span><span class="n">M</span><span class="o">);</span>
-        <span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-        <span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">;</span>
+        <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">A</span><span class="o">);</span>
 
-        <span class="k">while</span> <span class="o">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">memo</span><span class="o">[</span><span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">]])</span> <span class="o">{</span>
-                <span class="n">memo</span><span class="o">[</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-                <span class="n">i</span><span class="o">++;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">-</span><span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
 
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="n">memo</span><span class="o">[</span><span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">]]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-                <span class="n">count</span> <span class="o">+=</span> <span class="o">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-                <span class="n">j</span><span class="o">++;</span>
-            <span class="o">}</span>
+            <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
 
-            <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1000000000</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">return</span> <span class="mi">1000000000</span><span class="o">;</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">&amp;&amp;</span> <span class="n">isTriangular</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">,</span> <span class="n">k</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="n">k</span><span class="o">++;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+                    <span class="n">j</span><span class="o">++;</span>
+                <span class="o">}</span>
             <span class="o">}</span>
         <span class="o">}</span>
 
         <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initMemo</span><span class="o">(</span><span class="kt">int</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">memo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">M</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isTriangular</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">j</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">A</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="n">A</span><span class="o">[</span><span class="n">k</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
