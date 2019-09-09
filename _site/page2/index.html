@@ -255,6 +255,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -500,45 +508,97 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2019/08/20/codility-number-solitaire/">
-        Codility - NumberSolitaire
+      <a href="/codility/2019/08/30/codility-minabssum/">
+        Codility - MinAbsSum
       </a>
     </h1>
 
-    <time datetime="2019-08-20T00:00:00+09:00" class="post-date">20 August 2019</time>
+    <time datetime="2019-08-30T00:00:00+09:00" class="post-date">30 August 2019</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingVK586S-S83">RESULT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingXHM2YD-TP9">RESULT</a></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-    <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">;</span>
-    <span class="kt">int</span><span class="o">[]</span> <span class="n">memo</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">100001</span><span class="o">];</span>
+
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">absA</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">sum</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">countMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">subset</span><span class="o">;</span>
 
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">;</span>
-        <span class="k">return</span> <span class="nf">getMaxDiceSum</span><span class="o">(</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">absA</span> <span class="o">=</span> <span class="n">getAbs</span><span class="o">(</span><span class="n">A</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">sum</span> <span class="o">=</span> <span class="n">getSum</span><span class="o">(</span><span class="n">absA</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">countMap</span> <span class="o">=</span> <span class="n">getCountMap</span><span class="o">(</span><span class="n">absA</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">subset</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">sum</span><span class="o">,</span> <span class="mi">1</span><span class="o">)];</span>
+
+        <span class="n">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">subset</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">subset</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">key</span> <span class="o">:</span> <span class="n">countMap</span><span class="o">.</span><span class="na">keySet</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">sum</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">subset</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">subset</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">countMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">key</span> <span class="o">&amp;&amp;</span> <span class="n">subset</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">key</span><span class="o">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">subset</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">subset</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">key</span><span class="o">]</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">sum</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">sum</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">subset</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">res</span><span class="o">,</span> <span class="n">sum</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
     <span class="o">}</span>
 
-    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getMaxDiceSum</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">maxSum</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MIN_VALUE</span><span class="o">;</span>
-
-        <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">A</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">getAbs</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span><span class="o">[]</span> <span class="n">absA</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">absA</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
         <span class="o">}</span>
 
+        <span class="k">return</span> <span class="n">absA</span><span class="o">;</span>
+    <span class="o">}</span>
 
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">n</span><span class="o">-</span><span class="mi">6</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-            <span class="n">maxSum</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxSum</span><span class="o">,</span> <span class="n">getMaxDiceSum</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getSum</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">sum</span> <span class="o">+=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
         <span class="o">}</span>
 
-        <span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">+</span> <span class="n">maxSum</span><span class="o">;</span>
-        <span class="k">return</span> <span class="n">memo</span><span class="o">[</span><span class="n">n</span><span class="o">];</span>
+        <span class="k">return</span> <span class="n">sum</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">getCountMap</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">countMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">countMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">countMap</span><span class="o">.</span><span class="na">getOrDefault</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">countMap</span><span class="o">;</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
+<p>내가 이해한 바를 적어보면, 문제는 주어진 수들의 합이나 차의 절대값이 가장 수를 찾는 것이다. 바꿔말하면 주어진 집합을<script type="math/tex">S</script>, 부분집합을 <script type="math/tex">U</script> 라 하고, <script type="math/tex">S</script> 에서 <script type="math/tex">U</script> 를 제외한 나머지 수의 집합인 <script type="math/tex">C</script> 두 부분으로 나눌때 <script type="math/tex">|SUM(U) - SUM(C)|</script> 가 가장 작은 것. 즉, 가능한 부분집합들을 찾고 그 부분집합과 나머지 집합의 차가 가장 작은 수를 찾는 것이다.</p>
+
+<p>부분집합의 차를 구하기 위해 집합의 모든 수를 다 더한 전체합을 이용한다.<br />
+전체합에서 구하려는 부분집합에 2를 곱하고 빼서 차를 구한다.<br />
+예를 들어, <script type="math/tex">S=\{a, b, c, d, e\}</script> 라고 하고 <script type="math/tex">U=\{a, b, c\}</script> 라고 할 때 <script type="math/tex">C=\{d, e\}</script> 이고</p>
+
+<script type="math/tex; mode=display">⇒ a + b + c + d + e - 2(a + b + c)</script>
+
+<script type="math/tex; mode=display">⇒ d + e - (a + b + c)</script>
+
+<p>이므로 S와 C의 차를 구할 수 있다. 그리고 부분집합을 선택 할 때 <script type="math/tex">{a, b, c}</script> 를 선택하는 경우와 <script type="math/tex">{d, e}</script> 를 선택하는 경우의 차가 동일하기 때문에 <script type="math/tex">% <![CDATA[
+SUM(U) < SUM(S) / 2 %]]></script>
+까지만 계산 할 수 있다.</p>
+
+<p>부분집합을 구할 때에는 위에서 설명한 바에 따라서 두 부분의 부분집합 중 합에 대한 부분만을 찾아도 되며 그 부분집합의 합이 <script type="math/tex">SUM(S) / 2</script> 인 것까지만 찾으면 된다. 그런데 문제에서 주어진 집합에 길이에 비해 집합의 수의 범위가 작으므로 중복된 수가 많이 발생할 것이 예측가능하므로 계산 시간을 줄이기 위해 부분합을 구할 때 집합의 원소의 갯수를 활용하는데 부분합과 같이 기록하며, 부분합을 구하고 남은 숫자를 의미한다.<br />
+집합의 원소들을 <script type="math/tex">SUM(S) / 2</script> 까지 순회하면서 부분합을 찾는데, 이전 단계들에서 만든 부분합일 때는 현재 단계에서 사용할 수 있다는 의미로 카운팅을 넣고 이미 구한 부분합으로 만들 수 있는 부분합이라면 숫자 하나를 더 사용했다는 의미로 이전 단계에서 1을 뺀다.</p>
 
   </article>
   
