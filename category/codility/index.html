@@ -259,6 +259,14 @@
       
     
       
+        
+      
+    
+      
+    
+      
+        
+      
     
       
         
@@ -510,45 +518,143 @@
   
   <article class="post">
     <h1 class="post-title">
-      <a href="/codility/2019/09/09/codility-longest-password/">
-        Codility - LongestPassword
+      <a href="/codility/2019/09/20/codility-flood-depth/">
+        Codility - FloodDepth
       </a>
     </h1>
 
-    <time datetime="2019-09-09T00:00:00+09:00" class="post-date">09 September 2019</time>
+    <time datetime="2019-09-20T00:00:00+09:00" class="post-date">20 September 2019</time>
 
-    <p><a href="https://app.codility.com/demo/results/trainingCR3WXZ-22T">RESULIT</a></p>
+    <p><a href="https://app.codility.com/demo/results/trainingAAM8BS-THR">RESULT</a></p>
+
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 
 <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
 
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">max</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">incline</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">prev</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">Pit</span><span class="o">&gt;</span> <span class="n">pitStack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">&lt;&gt;();</span>
 
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="n">String</span> <span class="n">S</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">String</span><span class="o">[]</span> <span class="n">words</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">" "</span><span class="o">);</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">word</span> <span class="o">:</span> <span class="n">words</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kt">int</span> <span class="n">digitsCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-            <span class="kt">int</span> <span class="n">lettersCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-            <span class="kt">boolean</span> <span class="n">found</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="n">pitStack</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Pit</span><span class="o">(</span><span class="n">prev</span><span class="o">));</span>
 
-            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">word</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-                <span class="kt">char</span> <span class="n">character</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">isDigit</span><span class="o">(</span><span class="n">character</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="n">digitsCount</span><span class="o">++;</span>
-                <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">Character</span><span class="o">.</span><span class="na">isLetter</span><span class="o">(</span><span class="n">character</span><span class="o">))</span> <span class="o">{</span>
-                    <span class="n">lettersCount</span><span class="o">++;</span>
-                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                    <span class="n">found</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">prev</span><span class="o">;</span>
+            <span class="n">Pit</span> <span class="n">last</span> <span class="o">=</span> <span class="n">pitStack</span><span class="o">.</span><span class="na">peek</span><span class="o">();</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">changedToDecline</span><span class="o">(</span><span class="n">delta</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">last</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">prev</span><span class="o">;</span>
+                <span class="n">merge</span><span class="o">(</span><span class="n">last</span><span class="o">);</span>
+                <span class="n">checkDepth</span><span class="o">(</span><span class="n">last</span><span class="o">);</span>
+                <span class="n">removeInvalid</span><span class="o">();</span>
+                <span class="n">pitStack</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Pit</span><span class="o">(</span><span class="n">prev</span><span class="o">));</span>
+                <span class="n">incline</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">changedToIncline</span><span class="o">(</span><span class="n">delta</span><span class="o">)){</span>
+                <span class="n">last</span><span class="o">.</span><span class="na">setBottom</span><span class="o">(</span><span class="n">prev</span><span class="o">);</span>
+                <span class="n">incline</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">checkLastPit</span><span class="o">(</span><span class="n">last</span><span class="o">,</span> <span class="n">a</span><span class="o">);</span>
+                <span class="o">}</span>
+
+            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">checkLastPit</span><span class="o">(</span><span class="n">last</span><span class="o">,</span> <span class="n">a</span><span class="o">);</span>
+            <span class="o">}</span>
+
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">max</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">changedToDecline</span><span class="o">(</span><span class="kt">int</span> <span class="n">delta</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">incline</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">incline</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">incline</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">changedToIncline</span><span class="o">(</span><span class="kt">int</span> <span class="n">delta</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">incline</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">incline</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">incline</span> <span class="o">!=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">delta</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">merge</span><span class="o">(</span><span class="n">Pit</span> <span class="n">pit</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">pit</span><span class="o">.</span><span class="na">isMergeable</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">checkDepth</span><span class="o">(</span><span class="n">pit</span><span class="o">);</span>
+            <span class="n">Pit</span> <span class="n">mergeablePit</span> <span class="o">=</span> <span class="n">pitStack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+            <span class="k">while</span> <span class="o">(!</span><span class="n">pitStack</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+                <span class="n">Pit</span> <span class="n">pop</span> <span class="o">=</span> <span class="n">pitStack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+                <span class="n">mergeablePit</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+                <span class="n">mergeablePit</span><span class="o">.</span><span class="na">setBottom</span><span class="o">(</span><span class="n">pop</span><span class="o">.</span><span class="na">bottom</span><span class="o">);</span>
+                <span class="n">checkDepth</span><span class="o">(</span><span class="n">mergeablePit</span><span class="o">);</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">mergeablePit</span><span class="o">.</span><span class="na">left</span> <span class="o">&gt;</span> <span class="n">mergeablePit</span><span class="o">.</span><span class="na">right</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">break</span><span class="o">;</span>
                 <span class="o">}</span>
             <span class="o">}</span>
 
-            <span class="k">if</span> <span class="o">(</span><span class="n">found</span> <span class="o">&amp;&amp;</span> <span class="n">digitsCount</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">lettersCount</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">max</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">word</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="n">max</span><span class="o">);</span>
-            <span class="o">}</span>
+            <span class="n">pitStack</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">mergeablePit</span><span class="o">);</span>
         <span class="o">}</span>
+    <span class="o">}</span>
 
-        <span class="k">return</span> <span class="n">max</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">removeInvalid</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">pitStack</span><span class="o">.</span><span class="na">peek</span><span class="o">().</span><span class="na">isInvalid</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">pitStack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">checkDepth</span><span class="o">(</span><span class="n">Pit</span> <span class="n">pit</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">max</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">max</span><span class="o">,</span> <span class="n">pit</span><span class="o">.</span><span class="na">getDepth</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">checkLastPit</span><span class="o">(</span><span class="n">Pit</span> <span class="n">pit</span><span class="o">,</span> <span class="kt">int</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">pit</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+        <span class="n">merge</span><span class="o">(</span><span class="n">pit</span><span class="o">);</span>
+        <span class="n">checkDepth</span><span class="o">(</span><span class="n">pit</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isMergeable</span><span class="o">(</span><span class="n">Pit</span> <span class="n">pit</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">pit</span><span class="o">.</span><span class="na">right</span> <span class="o">&gt;</span> <span class="n">pit</span><span class="o">.</span><span class="na">left</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Pit</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">left</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">right</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">bottom</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Pit</span><span class="o">(</span><span class="kt">int</span> <span class="n">left</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getDepth</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">isInvalid</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-</span> <span class="n">bottom</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setBottom</span><span class="o">(</span><span class="kt">int</span> <span class="n">bottom</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">bottom</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">bottom</span> <span class="o">=</span> <span class="n">bottom</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">bottom</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">bottom</span><span class="o">,</span> <span class="n">bottom</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isInvalid</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">left</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">right</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">bottom</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">left</span> <span class="o">==</span> <span class="n">bottom</span> <span class="o">||</span> <span class="n">right</span> <span class="o">==</span> <span class="n">bottom</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isMergeable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">right</span> <span class="o">&gt;</span> <span class="n">left</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"%d %d %d"</span><span class="o">,</span> <span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">,</span> <span class="n">bottom</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
