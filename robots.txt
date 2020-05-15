@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://bgrooot.github.io/sitemap.xml
+Host: https://bgrooot.github.io

@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[7],{UTyF:function(e,t,n){"use strict";n.r(t);var o=n("q1tI"),r=function(e){e.target.style.height=e.target.contentWindow.document.documentElement.scrollHeight+"px"};t.default=function(){return o.createElement("iframe",{src:"/resume/resume.html",style:{display:"flex",width:"100%"},frameBorder:"0",scrolling:"no",onLoad:r})}}}]);
+//# sourceMappingURL=component---src-pages-resume-tsx-63705f30a220c1e1356e.js.map
