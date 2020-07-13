@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+  <link rel="stylesheet" href="1joon-numbers.css">
+  <title>1joon-numbers</title>
+</head>
+<body>
+<script>
+const createElement = function(html) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = html;
+    return wrapper.firstChild;
+};
+
+const initRandomNumberPool = function(size) {
+    let iterCount = Math.ceil(size * size / 9);
+    let randomPool = [];
+
+    while (iterCount-- > 0) {
+        let number = 10;
+        while (--number > 0) {
+            randomPool.push(number);
+        }
+    }
+
+    return {
+
+        getNumber: function() {
+            const idx = Math.floor(Math.random() * randomPool.length),
+                random = randomPool[idx];
+
+            randomPool.splice(idx, 1);
+            return random;
+        }
+    }
+};
+
+const createNumbers = function(size, count) {
+    while (count-- > 0) {
+        createNumber(size);
+    }
+};
+
+const createNumber = function(size) {
+    const container = createElement('<div class="container numbers-container">'),
+          rowHTML = '<div class="row">',
+          colHTML = '<div class="col"><button class="btn-large"><\/button><\/div>',
+          randomPool = initRandomNumberPool(size);
+
+    let rowSize = size; 
+    while (rowSize-- > 0) {
+
+        const row = createElement(rowHTML);
+        let colSize = size;
+
+        while (colSize-- > 0) {
+            const col = createElement(colHTML);
+            col.className = col.className + ' col-' + Math.floor(12 / size);
+            col.querySelector('button').innerText = randomPool.getNumber();
+            row.appendChild(col);
+        }
+
+        container.appendChild(row);
+    }
+
+    document.body.appendChild(container);
+};
+
+const getParam = function(param) {
+    const valArr = location.href.split(param + "=");
+    if (valArr[0] !== location.href) {
+        return valArr[1].split('&')[0]
+    }
+
+    return undefined;
+};
+
+let size = getParam('size') || 5, 
+    count = getParam('count') || 1;
+
+createNumbers(size, count);
+</script>
+</body>
+</html>

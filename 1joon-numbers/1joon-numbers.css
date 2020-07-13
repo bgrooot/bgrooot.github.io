@@ -1,0 +1,51 @@
+body {
+    background-image: url(https://www.getpapercss.com/img/geometry2.png);
+    padding: 3rem;
+}
+
+.numbers-container {
+    max-width: 80%;
+    margin-bottom: 3rem;
+}
+
+.numbers-container .row {
+    margin: 0;
+    margin-bottom: -.1rem;
+    justify-content: center;
+}
+
+.numbers-container .col:before {
+    content: '';
+    float: left;
+    padding-top: 100%;
+}
+
+.numbers-container .col {
+    padding: 0;
+    margin-right: -.1rem;
+}
+
+.numbers-container .col button {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-size: 8vw;
+    padding-top: 2vw;
+    padding-bottom: 0;
+    background-color: white;
+}
+
+.numbers-container .col button:focus, .numbers-container .col button:hover {
+    border: 2px solid #41403e;
+}
+
+@media print {
+    @page {
+
+    }
+
+    .col-2 {
+        flex: 0 0 16.66667%;
+        max-width: 16.66667%;
+    }
+}
