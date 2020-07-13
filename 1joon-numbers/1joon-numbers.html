@@ -10,10 +10,31 @@
 </head>
 <body>
 <script>
+let successed = false;
+
 const createElement = function(html) {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = html;
     return wrapper.firstChild;
+};
+
+const isClicked = function(element) {
+    return element.className.indexOf('clicked') > -1;
+}
+
+const checkSuccess = function() {
+    const button = Array.from(document.querySelectorAll('button')),
+          clickedButton = button.filter(isClicked);
+
+    if (button.length === clickedButton.length && !successed) {
+        setTimeout(function() {
+
+            //TODO
+
+            successed = true;
+
+        }, 500);
+    }
 };
 
 const initRandomNumberPool = function(size) {
@@ -31,7 +52,7 @@ const initRandomNumberPool = function(size) {
 
         getNumber: function() {
             const idx = Math.floor(Math.random() * randomPool.length),
-                random = randomPool[idx];
+                  random = randomPool[idx];
 
             randomPool.splice(idx, 1);
             return random;
@@ -39,14 +60,75 @@ const initRandomNumberPool = function(size) {
     }
 };
 
-const createNumbers = function(size, count) {
-    while (count-- > 0) {
-        createNumber(size);
+const colorRandomPool = function() {
+    const colorPool = ['#ff5e5e', '#5d5bff', '#fff600', '#74ff6a', '#ff8c00', 
+                        '#ff44a4', '#f23fff', '#63bfff', '#9e9e9e', '#7b4242'];
+    let colorMap = {};
+
+    const takeColor = function(number) {
+        const idx = Math.floor(Math.random() * colorPool.length),
+              color = colorPool[idx];
+
+        colorPool.splice(idx, 1);
+        colorMap[number] = color;
+
+        return color;
+    };
+
+    return {
+
+        getColor: function(number) {
+            return colorMap[number] || takeColor(number);
+        }
     }
 };
 
-const createNumber = function(size) {
-    const container = createElement('<div class="container numbers-container">'),
+const initColorRandomPoolMap = function() {
+
+    let colorRandomPoolMap = {};
+
+    return {
+ 
+        getColorRandomPool: function(target) {
+            const container = target.parentNode.parentNode.parentNode,
+                  key = container.getAttribute('data-id'),
+                  colorPool = colorRandomPoolMap[key];
+ 
+            if (!colorPool) {
+                colorRandomPoolMap[key] = colorRandomPool();
+            }
+ 
+            return colorRandomPoolMap[key];
+        }
+    };
+};
+
+const colorRandomPoolMap = initColorRandomPoolMap();
+
+const clickNumber = function(event) {
+    const target = event.target,
+          number = target.innerText,
+          colorRandomPool = colorRandomPoolMap.getColorRandomPool(target);
+
+    if (isClicked(target)) {
+        target.style.backgroundColor = 'white';
+        target.classList.remove('clicked');
+    } else {
+        target.style.backgroundColor = colorRandomPool.getColor(number);
+        target.className = target.className + ' clicked';
+    }
+
+    checkSuccess();
+};
+
+const createNumbers = function(size, count) {
+    while (count-- > 0) {
+        createNumber(size, count);
+    }
+};
+
+const createNumber = function(size, count) {
+    const container = createElement('<div class="numbers-container">'),
           rowHTML = '<div class="row">',
           colHTML = '<div class="col"><button class="btn-large"><\/button><\/div>',
           randomPool = initRandomNumberPool(size);
@@ -58,15 +140,19 @@ const createNumber = function(size) {
         let colSize = size;
 
         while (colSize-- > 0) {
-            const col = createElement(colHTML);
+            const col = createElement(colHTML)
+                  button = col.querySelector('button');
+
             col.className = col.className + ' col-' + Math.floor(12 / size);
-            col.querySelector('button').innerText = randomPool.getNumber();
+            button.innerText = randomPool.getNumber();
+            button.addEventListener('click', clickNumber);
             row.appendChild(col);
         }
 
         container.appendChild(row);
     }
 
+    container.setAttribute('data-id', count);
     document.body.appendChild(container);
 };
 
@@ -83,6 +169,7 @@ let size = getParam('size') || 5,
     count = getParam('count') || 1;
 
 createNumbers(size, count);
+
 </script>
 </body>
 </html>
