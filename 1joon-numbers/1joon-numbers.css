@@ -4,8 +4,9 @@ body {
 }
 
 .numbers-container {
-    max-width: 100%;
-    margin-bottom: 3rem;
+    max-width: 80%;
+    margin:0 auto;
+    margin-bottom: 5rem;
 }
 
 .numbers-container .row {
@@ -54,4 +55,9 @@ body {
         flex: 0 0 16.66667%;
         max-width: 16.66667%;
     }
+
+    .col-4 {
+         flex: 0 0 33.33333%;
+         max-width: 33.33333%;
+     }
 }
