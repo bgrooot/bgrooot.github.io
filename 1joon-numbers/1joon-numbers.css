@@ -1,10 +1,10 @@
 body {
     background-image: url(https://www.getpapercss.com/img/geometry2.png);
-    padding-top: 3rem;
+    margin-top: 3rem;
 }
 
 .numbers-container {
-    max-width: 80%;
+    max-width: 90%;
     margin:0 auto;
     margin-bottom: 5rem;
 }
@@ -49,8 +49,9 @@ body {
 
     .numbers-container .col button {
         font-size: 5vw;
+        box-shadow: none;
     }
-
+    
     .col-2 {
         flex: 0 0 16.66667%;
         max-width: 16.66667%;

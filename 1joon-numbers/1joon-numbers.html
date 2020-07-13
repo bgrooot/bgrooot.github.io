@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
   <link rel="stylesheet" href="1joon-numbers.css">
+  <script src="confetti.min.js"></script>
   <title>1joon-numbers</title>
 </head>
 <body>
@@ -28,9 +29,7 @@ const checkSuccess = function() {
 
     if (button.length === clickedButton.length && !successed) {
         setTimeout(function() {
-
-            //TODO
-
+            confetti.start();
             successed = true;
 
         }, 500);
@@ -171,5 +170,8 @@ let size = getParam('size') || 5,
 createNumbers(size, count);
 
 </script>
+
+<div class="modal">
+</div>
 </body>
 </html>
