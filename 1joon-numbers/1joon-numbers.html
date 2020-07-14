@@ -42,7 +42,6 @@ const showModalByPhoto = function(photo) {
 };
 
 const getPhotoHTML = function(photo) {
-    console.log(photo);
     const url = photo.baseUrl + '=w512-h512';
     if (photo.mimeType.indexOf('video') > -1) {
         return '<video controls class="success-photo success-video" poster="' + url + '"><source src="' + url + '-dv">';
