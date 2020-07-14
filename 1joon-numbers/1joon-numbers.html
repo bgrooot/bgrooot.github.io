@@ -122,7 +122,6 @@ const loadClient = function() {
             scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
         }).then(function() {
             const GoogleAuth = gapi.auth2.getAuthInstance();
-            alert(GoogleAuth.isSignedIn.get());
             if (GoogleAuth.isSignedIn.get()) {
                 photoPool.addPhoto();
             } else {
