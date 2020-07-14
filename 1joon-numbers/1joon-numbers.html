@@ -42,6 +42,7 @@ const showModalByPhoto = function(photo) {
 };
 
 const getPhotoHTML = function(photo) {
+    console.log(photo);
     const url = photo.baseUrl + '=w512-h512';
     if (photo.mimeType.indexOf('video') > -1) {
         return '<video controls class="success-photo success-video" poster="' + url + '"><source src="' + url + '-dv">';
@@ -79,7 +80,7 @@ const photoPool =  function() {
              body: {
                  'albumId': 'AHFOjbPv-wxlNuZQGJFw1PnPzBB1kloBKHIT-7_SLwWhRbc1mRbotZ7Muf_9zwhLiAjVvPq44QIA',
                  'nextPageToken': token,
-                 'pageSize': 100,
+                 'pageSize': 100
                  //"filters": {
                  //   "mediaTypeFilter": {
                  //     "mediaTypes": [
@@ -118,8 +119,8 @@ const photoPool =  function() {
 const loadClient = function() {
     gapi.load('client:auth2', function() {
         gapi.client.init({
-         clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
-         scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+            clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
+            scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
         }).then(photoPool.addPhoto);
     });
 };
