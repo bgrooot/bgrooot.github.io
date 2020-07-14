@@ -1,17 +1,128 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1joon-numbers</title>
   <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
   <link rel="stylesheet" href="1joon-numbers.css">
   <script src="confetti.min.js"></script>
-  <title>1joon-numbers</title>
-</head>
+  <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};loadClient()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+  </head>
 <body>
+<input class="modal-state" id="success-modal" type="checkbox">
+<div class="modal">
+   <label class="modal-bg" for="success-modal">&nbsp;</label>
+   <div class="modal-body">
+       <label class="btn-close" for="success-modal">X</label>
+       <h4>Congraturations!</h4>
+       <p class='modal-photo-wrap'></p>
+   </div>
+</div>
 <script>
 let successed = false;
+
+const showModal = function() {
+    document.getElementById('success-modal').checked = true;
+};
+
+const showModalByPhoto = function(photo) {
+    if (photo.className.indexOf('video') > -1) {
+        showModal();
+    } else {
+        if (!photoPool.isStop()) {
+            photo.addEventListener('load', showModal);
+        } else {
+            showModal();
+        }
+    }
+};
+
+const getPhotoHTML = function(photo) {
+    const url = photo.baseUrl + '=w512-h512';
+    if (photo.mimeType.indexOf('video') > -1) {
+        return '<video controls class="success-photo success-video" poster="' + url + '"><source src="' + url + '-dv">';
+    } else {
+        return '<img class="success-photo success-image" src="' + url + '">';
+    }
+}
+
+const appendSuccessPhoto = function(photo) {
+    const photoWrap = document.querySelector('.modal-photo-wrap');
+    if (!photoWrap.hasChildNodes()) {
+        const photoElement = createElement(getPhotoHTML(photo));
+        photoWrap.appendChild(photoElement);
+        return photoElement;
+    } else {
+        return document.querySelector('.success-photo');
+    }
+};
+
+const photoPool =  function() {
+    const self = this,
+          maxSize = 500;
+
+    let photoPool = [],
+        stop = false;
+
+    const getPhoto = function() {
+        return photoPool[Math.floor(Math.random() * photoPool.length)];
+    };
+
+    const addPhoto = function(token) {
+        gapi.client.request({
+             path: 'https://photoslibrary.googleapis.com/v1/mediaItems:search',
+             method: 'POST',
+             body: {
+                 'albumId': 'AHFOjbPv-wxlNuZQGJFw1PnPzBB1kloBKHIT-7_SLwWhRbc1mRbotZ7Muf_9zwhLiAjVvPq44QIA',
+                 'nextPageToken': token,
+                 'pageSize': 100,
+                 //"filters": {
+                 //   "mediaTypeFilter": {
+                 //     "mediaTypes": [
+                 //       "VIDEO"
+                 //     ]
+                 //   }
+                 // }
+             }
+         }).then(function (response) {
+             photoPool = photoPool.concat(response.result.mediaItems);
+             if (!successed && photoPool.length < maxSize) {
+                 addPhoto(response.nextPageToken);
+             } else {
+                 appendSuccessPhoto(getPhoto());
+                 stop = true;
+             }
+         });
+    };
+
+    return {
+
+        addPhoto: function(token) {
+            addPhoto(token);
+        },
+
+        getPhoto: function() {
+            return getPhoto();
+        },
+
+        isStop: function() {
+            return stop;
+        }
+    }
+}();
+
+const loadClient = function() {
+    gapi.load('client:auth2', function() {
+        gapi.client.init({
+         clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
+         scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+        }).then(photoPool.addPhoto);
+    });
+};
 
 const createElement = function(html) {
     const wrapper = document.createElement('div');
@@ -30,8 +141,10 @@ const checkSuccess = function() {
     if (button.length === clickedButton.length && !successed) {
         setTimeout(function() {
             confetti.start();
-            successed = true;
+            photo = appendSuccessPhoto(photoPool.getPhoto());
+            showModalByPhoto(photo);
 
+            successed = true;
         }, 500);
     }
 };
@@ -168,10 +281,6 @@ let size = getParam('size') || 5,
     count = getParam('count') || 1;
 
 createNumbers(size, count);
-
 </script>
-
-<div class="modal">
-</div>
 </body>
 </html>
