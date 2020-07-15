@@ -130,7 +130,11 @@ const loadClient = function() {
             if (GoogleAuth.isSignedIn.get()) {
                 photoPool.addPhoto();
             } else {
-                GoogleAuth.signIn().then(photoPool.addPhoto);
+                GoogleAuth.signIn({
+                    scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+                });
+
+                GoogleAuth.auth2.isSignedIn.listen(photoPool.addPhoto);
             }
         });
     });
