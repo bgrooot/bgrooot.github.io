@@ -13,6 +13,11 @@
       onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
   </head>
 <body>
+<div class="numbers-area"></div>
+<div class="row question-area">
+    <div class="col col-12 question-label">Find number</div>
+    <div class="col col-3 border border-primary question-number">1</div>
+</div>
 <input class="modal-state" id="success-modal" type="checkbox">
 <div class="modal">
    <label class="modal-bg" for="success-modal">&nbsp;</label>
@@ -272,7 +277,7 @@ const createNumber = function(size, count) {
     }
 
     container.setAttribute('data-id', count);
-    document.body.appendChild(container);
+    document.querySelector('.numbers-area').appendChild(container);
 };
 
 const getParam = function(param) {

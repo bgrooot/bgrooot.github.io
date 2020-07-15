@@ -49,6 +49,20 @@ body {
     max-width: 100%;
 }
 
+.question-area {
+    text-align: center;
+}
+
+.question-area .question-label {
+    font-size: 5vw;
+}
+
+.question-area .question-number {
+    margin: 0 auto;
+    padding: 5vw 0 0 0;
+    font-size: 20vw;
+}
+
 @media print {
     .numbers-container {
         max-width: 70%;
@@ -59,6 +73,10 @@ body {
     .numbers-container .col button {
         font-size: 7vw;
         box-shadow: none;
+    }
+
+    .question-area {
+        display: none;
     }
     
     .col-2 {
