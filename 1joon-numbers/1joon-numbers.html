@@ -227,12 +227,22 @@ const initColorRandomPoolMap = function() {
     };
 };
 
+const existNumber = function(number) {
+    return Array.from(document.querySelectorAll('button')).find(function(button) {
+        return button.innerText == number && button.className.indexOf('clicked') === -1;
+    });
+};
+
 const colorRandomPoolMap = initColorRandomPoolMap();
 
 const clickNumber = function(event) {
     const target = event.target,
           number = target.innerText,
           colorRandomPool = colorRandomPoolMap.getColorRandomPool(target);
+
+    if (number != question.get()) {
+        return;
+    }
 
     if (isClicked(target)) {
         target.style.backgroundColor = 'white';
@@ -243,6 +253,10 @@ const clickNumber = function(event) {
     }
 
     checkSuccess();
+
+    if (!existNumber(number)) {
+        question.set();
+    }
 };
 
 const createNumbers = function(size, count) {
@@ -293,6 +307,28 @@ let size = getParam('size') || 5,
     count = getParam('count') || 1;
 
 createNumbers(size, count);
+
+const question = function(pool) {
+    const randomPool = pool;
+    let question;
+
+    return {
+
+        set: function() {
+            question = randomPool.getNumber();
+            if (question) {
+                document.querySelector('.question-number').innerText = question;
+            }
+        },
+
+        get: function() {
+            return question;
+        }
+    };
+
+}(initRandomNumberPool(1));
+
+question.set();
 </script>
 </body>
 </html>
