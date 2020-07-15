@@ -36,6 +36,10 @@ body {
     background-color: white;
 }
 
+.numbers-container .col button {
+    -webkit-tap-highlight-color: transparent;
+}
+
 .numbers-container .col button:focus, .numbers-container .col button:hover {
     border: 2px solid #41403e;
 }
