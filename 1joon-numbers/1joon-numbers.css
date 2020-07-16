@@ -30,7 +30,7 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    font-size: 8vw;
+    font-size: 15vw;
     padding-top: 2vw;
     padding-bottom: 0;
     background-color: white;
@@ -75,7 +75,7 @@ body {
     }
 
     .numbers-container .col button {
-        font-size: 15vw;
+        font-size: 7vw;
         box-shadow: none;
     }
 
