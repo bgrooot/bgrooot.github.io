@@ -70,7 +70,8 @@ const photoPool =  function() {
     const self = this,
           maxSize = 500;
 
-    let photoPool = [],
+    let albumId,
+        photoPool = [],
         stop = false;
 
     const getPhoto = function() {
@@ -82,8 +83,9 @@ const photoPool =  function() {
              path: 'https://photoslibrary.googleapis.com/v1/mediaItems:search',
              method: 'POST',
              body: {
-                 'albumId': 'AHFOjbPv-wxlNuZQGJFw1PnPzBB1kloBKHIT-7_SLwWhRbc1mRbotZ7Muf_9zwhLiAjVvPq44QIA',
-                 'nextPageToken': token,
+                 'albumId': albumId,
+                 //'albumId': 'AHFOjbPv-wxlNuZQGJFw1PnPzBB1kloBKHIT-7_SLwWhRbc1mRbotZ7Muf_9zwhLiAjVvPq44QIA',
+                 'pageToken': token,
                  'pageSize': 100
                  //"filters": {
                  //   "mediaTypeFilter": {
@@ -93,10 +95,10 @@ const photoPool =  function() {
                  //   }
                  // }
              }
-         }).then(function (response) {
+         }).then(function(response) {
              photoPool = photoPool.concat(response.result.mediaItems);
              if (!successed && photoPool.length < maxSize) {
-                 addPhoto(response.nextPageToken);
+                 addPhoto(response.result.nextPageToken);
              } else {
                  appendSuccessPhoto(getPhoto());
                  stop = true;
@@ -104,7 +106,21 @@ const photoPool =  function() {
          });
     };
 
+    const setAlbumId = function() {
+        gapi.client.request({
+             path: 'https://photoslibrary.googleapis.com/v1/sharedAlbums',
+             method: 'GET'
+         }).then(function(response) {
+             albumId = response.result.sharedAlbums[0].id;
+         }).then(addPhoto);
+    };
+
     return {
+
+        setAlbumId: function() {
+            setAlbumId();
+        },
+
 
         addPhoto: function(token) {
             addPhoto(token);
@@ -127,14 +143,14 @@ const loadClient = function() {
             scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
         }).then(function() {
             const GoogleAuth = gapi.auth2.getAuthInstance();
-            if (GoogleAuth.isSignedIn.get()) {
-                photoPool.addPhoto();
+            if (GoogleAuth.isSignedIn && GoogleAuth.isSignedIn.get()) {
+                photoPool.setAlbumId();
             } else {
                 GoogleAuth.signIn({
                     scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
                 });
 
-                GoogleAuth.auth2.isSignedIn.listen(photoPool.addPhoto);
+                GoogleAuth.auth2.isSignedIn.listen(photoPool.setAlbumId);
             }
         });
     });
