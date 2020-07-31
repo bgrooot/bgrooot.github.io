@@ -150,7 +150,7 @@ const loadClient = function() {
                     scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
                 });
 
-                GoogleAuth.auth2.isSignedIn.listen(photoPool.setAlbumId);
+                GoogleAuth.isSignedIn.listen(photoPool.setAlbumId);
             }
         });
     });
