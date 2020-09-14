@@ -1,4 +1,278 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Running Out Of Coins. | Feed]]></title><description><![CDATA[Running Out Of Coins. | Feed]]></description><link>https://bgrooot.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 31 Jul 2020 16:16:37 GMT</lastBuildDate><item><title><![CDATA[CannotAcquireLockException과 Deadlock]]></title><description><![CDATA[내가 지금 회사에서 개발한 것 중에는 사용자에게 보이는 알림과 작품, 시스템에 대한 알림 설정을 관리하는 가 있고 댓글과 작품의 Rating, Like…]]></description><link>https://bgrooot.github.io/cannot-acquire-lock-exception-research/</link><guid isPermaLink="false">https://bgrooot.github.io/cannot-acquire-lock-exception-research/</guid><pubDate>Fri, 19 Jun 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;내가 지금 회사에서 개발한 것 중에는 사용자에게 보이는 알림과 작품, 시스템에 대한 알림 설정을 관리하는 &lt;code class=&quot;language-text&quot;&gt;Notification API&lt;/code&gt;가 있고 댓글과 작품의 Rating, Like를 관리하는 &lt;code class=&quot;language-text&quot;&gt;Community API&lt;/code&gt;가 있다. 그런데 이 두 서비스에서 빈도는 낮지만, 간혹 &lt;code class=&quot;language-text&quot;&gt;CannotAcquireLockException&lt;/code&gt;이 발생하여 원인을 찾아보려고 했던 과정과 사례를 적어본다. &lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Running Out Of Coins. | Feed]]></title><description><![CDATA[Running Out Of Coins. | Feed]]></description><link>https://bgrooot.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 14 Sep 2020 00:45:37 GMT</lastBuildDate><item><title><![CDATA[내가 겪은 메모리 누수 이야기 - 첫 번째]]></title><description><![CDATA[…]]></description><link>https://bgrooot.github.io/memory-leak-the-first/</link><guid isPermaLink="false">https://bgrooot.github.io/memory-leak-the-first/</guid><pubDate>Mon, 29 Jun 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;현재 플랫폼을 개발하고 운영하면서 몇 차례의 메모리 누수 문제를 겪었는데 이것들을 해결했던 과정과 그 원인을 적어보려고 한다. 발생한 지 몇 개월이 지난 것들이지만 혹시 나와 같은 문제를 겪는 사람이 있다면 도움이 되었으면 좋겠다.&lt;/p&gt;
+&lt;h3 id=&quot;문제-발생&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%AC%B8%EC%A0%9C-%EB%B0%9C%EC%83%9D&quot; aria-label=&quot;문제 발생 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;문제 발생&lt;/h3&gt;
+&lt;p&gt;가장 처음으로 발생했던 메모리 관련 문제는 서비스를 오픈하고 많은 날이 지나지 않았을 때였던 걸로 기억한다. 주말에도 마음 편하게 쉬지를 못하는 때였으니까...
+아니나 다를까 정확한 선후 관계는 기억이 나지 않지만, 서비스가 느려진 것을 인지하고 각 서비스 상태를 모니터링했었다.&lt;/p&gt;
+&lt;p&gt;&lt;figure class=&quot;gatsby-resp-image-figure&quot; style=&quot;&quot;&gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/2401ed5080499c7bc1f658aa3ecc23c6/a2498/community-cpu-log-by-memory-leak.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 47.142857142857146%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAABeElEQVQoz4WSW0/jMBCF8///GOKJlWBRKb2lNA1p4hSndm628zFJA4I+7I40sj2XM+fYji62pm47RhuGgUHW0DX0eYw3Jb6uJr/mw7XmxkfrekdlGiLnHCH8KJSk72pC38ra4BszDfge+A/3ghN5738nZsBhHBI8fX1B6WKK/w9w9InhLaCrCrzrCN7RCWBeZozKRiXfTMeBN0PCL4Zz8Xhf/fuKa2egsZqsUnxZe8pkkJ/2YSQzKZnBxSM3J7/MnRPKc8r99ondaY8WtunrE0Ep2t0G+/eRZv1Ks1zQp8mPRnkLa4Vh39GbCmcNzlywKmN72JAtHskF6LR8oFg/o1YLquxIHRxlvEanB/E3qiRGyzl/uEfvVgJYG/RmKYc19hBTrl7wWSraB2yRYfYb1DnjaBSxOrJXKfvTG9s84VAkvPy5I948s5VYqhVRJ43vHxdKrTH6jBIW2jYUKp9et5X/lRcFWlQYfaE29nrXEp/WYZYc5NuI7E/rzLiwix7jrwAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;아니... 서버 CPU의 상태가?&quot;
+        title=&quot;아니... 서버 CPU의 상태가?&quot;
+        src=&quot;/static/2401ed5080499c7bc1f658aa3ecc23c6/b06ae/community-cpu-log-by-memory-leak.png&quot;
+        srcset=&quot;/static/2401ed5080499c7bc1f658aa3ecc23c6/0d3e1/community-cpu-log-by-memory-leak.png 140w,
+/static/2401ed5080499c7bc1f658aa3ecc23c6/908b1/community-cpu-log-by-memory-leak.png 280w,
+/static/2401ed5080499c7bc1f658aa3ecc23c6/b06ae/community-cpu-log-by-memory-leak.png 560w,
+/static/2401ed5080499c7bc1f658aa3ecc23c6/1e088/community-cpu-log-by-memory-leak.png 840w,
+/static/2401ed5080499c7bc1f658aa3ecc23c6/f43e4/community-cpu-log-by-memory-leak.png 1120w,
+/static/2401ed5080499c7bc1f658aa3ecc23c6/a2498/community-cpu-log-by-memory-leak.png 1764w&quot;
+        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&quot;gatsby-resp-image-figcaption&quot;&gt;아니... 서버 CPU의 상태가?&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;이 그래프에서 보다시피 특정 인스턴스 몇 대가 무슨 짓을 하는지 갑자기 CPU Utilization이 치솟는 현상이 있었고 이 서비스로 HTTP Call을 하는 다른 컴포넌트에도 영향을 미치고 있었다. 암담한 심정과 더불어 도무지 원인을 알 수가 없었는데 갑자기 CPU가 치솟는 현상을 경험한 적이 없었기 때문이다. 그래서 문제가 있는 인스턴스들을 재시작하였고 서비스 상태는 잠잠해진 듯했다. 문제가 언제 다시 발생할지 몰라 조마조마하긴 했지만.&lt;/p&gt;
+&lt;h3 id=&quot;원인-파악&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EC%9B%90%EC%9D%B8-%ED%8C%8C%EC%95%85&quot; aria-label=&quot;원인 파악 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;원인 파악&lt;/h3&gt;
+&lt;p&gt;계속 모니터링하다 보니 시간이 지나면 문제의 현상이 재현되었고 LB에서 제외하여 해당 인스턴스에서 문제를 파악해 보기로 했다. &lt;code class=&quot;language-text&quot;&gt;top&lt;/code&gt; 명령으로 보았을 때 java가 CPU를 가장 많이 점유하고 있는 것을 확인 할 수 있었고 &lt;code class=&quot;language-text&quot;&gt;top -H -p pid&lt;/code&gt;로 java의 특정 thread가 CPU를 많이 사용함을 알 수 있었다. &lt;/p&gt;
+&lt;p&gt;그리고 &lt;code class=&quot;language-text&quot;&gt;sudo -u user jstack -l pid&lt;/code&gt; 명령으로 jvm의 thread dump의 tid와 대조한 결과 그 thread가 GC thread라는 것을 알 수 있었다. 즉, 이유는 모르겠는데 GC를 수행하느라 CPU를 많이 쓰고 있고 GC가 수행되어도 메모리 해제가 되지 않았기 때문에 현재 상태에 도달했을 것이다. 이때부터 메모리 누수가 의심되기 시작했다. (그때 &lt;code class=&quot;language-text&quot;&gt;jstat&lt;/code&gt;을 사용했다면 좀 더 의미 있는 상태 분석을 했을 것 같다.) &lt;/p&gt;
+&lt;h3 id=&quot;메모리-분석&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%A9%94%EB%AA%A8%EB%A6%AC-%EB%B6%84%EC%84%9D&quot; aria-label=&quot;메모리 분석 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;메모리 분석&lt;/h3&gt;
+&lt;p&gt;메모리 누수가 의심되는 상황이기는 했지만 역시나 원인이 짐작도 되지 않았다. 특별히 메모리를 많이 요구하는 코드도 없었기 때문이다. 그래서 메모리 분석을 위해 jvm의 heap dump를 받아보기로 했다. &lt;code class=&quot;language-text&quot;&gt;sudo -u user jmap -dump:format=b,file=dump.bin pid&lt;/code&gt; 명령을 사용했다. &lt;/p&gt;
+&lt;p&gt;dump는 시간이 꽤 걸렸는데 메모리 사용량에 따라 다르겠지만.. 기억하기로는 2G일 때 2시간 정도 걸렸던 듯하다. 시간이 걸리는 작업이기 때문에 작업을 걸어놓고 다른 것을 하다가 나중에 확인했을 때 터미널이 끊어져 있는 불상사를 맞이하고 nohup으로 백그라운드에서 수행한 기억이 있다. 그리고 AWS EC2에서는 package를 설치해야 jmap 실행이 가능했다&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;덤프 파일 분석에는 eclipse의 &lt;a href=&quot;https://www.eclipse.org/mat&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;MAT(Memory Analyzer)&lt;/a&gt;를 사용했다.&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/503834bdc6d11edc9c26e7722eaccaf4/a2b88/community-memory-dump.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 81.42857142857143%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAQCAYAAAAWGF8bAAAACXBIWXMAAAsSAAALEgHS3X78AAACh0lEQVQ4y41SWW8SURTuD/TBuEefbHzxTY1bNDG10VpjjfjgEveEvpiUFmXRUEPTIIvQUtpRoMMyDJRCy9ZCYYZZ+Dwz0AIWUk/y5cw9955vvnu+O1IoFJHL5dBqtXT8G731QfsUUidPjmixX1VVtZ2pycdEYV7wYpVN9hEPicGEWsiKgqfGOZy++Qhnb03i3O3HMFqdfUp7oYmgLHX224SSJKFSqaApNODwBnHy+kOM3jdgdMyAC3encOzKOEI9So9UKIoiisUSJCJ8PWPHGVJ2cewZLk+8gGF6Fu9MNgTWwlBkCbVaDcVyGTEujRTHgWEYRKNRqVqtYm9v7/CVrS4/TpDCS+PPidSAq1NvYDCakMluYodukclksLmZQ4lIeZ5HJBLRalLHgzbh/iy0qAsi7r2axqkbEzh/5wmOX3uAyY8zUDr7/3VlGm+fi4LYxJcFD15+tsDhWeq63zZgEPpN0XhUtaVDVtrNYqOhX7FOM1MUjQh96Lo+QGGjWkGaj9MsOKTTSezuljQ9BKUnKwdrTZCq7nN0FR4Qbm2FwKd/0ZB9SCTcWF9fJOcWwbIufZ3NLqFc/k0vYQ35/Aq5GSHCItqTGEAYDNpgt3+C2fwWVusHWCzvMT8/DbfbpK+93jkEAhb6kRPJ5E+USkHIcn444fKyDS7XDHw+M/z+r3qzxzOLlRU7QqHvpNJFo/DqiMUWUSgcQcgwDqRSbjqUQLMZ0yEILOr1KH3HqZGjszwkKYFGg6VzWm17OCHLOrG6+g3h8A+anRMbGz4yyKv/pFJZ02e2s8OgWv1DPWlCipzfGk6Yz3PUkIAoxklBnHKSlCUpJ/S1IGj1mP4tyzyRcZS3O0/mMOFfSF1bmmKAXbEAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;community memory dump&quot;
+        title=&quot;community memory dump&quot;
+        src=&quot;/static/503834bdc6d11edc9c26e7722eaccaf4/b06ae/community-memory-dump.png&quot;
+        srcset=&quot;/static/503834bdc6d11edc9c26e7722eaccaf4/0d3e1/community-memory-dump.png 140w,
+/static/503834bdc6d11edc9c26e7722eaccaf4/908b1/community-memory-dump.png 280w,
+/static/503834bdc6d11edc9c26e7722eaccaf4/b06ae/community-memory-dump.png 560w,
+/static/503834bdc6d11edc9c26e7722eaccaf4/1e088/community-memory-dump.png 840w,
+/static/503834bdc6d11edc9c26e7722eaccaf4/a2b88/community-memory-dump.png 908w&quot;
+        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/10c363e7619b181a3eb50ea30d587ad8/b12f7/community-memory-dump-detail.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 72.14285714285715%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAYAAAAvxDzwAAAACXBIWXMAAAsSAAALEgHS3X78AAACtklEQVQ4y0VTyW4TURDMF3PlAAcOCLiAWL6AAxcQ4hARuHCASCiLkOM49ni3Z/F49n2zPXlFvTeQjFTqnlZPvaruN0fb7RaWZcDzHLiug+12o5BlMYS4Rdu2OBw6yLwFFA63t2iaWuz3e/kKxodH8tH1DTZWiijcwfdreC7h1SQv+V7yo4bNEjs0VYXGWqEZXCCbDrHWdUFBreu6sG27IwzDEDc3E4xGNobDAINrH4MbnzUfi3kMw8igr2OY3h7p71/YPX+ActhDUxYoylJ4ntcScBynI6RUuB7JRgsShuj3JVkAbRRQZUq1mUIUFaizFE1NlbTY7BrkeS6oTimk0o6QRRRFjdXaUkrW65SqUphmhrKslOW6bpjXyAuSsDdLC1SVrNeCDtskSRAEwb1lebrvZ1gsLSwWMa0myu50GmE8DlVNHqTrKZJE9uZUV5G0FFmWtYfDgS68jlAq2O26obvctKbNSeRiMomIUBEulwk2mxwWVQdBzv5aKZeWoyhqpUva7ggrbo7SeVrXZJoGiRySJpjNpMIIq1VMwkTBdf+PomYsBa22xD2hJJMzklESllWJ2XxNIk+pHI8DtX1NCxUcJ7/rpV1RFEUrhLhfiu/7vEMbzsAlcqKEafHKLBzOLKG6TmGXx0i5kLqW86s4z0Skaaosm6b5/2IbHLirmldqy7HKpzNPbVo3UkVmGITZRcdJlau8KKiwVH/K3ZbTJELCLcdEEndRwnVj2l1grG0x5p2caAGjj4B38rCr0O45wzwRdZmRUPAP+2f55bGD1ycO3pxsFd5+Y/5V5jbeHS/w7JOJxx9sYoNHxJOPNp5+3uLFFxltwdi++p7i/Q+jIzzrabi4mhMmYeCyb+K8Z+Dn2Qyn50ucsXZ6aeLPyMJgbqM/tXE12eCasadZgnk75Siux7oi/As/Ec7b6LYfeQAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;community memory dump detail&quot;
+        title=&quot;community memory dump detail&quot;
+        src=&quot;/static/10c363e7619b181a3eb50ea30d587ad8/b06ae/community-memory-dump-detail.png&quot;
+        srcset=&quot;/static/10c363e7619b181a3eb50ea30d587ad8/0d3e1/community-memory-dump-detail.png 140w,
+/static/10c363e7619b181a3eb50ea30d587ad8/908b1/community-memory-dump-detail.png 280w,
+/static/10c363e7619b181a3eb50ea30d587ad8/b06ae/community-memory-dump-detail.png 560w,
+/static/10c363e7619b181a3eb50ea30d587ad8/1e088/community-memory-dump-detail.png 840w,
+/static/10c363e7619b181a3eb50ea30d587ad8/b12f7/community-memory-dump-detail.png 1020w&quot;
+        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;분석해보니 &lt;code class=&quot;language-text&quot;&gt;PartTreeJpaQuery&lt;/code&gt;라는 클래스에서 사용하는 &lt;code class=&quot;language-text&quot;&gt;ConcurrentHashMap&lt;/code&gt;이 메모리를 많이 차지하고 있었다.  관련된 내용이 있는지 검색해 보았고 나의 증상과 비슷해 보이는 Spring Data JPA &lt;a href=&quot;https://jira.spring.io/browse/DATAJPA-1647&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;이슈&lt;/a&gt;를 발견할 수 있었다.&lt;/p&gt;
+&lt;h3 id=&quot;datajpa-1647&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#datajpa-1647&quot; aria-label=&quot;datajpa 1647 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;DATAJPA-1647&lt;/h3&gt;
+&lt;p&gt;이 이슈에서는 JPA repository의 &lt;code class=&quot;language-text&quot;&gt;findBy...&lt;/code&gt;의 파라미터로 &lt;code class=&quot;language-text&quot;&gt;Pageable&lt;/code&gt;을 사용할 때 메모리 누수가 있는 것 같다고 제보하고 있었다. 그리고 이 이슈는 장애가 발생한 날의 불과 4일 전에 버전 올림 되면서 수정되었다. &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/pull/402&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;PR&lt;/a&gt;을 보면 이전에 넣은 기능을 롤백하는 것인데 &lt;a href=&quot;https://jira.spring.io/browse/DATAJPA-1575&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;DATAJPA-1575&lt;/a&gt;으로 2019년 8월 5일 2.2.0.RC2 버전에 포함되었다. &lt;/p&gt;
+&lt;p&gt;정리하면 2019년 8월 5일에 Spring Data JPA의 2.2.0.RC2에 추가된 기능을 2020년 1월 15일에 2.2.4와 2.3.0 버전 이상에서는 이전 코드로 되돌려 해결하였다. 문제가 있었던 프로젝트는 Spring Boot 2.2.0을 사용하고 있었고 댓글을 조회하고 페이징하기 위해 &lt;code class=&quot;language-text&quot;&gt;JpaRepository&lt;/code&gt;를 상속한 인터페이스에서 &lt;code class=&quot;language-text&quot;&gt;findBy...&lt;/code&gt;에 &lt;code class=&quot;language-text&quot;&gt;Pageable&lt;/code&gt;을 파라미터로 사용하고 있었다.&lt;/p&gt;
+&lt;h3 id=&quot;검증&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EA%B2%80%EC%A6%9D&quot; aria-label=&quot;검증 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;검증&lt;/h3&gt;
+&lt;p&gt;같은 코드에서 Spring Data JPA 버전만을 변경하여 heap 메모리 사용을 비교해 보기로 했다.
+환경은 Java 1.8을 사용하였고, Heap의 최초, 최대 크기는 1G로 설정했다. 그리고 nGinrder로 100명의 가상 유저로 요청을 시뮬레이션하였으며 Scouter로 모니터링하였다. 각 요청은 아래의 코드를 수행하게 했다.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;    &lt;span class=&quot;token annotation punctuation&quot;&gt;@GetMapping&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;/memoryLeakTest&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;memoryLeakTest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        commentRepository&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;findByComment&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;comment&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;PageRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;spring-data-jpa-220&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-data-jpa-220&quot; aria-label=&quot;spring data jpa 220 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Data JPA 2.2.0&lt;/h4&gt;
+&lt;p&gt;&lt;figure class=&quot;gatsby-resp-image-figure&quot; style=&quot;&quot;&gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/86f37920260c2686345c32f9c0f578b0/b1945/memory-leak-jpa-2.2.0-heap.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 64.99999999999999%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAANCAYAAACpUE5eAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA6klEQVQ4y8WT2W7CMBBF/f/fhypACAXSUpUQcCbOYo/DxQtrCYilUh+O4iQzJ3diWZRlCWvZYWEMB1ptYJhR1xpUtmhbg7qJ+LVH60vY1XuElBKVa1SVxk+mMBjlSNICk0QiXRAkNWicSO8/dmQvMHxaB+EyW2P+RRhPN/gY5xhO1liuqpDMp+46G65xCgfHaZjjPfMlIkmzkGj2SS5hFZJsuyj6XXzgIOxDLL7zMO55mlvFDwmpKHoL7jXdFRZO+GzT/wjjTtqzHbRXzx95J4jo6sU73Bz5VUQ8en+Y0B89L1VKPUVfj/99O+AH+XT1pHaoAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;JPA 2.2.0 Heap&quot;
+        title=&quot;JPA 2.2.0 Heap&quot;
+        src=&quot;/static/86f37920260c2686345c32f9c0f578b0/b06ae/memory-leak-jpa-2.2.0-heap.png&quot;
+        srcset=&quot;/static/86f37920260c2686345c32f9c0f578b0/0d3e1/memory-leak-jpa-2.2.0-heap.png 140w,
+/static/86f37920260c2686345c32f9c0f578b0/908b1/memory-leak-jpa-2.2.0-heap.png 280w,
+/static/86f37920260c2686345c32f9c0f578b0/b06ae/memory-leak-jpa-2.2.0-heap.png 560w,
+/static/86f37920260c2686345c32f9c0f578b0/1e088/memory-leak-jpa-2.2.0-heap.png 840w,
+/static/86f37920260c2686345c32f9c0f578b0/f43e4/memory-leak-jpa-2.2.0-heap.png 1120w,
+/static/86f37920260c2686345c32f9c0f578b0/b1945/memory-leak-jpa-2.2.0-heap.png 2754w&quot;
+        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&quot;gatsby-resp-image-figcaption&quot;&gt;JPA 2.2.0 Heap&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;figure class=&quot;gatsby-resp-image-figure&quot; style=&quot;&quot;&gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/5bf9b5be6db76e5595b06f5f01cea1b9/cd13d/memory-leak-jpa-2.2.0-tps.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 35%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAABYlAAAWJQFJUiTwAAABR0lEQVQoz2VSTU/CQBTkz3v24FFjYkw4GD8SL8aDJw8mmqhRAkgtBQVBSlta9qvtbse3SyGih+nMtm/nzXtpI0kWMLoEPVDVMPq/tqypTuu1XvFal2UJQ3WNyhgwxZHJFFwtiTPokkPlS+QFI80gSVuGFmTAYei7419Y8hRFLtEge/TjGOdegJO3Pk57Aa4Hn7j0h2h2fdyOxrgKPtCdh/DjOVAJmmZlXP2B0YoMKebdeIqd+xYOWx4OCHvPXRy3fey/ejhqv2P3sUMNB2h2fFwQgy5b06pOt2VoR26HEXpRiJhi2xRBEuErSxCyBYaLCC+zb9wMR3iaTnFGEzxMJm49VW3ssDZ0y9QSgNyMs4VKOrb7VARbZxv3orlr5FGARGQuqS5rQyE4clqolMKxUtJxUSh6x/+w2JwzuhczhlmaIuUMJf0FP6dYFSXMIDreAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;JPA 2.2.0 TPS&quot;
+        title=&quot;JPA 2.2.0 TPS&quot;
+        src=&quot;/static/5bf9b5be6db76e5595b06f5f01cea1b9/b06ae/memory-leak-jpa-2.2.0-tps.png&quot;
+        srcset=&quot;/static/5bf9b5be6db76e5595b06f5f01cea1b9/0d3e1/memory-leak-jpa-2.2.0-tps.png 140w,
+/static/5bf9b5be6db76e5595b06f5f01cea1b9/908b1/memory-leak-jpa-2.2.0-tps.png 280w,
+/static/5bf9b5be6db76e5595b06f5f01cea1b9/b06ae/memory-leak-jpa-2.2.0-tps.png 560w,
+/static/5bf9b5be6db76e5595b06f5f01cea1b9/1e088/memory-leak-jpa-2.2.0-tps.png 840w,
+/static/5bf9b5be6db76e5595b06f5f01cea1b9/f43e4/memory-leak-jpa-2.2.0-tps.png 1120w,
+/static/5bf9b5be6db76e5595b06f5f01cea1b9/cd13d/memory-leak-jpa-2.2.0-tps.png 1958w&quot;
+        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&quot;gatsby-resp-image-figcaption&quot;&gt;JPA 2.2.0 TPS&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;시작 후 30분가량 후에 힙 사이즈가 최대치인 1G에 도달하였고 GC로도 메모리가 회수되지 않아 점차 사용 가능한 메모리가 줄어드는 모습을 보여주었다. 사용 가능한 메모리가 줄어들면서 TPS도 급감하였다. (날짜가 변경되어서 그런지 Scouter에서 Heap 메모리 로그가 전부 보이지 않는데 100M부터 점차 사용량이 증가하였다.)&lt;/p&gt;
+&lt;h4 id=&quot;spring-data-jpa-224&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#spring-data-jpa-224&quot; aria-label=&quot;spring data jpa 224 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Spring Data JPA 2.2.4&lt;/h4&gt;
+&lt;p&gt;&lt;figure class=&quot;gatsby-resp-image-figure&quot; style=&quot;&quot;&gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/3a32e29dfa641c5222447b38b56c8a4b/ba168/memory-leak-jpa-2.2.4-heap.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 68.57142857142857%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAOCAYAAAAvxDzwAAAACXBIWXMAABYlAAAWJQFJUiTwAAABpElEQVQ4y61Ta0sCURDd31vfg0AICnoZpdGDoLKS6B0RFPQh+1JRlluaKJsJqVn4yn1k5bruae5dNjVDC1w4zO7cew4zZ2YFTdNQqVRgGEZHIBSLRS74VzBSq3NBluXOCta3/BuxdWzOCaqq/slDi2zhXx7qP6INs2qgSqAXIrbxUNdrAqZpEe1okzO5EkfiSUU2X+LC3/Y0CiqcDFS5QOH1HbLygacXDb7zNHxnaQRCWcyvS1jckOBaCEO8y4E95XLzwARFURCJFRCK5nFNxLnVKNb241jevsfQ9C3G5kJwEhzOa4zMBNE3LuJCzJCciY9PnURr4BUmUzm6FMDobJCTegb9GHDfoJ8wMX8H92IY/S4Rs94IvLsx7B09Ik3Vs46sqmrggqf+BLod5+gi9A5fYWo5gklPGEtbEk6o5YPjJMJSAXmyIvWsQnsr8wFZbTZG3vKlmMLKzj08mxIOfUnEEzIeHmVkyHh2gQmwyCqyB1W/Zk17mC/IRPokP2jSusG9YTBNNqQqj/V7xnKtQFMuQtOoFfpj2JKzIdn4+d3ujOW+AIWyJKdWDNAnAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;JPA 2.2.4 Heap&quot;
+        title=&quot;JPA 2.2.4 Heap&quot;
+        src=&quot;/static/3a32e29dfa641c5222447b38b56c8a4b/b06ae/memory-leak-jpa-2.2.4-heap.png&quot;
+        srcset=&quot;/static/3a32e29dfa641c5222447b38b56c8a4b/0d3e1/memory-leak-jpa-2.2.4-heap.png 140w,
+/static/3a32e29dfa641c5222447b38b56c8a4b/908b1/memory-leak-jpa-2.2.4-heap.png 280w,
+/static/3a32e29dfa641c5222447b38b56c8a4b/b06ae/memory-leak-jpa-2.2.4-heap.png 560w,
+/static/3a32e29dfa641c5222447b38b56c8a4b/1e088/memory-leak-jpa-2.2.4-heap.png 840w,
+/static/3a32e29dfa641c5222447b38b56c8a4b/f43e4/memory-leak-jpa-2.2.4-heap.png 1120w,
+/static/3a32e29dfa641c5222447b38b56c8a4b/ba168/memory-leak-jpa-2.2.4-heap.png 2644w&quot;
+        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&quot;gatsby-resp-image-figcaption&quot;&gt;JPA 2.2.4 Heap&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;figure class=&quot;gatsby-resp-image-figure&quot; style=&quot;&quot;&gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/0577cabfa5feffe5869a511b066653d2/4ca46/memory-leak-jpa-2.2.4-tps.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 35%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAYAAAAIy204AAAACXBIWXMAABYlAAAWJQFJUiTwAAABRUlEQVQoz2VR204CMRTc//8DP0DFqCE+GKLxwfjkE4lGw03YFVTABVa23d67w2lhExKTnUznzDltp5usNxt4ZwF4+twetUPtbaw37I/0sRf6AxtrYi3x3qNSHFmxQlFtsSHMy4JqJbzlUJoRV7CGw5GWpAOCFoqBU5+mNaM5ISskcA7v+Qrtjwz32Qyt/gSXgxSnvTHaowxXwxQXgwnO+uPI16MU59TTOiB61PvwOcNbvkaitUaPNkyLNfqrHCevQzxOv3CXTvGyXKK7WOCGDutMpnHT55959G9JP82+o+5Qb+jpLnIkxlhsBUMpS4rJ4sYhdogSohmKw9U+Zs7/wJqIxHGG6oz4lxc0x5BY6+iNBD1oBQR4EVHTugGOvEb/94JW4YYGSgp6ZA2tJUEdIOl2OnrGKAjBD1xFX1JdKRm5WTv6Hzuc/hIiv8TqKAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;JPA 2.2.4 TPS&quot;
+        title=&quot;JPA 2.2.4 TPS&quot;
+        src=&quot;/static/0577cabfa5feffe5869a511b066653d2/b06ae/memory-leak-jpa-2.2.4-tps.png&quot;
+        srcset=&quot;/static/0577cabfa5feffe5869a511b066653d2/0d3e1/memory-leak-jpa-2.2.4-tps.png 140w,
+/static/0577cabfa5feffe5869a511b066653d2/908b1/memory-leak-jpa-2.2.4-tps.png 280w,
+/static/0577cabfa5feffe5869a511b066653d2/b06ae/memory-leak-jpa-2.2.4-tps.png 560w,
+/static/0577cabfa5feffe5869a511b066653d2/1e088/memory-leak-jpa-2.2.4-tps.png 840w,
+/static/0577cabfa5feffe5869a511b066653d2/f43e4/memory-leak-jpa-2.2.4-tps.png 1120w,
+/static/0577cabfa5feffe5869a511b066653d2/4ca46/memory-leak-jpa-2.2.4-tps.png 1944w&quot;
+        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;
+    &lt;figcaption class=&quot;gatsby-resp-image-figcaption&quot;&gt;JPA 2.2.4 TPS&lt;/figcaption&gt;
+  &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2시간 정도 수행하였는데도 600M 아래로 사용하고 있고 TPS 저하 현상도 보이지 않았다. &lt;/p&gt;
+&lt;h3 id=&quot;무엇을-하려고-했던-걸까&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#%EB%AC%B4%EC%97%87%EC%9D%84-%ED%95%98%EB%A0%A4%EA%B3%A0-%ED%96%88%EB%8D%98-%EA%B1%B8%EA%B9%8C&quot; aria-label=&quot;무엇을 하려고 했던 걸까 permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;무엇을 하려고 했던 걸까?&lt;/h3&gt;
+&lt;p&gt;위의 PR에서 보다 시피 이전 코드는 &lt;code class=&quot;language-text&quot;&gt;ParameterBinder&lt;/code&gt;를 생성하고 Map에 저장하여 재사용하려고 했고 변경된 코드는 &lt;code class=&quot;language-text&quot;&gt;ParameterBinder&lt;/code&gt;를 생성한 뒤에 별다른 작업 없이 바로 반환해주고 있다. 이전 코드에서는 생성 비용을 줄이려고 Map에 저장한 뒤에 재사용하는 것을 의도했지만 키로 사용한 &lt;code class=&quot;language-text&quot;&gt;ParameterMetadata&lt;/code&gt;객체의 동일성을 보장해주지 못해 메모리 누수가 발생한 것으로 보인다. 실제로 debugger로 확인했을 때 동일한 인수임에도 Map의 크기가 호출할 때마다 늘어나는 것을 볼 수 있었다.&lt;/p&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn-1&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://stackoverflow.com/questions/43753568/aws-ec2-jmap-heap-dump&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://stackoverflow.com/questions/43753568/aws-ec2-jmap-heap-dump&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&quot;#fnref-1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content:encoded></item><item><title><![CDATA[CannotAcquireLockException과 Deadlock]]></title><description><![CDATA[내가 지금 회사에서 개발한 것 중에는 사용자에게 보이는 알림과 작품, 시스템에 대한 알림 설정을 관리하는 가 있고 댓글과 작품의 Rating, Like…]]></description><link>https://bgrooot.github.io/cannot-acquire-lock-exception-research/</link><guid isPermaLink="false">https://bgrooot.github.io/cannot-acquire-lock-exception-research/</guid><pubDate>Fri, 19 Jun 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;내가 지금 회사에서 개발한 것 중에는 사용자에게 보이는 알림과 작품, 시스템에 대한 알림 설정을 관리하는 &lt;code class=&quot;language-text&quot;&gt;Notification API&lt;/code&gt;가 있고 댓글과 작품의 Rating, Like를 관리하는 &lt;code class=&quot;language-text&quot;&gt;Community API&lt;/code&gt;가 있다. 그런데 이 두 서비스에서 빈도는 낮지만, 간혹 &lt;code class=&quot;language-text&quot;&gt;CannotAcquireLockException&lt;/code&gt;이 발생하여 원인을 찾아보려고 했던 과정과 사례를 적어본다. &lt;/p&gt;
 &lt;h3 id=&quot;cannotacquirelockexception&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#cannotacquirelockexception&quot; aria-label=&quot;cannotacquirelockexception permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;CannotAcquireLockException&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&quot;https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/dao/CannotAcquireLockException.html&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;문서&lt;/a&gt;에는 이름과 같이 lock을 얻지 못해 발생하는 예외이다. 또한 stack trace의 메시지와&lt;sup id=&quot;fnref-1&quot;&gt;&lt;a href=&quot;#fn-1&quot; class=&quot;footnote-ref&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; 검색한 결과로 보건대 &lt;code class=&quot;language-text&quot;&gt;Notification API&lt;/code&gt;에서는 알림을 읽은 시간을 기록하는 &lt;code class=&quot;language-text&quot;&gt;Confirm API&lt;/code&gt;와 댓글을 Like 하는 &lt;code class=&quot;language-text&quot;&gt;Comment Like API&lt;/code&gt;에서 발생했고 &lt;code class=&quot;language-text&quot;&gt;deadlock&lt;/code&gt;과 관련되어 보였다.&lt;/p&gt;
 &lt;h3 id=&quot;deadlock&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#deadlock&quot; aria-label=&quot;deadlock permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Deadlock&lt;/h3&gt;
@@ -623,34 +897,5 @@ Record lock, heap no 36 PHYSICAL RECORD: n_fields 15; compact format; info bits 
         &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
         &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; tiedCount&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Codility - MinAbsSumOfTwo]]></title><description><![CDATA[RESULT]]></description><link>https://bgrooot.github.io/codility-min-abs-sum-of-two/</link><guid isPermaLink="false">https://bgrooot.github.io/codility-min-abs-sum-of-two/</guid><pubDate>Thu, 08 Aug 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://app.codility.com/demo/results/trainingF4ZCT7-ZXA&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;RESULT&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token namespace&quot;&gt;java&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;util&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;*&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Solution&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;int&lt;/span&gt; min &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Integer&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;MAX_VALUE&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;int&lt;/span&gt; left &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;int&lt;/span&gt; right &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;token class-name&quot;&gt;Arrays&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;token keyword&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;left &lt;span class=&quot;token operator&quot;&gt;&amp;lt;=&lt;/span&gt; right&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;token keyword&quot;&gt;int&lt;/span&gt; sum &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;left&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;right&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;token keyword&quot;&gt;int&lt;/span&gt; absSum &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Math&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;abs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sum&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;absSum &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; min&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-                min &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; absSum&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-
-            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sum &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-                left&lt;span class=&quot;token operator&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-                right&lt;span class=&quot;token operator&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-
-        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; min&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
