@@ -13,7 +13,16 @@
       onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
   </head>
 <body>
-<div class="numbers-area"></div>
+<audio id="ding-dong-dang" data-src="audio/ding-dong-dang.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-1" data-src="audio/one.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-2" data-src="audio/two.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-3" data-src="audio/three.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-4" data-src="audio/four.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-5" data-src="audio/five.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-6" data-src="audio/six.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-7" data-src="audio/seven.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-8" data-src="audio/eight.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
+<audio id="number-9" data-src="audio/nine.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio> <div class="numbers-area"></div>
 <div class="row question-area">
     <div class="col col-12 question-label">Find number</div>
     <div class="col col-3 border border-primary question-number">1</div>
@@ -175,10 +184,17 @@ const checkSuccess = function() {
             confetti.start();
             photo = appendSuccessPhoto(photoPool.getPhoto());
             showModalByPhoto(photo);
+            playAudio('ding-dong-dang');
 
             successed = true;
         }, 500);
     }
+};
+
+const playAudio = function(id) {
+    const audio = document.getElementById(id);
+    audio.src = audio.getAttribute('data-src')
+    audio.play();
 };
 
 const initRandomNumberPool = function(size) {
@@ -279,6 +295,11 @@ const clickNumber = function(event) {
     }
 };
 
+const playNumberAudio = function(event) {
+    const target = event.target;
+    playAudio('number-' + target.innerText);
+}
+
 const createNumbers = function(size, count) {
     while (count-- > 0) {
         createNumber(size, count);
@@ -304,6 +325,7 @@ const createNumber = function(size, count) {
             col.className = col.className + ' col-' + Math.floor(12 / size);
             button.innerText = randomPool.getNumber();
             button.addEventListener('click', clickNumber);
+            button.addEventListener('click', playNumberAudio);
             row.appendChild(col);
         }
 

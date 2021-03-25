@@ -401,7 +401,7 @@ blockquote .name {
 						<h5>2018. 08 - 2018. 11</h5>
 						<p></p>
 						<ul>
-							<li>카카오페이지 Back-end 개발</li>
+							<li>카카오 페이지 Back-end 개발</li>
 							<li>레거시 코드 리펙토링</li>
 						</ul>
 					</section>
@@ -412,7 +412,7 @@ blockquote .name {
 						<p></p>
 						<ul>
 							<li>퍼블리싱 게임 및 게임 포털 웹 Back-end 개발</li>
-							<li>게임 서비스의 운영 툴 개발</li>
+							<li>퍼블리싱 게임 플랫폼 Back-end 개발</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-job">
@@ -431,41 +431,58 @@ blockquote .name {
 					<section class="section-sub section-sub-project">
 						<h3>글로벌 웹툰 플랫폼 개발</h3>
 						<h4>카카오 페이지</h4>
-						<h5>2019. 06 - Now</h5>
+						<h5>2019. 06 - 2020. 12</h5>
 						<ul class="list-set keywords">
 							<li>Spring Boot</li>
 							<li>Beanstalk</li>
-							<li>APIGateway</li>
+							<li>API Gateway</li>
 							<li>SNS</li>
 							<li>Lambda</li>
 							<li>SQS</li>
 							<li>Kinesis</li>
-							<li>RDS</li>
+							<li>RDS Aurora</li>
+                            <li>Dynamo DB</li>
 							<li>Elastic Search</li>
 						</ul>
 						<ul>
-							<li>Notificaiton API 개발</li>
-							<li>Search API 개발</li>
-							<li>Community(Comment, Rating) API 개발</li>
-							<li>댓글 검색 시스템 개발</li>
-						</ul>
+							<li>Notification (알림 탭, 유저와 작품 알림 설정) API 개발</li>
+                            <li>Community (댓글, 작품 평가, 좋아요) API 개발</li>
+                            <li>Point API 개발</li>
+                            <li>Search (작품 검색, 자동 완성) API 개발</li>
+                            <li>댓글 검색 시스템 개발</li>
+                            <li>CRM 시스템 개발</li>
+                            <li>시간 별 매출 현황 리포트 개발</li>
+                            <li>데이터 클리어링 용도의 Serverless 배치 개발</li>
+                            <li>Request Key 기반의 포인트 API 개발로 중복 지급, 소진 요청 방지</li>
+                            <li>댓글의 RDB 에서 ES로의 마이그레이션 및 비동기 이벤트 기반의 댓글 인덱싱 플로우 구축</li>
+                            <li>APM 을 사용하여 P99 Latency 를 0.2 ~ 0.3 이내로 개선</li>
+                        </ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>CRM을 위한 ETL 시스템</h3>
+						<h3>CRM 시스템 개발</h3>
 						<h4>카카오 페이지</h4>
 						<h5>2019. 02 - 2019. 04</h5>
 						<ul class="list-set keywords">
 							<li>Java</li>
 							<li>DMS</li>
-							<li>APIGateway</li>
+							<li>API Gateway</li>
 							<li>Lambda</li>
 							<li>Kinesis</li>
 							<li>SQS</li>
-							<li>RDS</li>
+                            <li>S3</li>
+                            <li>RDS Aurora</li>
+                            <li>CloudWatch Events</li>
+                            <li>Circle CI</li>
 						</ul>
 						<ul>
-							<li>RDB 데이터를 CRM의 이벤트로 변환, 적재하는 시스템 개발</li>
-							<li>CRM 운영 툴과 추출 시스템의 Job을 위한 API 개발</li>
+                            <li>타 클라우드의 유저, 작품, 열람, 구매 등의 정보를 가져와 CRM 이벤트로 변환, 적재 하는 시스템 개발</li>
+                            <li>RDB CDC 기반의 ETL 시스템</li>
+                            <li>데이터 변환에 표현식을 정의 하여 이벤트 추가를 표현식을 추가하여 할 수 있음</li>
+                            <li>모듈이 SRP이 원칙으로 분리되어 다른 플랫폼에 적용할 때 큰 비용이 들지 않았음</li>
+                            <li>Job 기반의 유저 추출 시스템의 API 개발</li>
+                            <li>Lambda와 API Gateway 사용으로 Serverless API 구축</li>
+                            <li>유저 추출 Job, Job의 상태 API 개발</li>
+                            <li>예약, Batch Job API 를 CloudWatch Events 를 사용하여 구현</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
@@ -474,13 +491,15 @@ blockquote .name {
 						<h5>2018. 08 - 2018. 09</h5>
 						<ul class="list-set keywords">
 							<li>Spring Boot</li>
-							<li>Spring Batch</li>
+                            <li>Spring Batch</li>
 							<li>JPA</li>
 							<li>Redis</li>
 							<li>MySQL</li>
 						</ul>
 						<ul>
 							<li>카카오톡의 웹소설 탭을 위한 데이터를 Redis에 넣어주는 배치 어플리케이션</li>
+                            <li>여러 곳에서 가져와야 하는 데이터들을 Spring Batch를 사용하여 추상화된 데이터 플로우로 개발</li>
+                            <li>의존성이 없는 작업은 병렬로 수행하여 빠르게 처리</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
@@ -491,19 +510,18 @@ blockquote .name {
 							<li>Spring Boot</li>
 							<li>JPA</li>
 							<li>Zuul</li>
-							<li>Webpack</li>
+                            <li>Eureka</li>
+                            <li>Ribbon</li>
 							<li>Vue.js</li>
-							<li>Gradle</li>
-							<li>Ehcache</li>
 							<li>MySQL</li>
-							<li>MongoDB</li>
 							<li>AWS</li>
 						</ul>
 						<ul>
-							<li>검은사막 모바일 웹 개발</li>
+							<li>해외 검은사막 모바일 웹 개발</li>
+                            <li>점검 API, 유저 권한 API, 스팀 API 및 운영 툴 개발</li>
 							<li>API 게이트웨이 개발</li>
-							<li>점검 API, 유저 권한 API, 스팀 API 개발</li>
-						</ul>
+                            <li>Netflix OSS를 활용하여 인프라 비용을 절감</li>
+                        </ul>
 					</section>
 					<section class="section-sub section-sub-project">
 						<h3>게임 웹 서비스 개발</h3>
@@ -514,18 +532,20 @@ blockquote .name {
 							<li>Ruby</li>
 							<li>Rails</li>
 							<li>RequireJs</li>
-							<li>Maven</li>
-							<li>Ehcache</li>
+                            <li>EhCache</li>
 							<li>Redis</li>
 							<li>MyBatis</li>
 							<li>MySQL</li>
 						</ul>
 						<ul>
 							<li>퍼블리싱 게임(배틀그라운드, 검은사막, 에오스)의 웹, 게시판, 운영 툴 개발</li>
-							<li>퍼블리싱 게임 이벤트 페이지 개발</li>
-							<li>게임 포털(다음게임) 웹 사이트, 운영 툴 개발</li>
-							<li>게임 플랫폼 운영 툴 개발</li>
+							<li>퍼블리싱 게임의 이벤트 페이지 개발</li>
+							<li>게임 포털(다음게임) 웹, 운영 툴 개발</li>
 							<li>ISMS 인증 대응</li>
+                            <li>캐싱으로 내구성있는 웹을 개발</li>
+                            <li>제한적인 수량의 경품 이벤트 페이지를 개발하기 위해 트랜잭션과 에러 핸들링, 자동화된 테스트를 사용</li>
+                            <li>'에오스'의 퍼블리싱 개발 책임자로 개발 프로젝트를 리딩하고 사업에서도 좋은 성과를 얻음</li> 
+                            <li>플랫폼 관점에서 반복되는 코드는 모듈화 하고 재사용하여 개발 효율을 높이는데 기여</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
@@ -534,32 +554,51 @@ blockquote .name {
 						<h5>2015. 05 - 2015. 12</h5>
 						<ul class="list-set keywords">
 							<li>Spring</li>
-							<li>jQuery</li>
+							<li>Javascript</li>
 							<li>Bootstrap</li>
+                            <li>Grunt</li>
+                            <li>MyBatis</li>
 						</ul>
 						<ul>
 							<li>사내 스크립트 라이브러리를 활용한 웹 페이지 저작도구</li>
-							<li>UI컴포넌트들을 그리드 레아아웃으로 배치하여 반응형에 대응하고, GUI로 옵션을 수정하여 페이지를 구성</li>
-							<li>만들어진 페이지를 사내 CMS를 통해 배포 해주는 WYSIWYG 도구</li>
+							<li>UI 컴포넌트들을 그리드 레아아웃으로 배치하고, GUI로 컴포넌트 옵션을 수정 가능</li>
+							<li>만들어진 페이지를 사내 CMS를 통해 배포 해주는 도구</li>
 							<li>랭킹, 갤러리, 이벤트, 탭 등의 UI 컴포넌트 개발</li>
-							<li>저작도구 웹 UI 스크립트 개발</li>
+							<li>저작도구의 웹 UI 스크립트 개발</li>
+                            <li>만든 파일을 서버에 저장하는 기능 및 CMS 와의 연동 개발</li>
 							<li><a href="https://github.com/bgrooot/dzo-pub">https://github.com/bgrooot/dzo-pub</a></li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>조선 닷컴 타임라인 서비스</h3>
+						<h3>성애병원</h3>
 						<h4>디지틀 조선일보</h4>
 						<h5>2015. 05 - 2015. 09</h5>
 						<ul class="list-set keywords">
 							<li>Spring</li>
 							<li>MyBatis</li>
-							<li>jQuery</li>
+							<li>Javascript</li>
 							<li>MariaDB</li>
 						</ul>
 						<ul>
-							<li>인물, 드라마, 이슈에 대한 뉴스 기사들의 모음을 시간대 별로 보여주는 서비스</li>
+                            <li>공지사항, 고객의 소리 등의 게시판 개발</li>
+                            <li>진료 예약, 건강 검진 예약 기능 개발</li>
 						</ul>
 					</section>
+                    <section class="section-sub section-sub-project">
+                         <h3>조선닷컴 타임라인 서비스</h3>
+                         <h4>디지틀 조선일보</h4>
+                         <h5>2014. 02 - 2014. 04</h5>
+                         <ul class="list-set keywords">
+                             <li>Spring</li>
+                             <li>MyBatis</li>
+                             <li>Javascript</li>
+                             <li>MariaDB</li>
+                         </ul>
+                         <ul>
+                             <li>인물, 드라마, 이슈에 대한 뉴스 기사들의 모음을 시간대 별로 보여주는 서비스</li>
+                             <li>인물에 대한 기사를 검색 하고 설정 할 수 있는 기능의 운영 툴과 프론트 페이지를 개발</li>
+                         </ul>
+                     </section>
 					<section class="section-sub section-sub-project">
 						<h3>조선닷컴 기자 블로그</h3>
 						<h4>디지틀 조선일보</h4>
@@ -571,8 +610,8 @@ blockquote .name {
 						</ul>
 						<ul>
 							<li>워드프레스를 이용한 블로그 사이트</li>
-							<li>기자 블로그를 위한 테마와 플러그인 개발</li>
-							<li>최신 업데이트의 주기적인 적용 및 Kali Linux의 스캔 기능을 활용해서 취약점을 줄였음</li>
+							<li>블로그 메인 사이트에서 글을 모아보기 위한 플러그인과 블로그 기본 테마 개발</li>
+                            <li>최신 업데이트의 주기적인 적용 및 Kali Linux의 스캔 기능을 활용해서 취약점을 줄였음</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
@@ -580,16 +619,15 @@ blockquote .name {
 						<h4>디지틀 조선일보</h4>
 						<h5>2013. 02 - 2013. 06</h5>
 						<ul class="list-set keywords">
-                            <li>Java</li>
 							<li>Spring</li>
 							<li>Nexcore</li>
-							<li>MySQL</li>
+                            <li>MySQL</li>
+                            <li>MyBatis</li>
 						</ul>
 						<ul>
 							<li>E-Book 사이트</li>
 							<li>RESTful API 및 프론트 페이지 개발</li>
-                            <li></li>
-                            <li></li>
+                            <li>보안 취약점 개선</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
@@ -608,7 +646,7 @@ blockquote .name {
                             <li>라이브러리 코어 설계 및 개발, 템플릿과 UI 컴포넌트의 개발</li>
                             <li>쉽게 UI 컴포넌트 추가와 기존 컴포넌트의 확장이 가능함</li>
                             <li>직관적인 문법으로 뉴스 기사를 활용한 웹 페이지를 빠르게 제작할 수 있도록 기여</li>
-                            <li>멀티 디바이스 대응을 위한 프리미엄 독자 페이지등 여러 서비스에 사용되었음</li>
+                            <li>멀티 디바이스 대응을 위한 프리미엄 독자 페이지등의 서비스에 사용되었음</li>
 							<li><a href="https://github.com/bgrooot/dzo-lib">https://github.com/bgrooot/dzo-lib</a></li>
 						</ul>
 					</section>
