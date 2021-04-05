@@ -73,14 +73,14 @@ body {
 
 .advanced-button-wrap {
     margin: 0 auto;
-    padding: 1rem 0;
+    padding: 0;
 }
 
-.advanced-button-wrap .start-btn {
+.advanced-button-wrap .start-btn, .advanced-button-wrap .next-btn{
     font-size: 10vw;
 }
 
-.advanced-button-wrap .play-btn, .play-btn:focus, .play-btn:hover {
+.advanced-button-wrap .play-btn,  .advanced-button-wrap .play-btn:focus,  .advanced-button-wrap .play-btn:hover {
     padding: 0;
     border: none;
     box-shadow: none;
@@ -88,6 +88,7 @@ body {
 
 .advanced-button-wrap .play-btn svg {
     width: 2.5em;
+    opacity: 0.8;
 }
 
 @media print {
