@@ -436,7 +436,7 @@ const showQuestion = function() {
     hideElement(elem.advancedButtonWrap());
     hideElement(elem.nextButton());
     hideElement(elem.startButton());
-    showElement(elem.questionNumber());
+    if (showTime > 0) showElement(elem.questionNumber());
     playQuestionNumberAudio();
 
     hideQuestionTimeout = setTimeout(function() {
