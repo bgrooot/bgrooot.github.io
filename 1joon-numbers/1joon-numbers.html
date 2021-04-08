@@ -350,11 +350,7 @@ const clickNumber = function(event) {
         question.set();
 
         if (mode === 'advanced') {
-            hideElement(elem.questionNumber());
-            showElement(elem.playButton());
-            showElement(elem.advancedButtonWrap());
-            clearTimeout(hideQuestionTimeout);
-            playQuestionNumberAudio();
+            showQuestion();
         }
     }
 };
@@ -431,16 +427,24 @@ let size = getParam('size') || 3,
 let hideQuestionTimeout;
 
 const showQuestion = function() {
-    hideElement(elem.advancedButtonWrap());
+    clearTimeout(hideQuestionTimeout);
     hideElement(elem.startButton());
-    if (showTime > 0) showElement(elem.questionNumber());
-    playQuestionNumberAudio();
-
-    hideQuestionTimeout = setTimeout(function() {
-        hideElement(elem.questionNumber());
-        showElement(elem.advancedButtonWrap());
+    
+    if (showTime > 0) {
+        showElement(elem.questionNumber());
+        hideElement(elem.advancedButtonWrap());
+        hideElement(elem.playButton());
+        
+        hideQuestionTimeout = setTimeout(function() {
+            hideElement(elem.questionNumber());
+            showElement(elem.advancedButtonWrap());
+            showElement(elem.playButton());
+        }, showTime);
+    } else {
         showElement(elem.playButton());
-    }, showTime);
+    }
+
+    playQuestionNumberAudio();
 };
 
 const initAdvancedMode = function() {
