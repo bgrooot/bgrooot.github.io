@@ -28,7 +28,6 @@
     <div class="col col-3 border border-primary question-number" data-mode="basic">1</div>
     <div class="col col-4 advanced-button-wrap" data-mode="advanced">
         <button class="btn-large start-btn">Start!</button>
-        <button class="btn-large next-btn hide">Next</button>
         <button class="btn-large play-btn hide">
             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 52.821 52.821" style="enable-background:new 0 0 52.821 52.821;" xml:space="preserve">
@@ -87,10 +86,6 @@ const elem = {
         return document.querySelector('.start-btn');
     },
 
-    nextButton: function() {
-        return document.querySelector('.next-btn');
-    },
-
     playButton: function() {
         return document.querySelector('.play-btn');
     }
@@ -127,7 +122,8 @@ const appendSuccessPhoto = function(photo) {
         const photoElement = createElement(getPhotoHTML(photo));
         photoWrap.appendChild(photoElement);
         return photoElement;
-    } else { return document.querySelector('.success-photo');
+    } else { 
+        return document.querySelector('.success-photo');
     }
 };
 
@@ -325,7 +321,7 @@ const initColorRandomPoolMap = function() {
 
 const existNumber = function(number) {
     return Array.from(elem.numberButton()).find(function(button) {
-        return button.innerText == number && button.className.indexOf('clicked') === -1;
+        return button.innerText === number && button.className.indexOf('clicked') === -1;
     });
 };
 
@@ -354,23 +350,25 @@ const clickNumber = function(event) {
         question.set();
 
         if (mode === 'advanced') {
-            hideElement(elem.playButton());
             hideElement(elem.questionNumber());
+            showElement(elem.playButton());
             showElement(elem.advancedButtonWrap());
-            showElement(elem.nextButton());
             clearTimeout(hideQuestionTimeout);
+            playQuestionNumberAudio();
         }
     }
 };
 
 const playNumberAudio = function(event) {
     const target = event.target;
-    playAudio('number-' + target.innerText);
-}
+    if (mode !== 'advanced' || (mode === 'advanced' && target.innerText !== elem.questionNumber().innerText)) {
+        playAudio('number-' + target.innerText);
+    } 
+};
 
 const playQuestionNumberAudio = function() {
     playAudio('number-' + elem.questionNumber().innerText);
-}
+};
 
 const createNumbers = function(size, count) {
     while (count-- > 0) {
@@ -396,8 +394,8 @@ const createNumber = function(size, count) {
 
             col.className += ' col-' + Math.floor(12 / size);
             button.innerText = randomPool.getNumber();
-            button.addEventListener('click', clickNumber);
             button.addEventListener('click', playNumberAudio);
+            button.addEventListener('click', clickNumber);
             row.appendChild(col);
         }
 
@@ -419,11 +417,11 @@ const getParam = function(param) {
 
 const hideElement = function(element) {
     element.className += ' hide';
-}
+};
 
 const showElement = function(element) {
     element.classList.remove('hide');
-}
+};
 
 let size = getParam('size') || 3,
     count = getParam('count') || 1,
@@ -434,14 +432,12 @@ let hideQuestionTimeout;
 
 const showQuestion = function() {
     hideElement(elem.advancedButtonWrap());
-    hideElement(elem.nextButton());
     hideElement(elem.startButton());
     if (showTime > 0) showElement(elem.questionNumber());
     playQuestionNumberAudio();
 
     hideQuestionTimeout = setTimeout(function() {
         hideElement(elem.questionNumber());
-        hideElement(elem.nextButton());
         showElement(elem.advancedButtonWrap());
         showElement(elem.playButton());
     }, showTime);
@@ -454,7 +450,6 @@ const initAdvancedMode = function() {
 
     elem.startButton().addEventListener('click', showQuestion);
     elem.playButton().addEventListener('click', playQuestionNumberAudio);
-    elem.nextButton().addEventListener('click', showQuestion);
 
 }();
 
