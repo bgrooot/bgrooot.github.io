@@ -1,18 +1,23 @@
 # 1joon-numbers
-아이들을 위한 숫자 퍼즐 게임입니다.
-- 숫자를 빨리 익힐 수 있도록 게임 형태로 만들었습니다.
-- 모든 숫자를 맞췄을 때 Google Photo 와 연동하여 앨범의 사진이 나와 작은 즐거움을 선사합니다.
-- 숫자를 눌렀을 때 귀여운 목소리가 나옵니다!
+![chrome-capture](https://user-images.githubusercontent.com/35263766/115259895-3fdeb800-a16d-11eb-8214-d3d05a8789a3.gif)
+  
+A number puzzle game designed to help my child learn numbers quickly.  
+It has the following features.
 
-한번 해 보실래요?
-DEMO
- 
-설정
+## Features
+- When you touch a number, a cute voice comes out!
+- When all the numbers are correct, the photos in the album linked with Google Photo will appear, providing a little fun.
+- You can do simple game settings with parameters
 
-size
-count
-mode
-show-time
+## Demo
+The explanation was too long... would you like to try it?  
 
+[DEMO](https://bgrooot.github.io/1joon-numbers/1joon-numbers.html)
 
-
+## Parameters
+| name | value | default |
+|---|---|---|
+| `size` | Number of numbers in one puzzle  | 3
+| `count` | Number of puzzles | 1
+| `mode` | basic or advanced | basic 
+| `show-time` | The time shown before the number disappears (ms) <br /> only available in advanced mode | 1500
