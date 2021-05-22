@@ -357,7 +357,7 @@ const clickNumber = function(event) {
 
 const playNumberAudio = function(event) {
     const target = event.target;
-    if (mode !== 'advanced' || (mode === 'advanced' && target.innerText !== elem.questionNumber().innerText)) {
+    if ((mode !== 'advanced' || (mode === 'advanced' && target.innerText !== elem.questionNumber().innerText)) && !target.classList.contains('clicked')) {
         playAudio('number-' + target.innerText);
     } 
 };
