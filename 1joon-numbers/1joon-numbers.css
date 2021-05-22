@@ -1,3 +1,21 @@
+@font-face {
+    font-family: OpticianSans;
+    src: url(https://cdn.jsdelivr.net/gh/anewtypeofinterference/Optician-Sans/Web-PS/Optician-Sans.woff2);
+}
+
+[data-font="OpticianSans"] {
+    font-family: OpticianSans;
+}
+
+.numbers-container .btn-large[data-font="OpticianSans"] {
+    font-size: 20vw;
+}
+
+.question-area .question-number[data-font="OpticianSans"] {
+    padding: 3vw;
+    font-size: 25vw;
+}
+
 body {
     background-image: url(https://www.getpapercss.com/img/geometry2.png);
     margin-top: 2rem;
