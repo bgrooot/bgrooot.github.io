@@ -422,7 +422,8 @@ const showElement = function(element) {
 let size = getParam('size') || 3,
     count = getParam('count') || 1,
     mode = getParam('mode') || 'basic',
-    showTime = getParam('show-time') || 1500;
+    showTime = getParam('show-time') || 1500,
+    font = getParam('font') || 'Neucha';
 
 let hideQuestionTimeout;
 
@@ -468,7 +469,21 @@ const hideNotUsedModeElements = function() {
      notUsedModeElements.forEach(hideElement);
 }();
 
+const addFontAttribute = function(elem) {
+    elem.setAttribute('data-font', font);
+};
+
 createNumbers(size, count);
+
+const setFontAttribute = function() {
+
+    document.querySelectorAll('.numbers-container .btn-large').forEach(function(elem) {
+        addFontAttribute(elem);
+    });
+
+    addFontAttribute(document.querySelector('.question-area .question-number'));
+
+}();
 
 const question = function(pool) {
     const randomPool = pool;
