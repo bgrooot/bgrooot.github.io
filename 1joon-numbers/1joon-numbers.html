@@ -8,8 +8,29 @@
     <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
     <link rel="stylesheet" href="1joon-numbers.css">
     <script src="confetti.min.js"></script>
+    <script>
+    const loadClient = function() {
+        gapi.load('client:auth2', function() {
+            gapi.client.init({
+                clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
+                scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+            }).then(function() {
+                const GoogleAuth = gapi.auth2.getAuthInstance();
+                if (GoogleAuth.isSignedIn && GoogleAuth.isSignedIn.get()) {
+                    photoPool.setAlbumId();
+                } else {
+                    GoogleAuth.signIn({
+                        scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+                    });
+
+                    GoogleAuth.isSignedIn.listen(photoPool.setAlbumId);
+                }
+            });
+        });
+    };
+    </script>
     <script async defer src="https://apis.google.com/js/api.js"
-        onload="this.onload=function(){};loadClient()"
+        onload="this.onload=loadClient()"
         onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
 </head>
 <body>
@@ -196,26 +217,6 @@ const photoPool = function() {
         }
     }
 }();
-
-const loadClient = function() {
-    gapi.load('client:auth2', function() {
-        gapi.client.init({
-            clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
-            scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
-        }).then(function() {
-            const GoogleAuth = gapi.auth2.getAuthInstance();
-            if (GoogleAuth.isSignedIn && GoogleAuth.isSignedIn.get()) {
-                photoPool.setAlbumId();
-            } else {
-                GoogleAuth.signIn({
-                    scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
-                });
-
-                GoogleAuth.isSignedIn.listen(photoPool.setAlbumId);
-            }
-        });
-    });
-};
 
 const createElement = function(html) {
     const wrapper = document.createElement('div');
@@ -489,11 +490,13 @@ const setFontAttribute = function() {
 
 }();
 
+/*
 const setScrollingClass = function() {
     if (scroll === 'false') {
         document.querySelector('body').classList.add('stop-scrolling');
     }
 }();
+*/
 
 const question = function(pool) {
     const randomPool = pool;
