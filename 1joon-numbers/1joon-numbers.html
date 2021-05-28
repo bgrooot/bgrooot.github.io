@@ -490,7 +490,7 @@ const setFontAttribute = function() {
 }();
 
 const setScrollingClass = function() {
-    if (!scroll) {
+    if (scroll === 'false') {
         document.querySelector('body').classList.add('stop-scrolling');
     }
 }();
