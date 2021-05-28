@@ -12,7 +12,7 @@
       onload="this.onload=function(){};loadClient()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
   </head>
-<body>
+<body class="stop-scrolling">
 <audio id="ding-dong-dang" src="audio/ding-dong-dang.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
 <audio id="number-1" src="audio/one.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
 <audio id="number-2" src="audio/two.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
@@ -509,13 +509,6 @@ const question = function(pool) {
 
 question.set();
 
-const disableScrolling = function() {
-    const wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-    const wheelOpt = supportsPassive ? { passive: false } : false;
-
-    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
-    window.addEventListener('touchmove', preventDefault, wheelOpt);
-}();
 </script>
 </body>
 </html>
