@@ -332,7 +332,7 @@ const clickNumber = function(event) {
           number = target.innerText,
           colorRandomPool = colorRandomPoolMap.getColorRandomPool(target);
 
-    if (number != question.get()) {
+    if (number !== question.get() || (mode === 'advaced' && !started)) {
         return;
     }
 
@@ -423,7 +423,8 @@ let size = getParam('size') || 3,
     count = getParam('count') || 1,
     mode = getParam('mode') || 'basic',
     showTime = getParam('show-time') || 1500,
-    font = getParam('font') || 'Neucha';
+    font = getParam('font') || 'Neucha'
+    started = false;
 
 let hideQuestionTimeout;
 
@@ -454,6 +455,7 @@ const initAdvancedMode = function() {
     }
 
     elem.startButton().addEventListener('click', showQuestion);
+    elem.startButton().addEventListener('click', function() { started = true });
     elem.playButton().addEventListener('click', playQuestionNumberAudio);
 
 }();
