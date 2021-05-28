@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>1joon-numbers</title>
-  <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
-  <link rel="stylesheet" href="1joon-numbers.css">
-  <script src="confetti.min.js"></script>
-  <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};loadClient()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
-  </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1joon-numbers</title>
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+    <link rel="stylesheet" href="1joon-numbers.css">
+    <script src="confetti.min.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"
+        onload="this.onload=function(){};loadClient()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+</head>
 <body class="stop-scrolling">
-<audio id="ding-dong-dang" src="audio/ding-dong-dang.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-1" src="audio/one.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-2" src="audio/two.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-3" src="audio/three.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-4" src="audio/four.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-5" src="audio/five.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-6" src="audio/six.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-7" src="audio/seven.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-8" src="audio/eight.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio>
-<audio id="number-9" src="audio/nine.m4a" autoplay="false" crossOrigin="anonymous" preload="auto"></audio> <div class="numbers-area"></div>
+    <audio id="ding-dong-dang" src="audio/ding-dong-dang.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-1" src="audio/one.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-2" src="audio/two.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-3" src="audio/three.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-4" src="audio/four.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-5" src="audio/five.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-6" src="audio/six.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-7" src="audio/seven.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-8" src="audio/eight.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-9" src="audio/nine.m4a" crossOrigin="anonymous" preload="auto"></audio> 
+<div class="numbers-area"></div>
 <div class="row question-area">
     <div class="col col-12 question-label">Find number</div>
     <div class="col col-3 border border-primary question-number" data-mode="basic">1</div>
@@ -356,7 +357,6 @@ const clickNumber = function(event) {
 };
 
 const playNumberAudio = function(event) {
-    conole.log(event);
     const target = event.target;
     if ((mode !== 'advanced' || !started || (mode === 'advanced' && target.innerText !== elem.questionNumber().innerText)) && !target.classList.contains('clicked')) {
         playAudio('number-' + target.innerText);
@@ -480,7 +480,7 @@ createNumbers(size, count);
 
 const setFontAttribute = function() {
 
-    document.querySelectorAll('.numbers-container .btn-large').forEach(function(elem) {
+    document.querySelectorAll('.numbers-container .col button').forEach(function(elem) {
         addFontAttribute(elem);
     });
 

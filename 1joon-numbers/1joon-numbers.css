@@ -7,7 +7,7 @@
     font-family: OpticianSans;
 }
 
-.numbers-container .btn-large[data-font="OpticianSans"] {
+.numbers-container .col button[data-font="OpticianSans"] {
     font-size: 20vw;
 }
 
