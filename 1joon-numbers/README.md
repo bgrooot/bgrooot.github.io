@@ -21,4 +21,5 @@ The explanation was too long... would you like to try it?
 | `count` | Number of puzzles | 1
 | `mode` | basic or advanced | basic 
 | `show-time` | The time shown before the number disappears (ms) <br /> only available in advanced mode | 1500
-| `font` | font (Neucha, OpticianSans) | Neucha
+| `font` | Font (Neucha, OpticianSans) | Neucha
+| `scroll` | Wheter to using scroll | true

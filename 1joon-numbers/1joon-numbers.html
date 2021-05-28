@@ -425,7 +425,7 @@ let size = getParam('size') || 3,
     mode = getParam('mode') || 'basic',
     showTime = getParam('show-time') || 1500,
     font = getParam('font') || 'Neucha',
-    scroll = getParam('scroll') || false,
+    scroll = getParam('scroll') || true,
     started = false;
 
 let hideQuestionTimeout;
@@ -490,7 +490,7 @@ const setFontAttribute = function() {
 }();
 
 const setScrollingClass = function() {
-    if (scroll) {
+    if (!scroll) {
         document.querySelector('body').classList.add('stop-scrolling');
     }
 }();
