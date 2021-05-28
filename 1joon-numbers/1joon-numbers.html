@@ -506,6 +506,14 @@ const question = function(pool) {
 }(initRandomNumberPool(9));
 
 question.set();
+
+const disableScrolling = function() {
+    const wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+    const wheelOpt = supportsPassive ? { passive: false } : false;
+
+    window.addEventListener(wheelEvent, preventDefault, wheelOpt);
+    window.addEventListener('touchmove', preventDefault, wheelOpt);
+}();
 </script>
 </body>
 </html>
