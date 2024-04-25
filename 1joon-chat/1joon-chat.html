@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+    <link rel="stylesheet" href="1joon-chat.css" type="text/css" />
+    <script type="importmap">
+    {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai",
+          "showdown": "https://esm.run/showdown"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="area">
+        <div id="question-area" class="form-group">
+            <textarea id="question" class="chat shadow no-resize" readonly></textarea>
+        </div>
+        <div id="button-area">
+            <button id="waiting"></button>
+            <button id="listening" class="hide"></button>
+            <button id="speaking" class="hide"></button>
+        </div>
+        <div id="answer-area">
+            <div id="answer" class="chat border shadow"></div>
+        </div>
+    </div>
+    <script type="module">
+        import { Val, Elem, Func } from "./1joon-chat.js";
+
+        Elem.waiting.addEventListener("click", () => { 
+            Val.recognition.start(); 
+            Func.showButton(Elem.listening);
+        });
+
+        Val.recognition.onresult = async (event) => { 
+            const questionText = event.results[0][0].transcript; 
+            Elem.question.innerText = questionText;
+            console.log(questionText);
+
+            const answerText = await Func.questionToAI(questionText);
+            const answerHTML = Func.markdownToHTML(answerText);
+            Elem.answer.innerHTML = answerHTML;
+            console.log(answerText);
+
+            Func.showButton(Elem.speaking);
+            const utter = Func.readText(Elem.answer.innerText);
+            utter.onend = (event) => { Func.showButton(Elem.waiting); };
+        };
+
+        const randomBorder = Func.getRandomBorder();
+        Elem.chat.forEach(elem => { elem.classList.add(Func.getRandomBorder()); });
+        Elem.button.forEach(elem => { 
+            elem.classList.add(randomBorder); 
+            Func.addBorderRadius(elem, "border-bottom-left-radius");
+            Func.addBorderRadius(elem, "border-bottom-right-radius");
+            Func.addBorderRadius(elem, "border-top-left-radius");
+            Func.addBorderRadius(elem, "border-top-right-radius");
+        });
+    </script>
+</body>
+</html>
