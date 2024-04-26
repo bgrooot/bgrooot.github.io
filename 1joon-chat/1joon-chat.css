@@ -1,0 +1,80 @@
+@font-face {
+    font-family: "KyoboHand";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/KyoboHand.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	display: grid; 
+	place-items: center;
+	width: 100%;
+	height: 100%;
+    background-image: url(https://www.getpapercss.com/img/geometry2.png);
+}
+
+#area {
+	width: 60%;
+	height: 90vh;
+}
+
+#question-area, #answer-area {
+	width: 100%;
+	height: 35vh;
+	margin: 0;
+}
+
+#question, #answer {
+	width: 100%;
+	height: 100%;
+	padding: 2rem;
+	font-family: "KyoboHand";
+	font-size: 3vw;
+	overflow-y: auto;
+    scrollbar-width: none;
+}
+
+#question::-webkit-scrollbar, #answer::-webkit-scrollbar {
+    display: none;
+}
+
+#answer * {
+	font-family: "KyoboHand" !important;
+}
+
+#answer p {
+	margin-block-start: 0 !important;
+	margin-block-end: 0 !important;
+}
+
+#button-area {
+	display: grid;
+	place-items: center;
+	height: 20vh;
+}
+
+#button-area button {
+	height: 50%;
+	aspect-ratio: 1 / 1; 
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+#waiting, #listening {
+	background-image: url(images/robot.jpg);
+    background-size: cover;
+}
+
+#speaking {
+	background-image: url(images/speaking.jpg);
+	background-size: contain;
+}
+
+.hide {
+    display: none;
+}
