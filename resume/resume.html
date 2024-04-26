@@ -1,23 +1,18 @@
----
-title: 배경근 - Web Developer
-permalink: /resume/
----
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                <mata name="robots" content="noindex, nofollow">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>배경근 - Software Developer</title>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
-		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7COpen+Sans" />
 		<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/FortAwesome/Font-Awesome/307323a6a7fe69b7018cb49d2b7e43e1f4b6c92b/css/font-awesome.min.css" />
 		<style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 /*<!--*/
 body {
 	font-size: 62.5%;
-	font-family: "Montserrat", sans-serif;
+	font-family: "Noto Sans KR";
 	background-color: #fff;
 	color: #131313;
 }
@@ -55,24 +50,49 @@ a:focus {
 .section .section-sub-skill.first {
 	margin-top: 0em;
 }
+#about li {
+    font-size: 1.7em;
+    line-height: 1.7em;
+}
 .section-sub-skill h3 {
 	font-size: 2em;
 }
+.section-sub-job h3, .section-sub-project h3{
+    margin-top: 2em;
+    margin-bottom: .5em;
+}
+.section-sub-job:first-of-type h3, .section-sub-project:first-of-type h3 {
+    margin-top: 1em;
+}
 .section-sub-job {
-    margin-bottom: 1em;
+    margin-bottom: 3em;
+}
+.section-sub-job:last-of-type {
+    margin-bottom: 0;
 }
 .section-sub-job h4, .section-sub-job h5, .section-sub-job p {
-    margin-left: 1em;
+    #margin-left: 1em;
 }
 .section-sub-job h4, .section-sub-project h4, .section-sub-education h4 {
+    font-size: 1.35em;
 	margin-top: 0.2em;
 	margin-bottom: 0.5em;
 	color: #4d4d4d;
 }
 .section-sub-job h5, .section-sub-project h5, .section-sub-education h5 {
 	margin-top: 0em;
+    margin-bottom: 0;
 	color: #666666;
-    font-size: 1.25em;
+    font-size: 1.35em;
+}
+.section-sub-job li, .section-sub-project li {
+    line-height: 1.7em;
+}
+.section-sub-project .keywords {
+    margin-top: 1em;
+}
+.section-sub-project .keywords li {
+    line-height: 1em;
 }
 h1 {
 	color: #131313;
@@ -85,10 +105,11 @@ h2 {
 	font-size: 3.5em;
 	margin: 0.83em 0;
 	text-transform: uppercase;
+    letter-spacing: .02em;
 }
 h3 {
 	color: #4d4d4d;
-	font-size: 1.75em;
+	font-size: 1.85em;
 	margin: 1em 0 0;
 }
 h4 {
@@ -97,7 +118,7 @@ h4 {
 	margin: 0 0 1em;
 }
 .profile {
-	font-family: "Montserrat";
+	font-family: "Noto Sans KR";
 	font-size: 1em;
 	margin: 0;
 }
@@ -106,6 +127,7 @@ h4 {
 }
 .contact-header {
 	font-weight: bold;
+    line-height: 1.3em;
 }
 .contact-list li,
 .contact-list a {
@@ -137,7 +159,7 @@ h4 {
 }
 p {
 	color: #565656;
-	font-family: "Open Sans";
+	font-family: "Noto Sans KR";
 	font-size: 1.5em;
 }
 li {
@@ -158,7 +180,7 @@ li {
 	margin-top: 0.3em;
 }
 .list-lines li {
-	font-family: "Montserrat";
+	font-family: "Noto Sans KR";
 	font-size: 1em;
 }
 .list-set,
@@ -168,7 +190,7 @@ li {
 	list-style: none;
 }
 .list-set li {
-	font-family: "Montserrat";
+	font-family: "Noto Sans KR";
 	display: inline-block;
 }
 .list-set li a {
@@ -218,7 +240,7 @@ blockquote {
 }
 blockquote .name {
 	font-weight: bold;
-	font-family: "Montserrat";
+	font-family: "Noto Sans KR";
 	margin-top: 1em;
 }
 ::-moz-selection {
@@ -354,86 +376,47 @@ blockquote .name {
 			<main role="main" class="main">
 				<section id="about" class="section">
 					<h2><i class="fa fa-user left"></i>About</h2>
-					<p>&nbsp;&nbsp;웹 개발자로 자바, 스프링 프레임워크, 자바스크립트를 주로 사용하여 몇 차례의 사이트 오픈과 운영을 경험하면서 효율적으로 협업하여 개발하고, 커뮤니케이션하려고 노력하였습니다. 그리고 안전하고 쉬운 코드를 만드는 것이 중요하다는 것을 느끼고 테스트 코드를 작성하고 리팩토링하면서 점진적으로 개선된 코드를 만들려고 하고 있습니다. 또한, 새로운 기술을 배우고 적용해 보는 것을 좋아하여 경험해 보지 못한 기술에도 거부감없이 빠르게 적응할 수 있습니다.<br />&nbsp;&nbsp;저는 제가 만든 서비스나 프로그램들을 사용자가 사용하는 모습을 볼 때 행복감을 느낍니다. 기술로 많은 사람의 삶을 이롭게 하고 즐겁게 일하는 개발자로 살고 싶습니다.</p>
-				</section>
-				<section id="skills" class="section">
-					<h2><i class="fa fa-tasks left"></i>Skills</h2>
-					<section class="section-sub section-sub-skill first">
-						<h3 class="skills"></h3>
-						<ul class="list-set types">
-							<li>
-								<h4 class="skill-type"></h4>
-								<ul class="list-set keywords">
-									<li>Javascript</li>
-									<li>Java</li>
-									<li>Spring</li>
-									<li>Ruby</li>
-									<li>Rails</li>
-									<li>Ehcache</li>
-									<li>Redis</li>
-								</ul>
-							</li>
-							<li>
-								<h4 class="skill-type"></h4>
-								<ul class="list-set keywords">
-									<li>MyBatis</li>
-									<li>JPA</li>
-									<li>JOOQ</li>
-									<li>MySQL</li>
-									<li>MongoDB</li>
-								</ul>
-							</li>
-							<li>
-								<h4 class="skill-type"></h4>
-								<ul class="list-set keywords">
-									<li>Apache</li>
-									<li>Tomcat</li>
-									<li>nginxX</li>
-								</ul>
-							</li>
-							<li>
-								<h4 class="skill-type"></h4>
-								<ul class="list-set keywords">
-									<li>AWS</li>
-								</ul>
-							</li>
-						</ul>
-					</section>
+					<p></p>
+                    <ul>
+                        <li>Java, Spring Back-end 개발자로 일하고 있습니다.</li>
+                        <li>무엇이든지 만드는 것을 좋아하고, 코딩하는 것을 좋아합니다.</li>
+                        <li>직무를 통해 성장하는 것을 중요하게 생각합니다.</li>
+                        <li>조직 구성원이 행복할 수 있는 곳에서 일하고 싶습니다.</li>
+                    </ul>
 				</section>
 				<section id="work" class="section">
 					<h2><i class="fa fa-suitcase left"></i>Work Experience</h2>
 					<section class="section-sub section-sub-job">
-						<h3>카카오 페이지</h3>
-						<h4>글로벌 서버개발팀</h4>
+                        <h3>카카오 페이지</h3>
+						<h4>글로벌 서비스개발팀</h4>
 						<h5>2018. 12 - Now</h5>
 						<p></p>
 						<ul>
-							<li>글로벌 플랫폼의 API 개발</li>
+							<li>글로벌 웹툰 플랫폼 Back-end 개발</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-job">
-						<h3></h3>
-						<h4>페이지 API팀</h4>
+                        
+						<h4>API팀</h4>
 						<h5>2018. 08 - 2018. 11</h5>
 						<p></p>
 						<ul>
-							<li>카카오페이지 앱과 웹을 위한 서버 API 개발</li>
+							<li>카카오페이지 Back-end 개발</li>
 							<li>레거시 코드 리펙토링</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-job">
-						<h3>카카오 게임즈</h3>
+                        <h3>카카오 게임즈</h3>
 						<h4>개발팀</h4>
 						<h5>2016. 01 - 2018. 07</h5>
 						<p></p>
 						<ul>
-							<li>퍼블리싱 게임 및 게임 포털 웹 사이트 개발</li>
+							<li>퍼블리싱 게임 및 게임 포털 웹 Back-end 개발</li>
 							<li>게임 서비스의 운영 툴 개발</li>
-							<li>게임 서비스의 API 게이트웨이, API 개발</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-job">
-						<h3>디지틀 조선일보</h3>
+                        <h3>디지틀 조선일보</h3>
 						<h4>시너지 개발팀</h4>
 						<h5>2012. 02 - 2015. 12</h5>
 						<p></p>
@@ -446,7 +429,7 @@ blockquote .name {
 				<section id="project" class="section">
 					<h2><i class="fa fa-code-fork left"></i>Project</h2>
 					<section class="section-sub section-sub-project">
-						<h3>글로벌 컨텐츠 플랫폼 개발</h3>
+						<h3>글로벌 웹툰 플랫폼 개발</h3>
 						<h4>카카오 페이지</h4>
 						<h5>2019. 06 - Now</h5>
 						<ul class="list-set keywords">
@@ -454,18 +437,21 @@ blockquote .name {
 							<li>Beanstalk</li>
 							<li>APIGateway</li>
 							<li>SNS</li>
+							<li>Lambda</li>
 							<li>SQS</li>
+							<li>Kinesis</li>
 							<li>RDS</li>
-							<li>CloudWatch</li>
+							<li>Elastic Search</li>
 						</ul>
 						<ul>
 							<li>Notificaiton API 개발</li>
 							<li>Search API 개발</li>
 							<li>Community(Comment, Rating) API 개발</li>
+							<li>댓글 검색 시스템 개발</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>CRM을 위한 ETL 시스템 및 API 개발</h3>
+						<h3>CRM을 위한 ETL 시스템</h3>
 						<h4>카카오 페이지</h4>
 						<h5>2019. 02 - 2019. 04</h5>
 						<ul class="list-set keywords">
@@ -476,8 +462,6 @@ blockquote .name {
 							<li>Kinesis</li>
 							<li>SQS</li>
 							<li>RDS</li>
-							<li>S3</li>
-							<li>CloudWatch</li>
 						</ul>
 						<ul>
 							<li>RDB 데이터를 CRM의 이벤트로 변환, 적재하는 시스템 개발</li>
@@ -493,12 +477,10 @@ blockquote .name {
 							<li>Spring Batch</li>
 							<li>JPA</li>
 							<li>Redis</li>
-							<li>Gradle</li>
 							<li>MySQL</li>
 						</ul>
 						<ul>
-							<li>카카오톡의 웹소설 탭을 위한 JSON 데이터를 Redis에 넣어주는 배치 어플리케이션</li>
-							<li>스프링 배치와 스케쥴링을 사용</li>
+							<li>카카오톡의 웹소설 탭을 위한 데이터를 Redis에 넣어주는 배치 어플리케이션</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
@@ -518,13 +500,13 @@ blockquote .name {
 							<li>AWS</li>
 						</ul>
 						<ul>
-							<li>해외 검은사막 모바일 웹 페이지 개발</li>
+							<li>검은사막 모바일 웹 개발</li>
 							<li>API 게이트웨이 개발</li>
 							<li>점검 API, 유저 권한 API, 스팀 API 개발</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>게임 웹 서비스 개발 및 운영</h3>
+						<h3>게임 웹 서비스 개발</h3>
 						<h4>카카오 게임즈</h4>
 						<h5>2016. 01 - 2018. 04</h5>
 						<ul class="list-set keywords">
@@ -539,17 +521,15 @@ blockquote .name {
 							<li>MySQL</li>
 						</ul>
 						<ul>
-							<li>퍼블리싱 게임(배틀그라운드, 검은사막, 에오스 등)의 웹 사이트, 게시판, 운영 툴 개발</li>
+							<li>퍼블리싱 게임(배틀그라운드, 검은사막, 에오스)의 웹, 게시판, 운영 툴 개발</li>
 							<li>퍼블리싱 게임 이벤트 페이지 개발</li>
 							<li>게임 포털(다음게임) 웹 사이트, 운영 툴 개발</li>
 							<li>게임 플랫폼 운영 툴 개발</li>
-							<li>GA적용, 데이터 추출 등의 웹 서비스 운영 지원</li>
 							<li>ISMS 인증 대응</li>
-							<li>라이브 웹 서버 IDC 이전</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>사내 웹 페이지 저작도구 개발</h3>
+						<h3>사내 웹 페이지 저작도구</h3>
 						<h4>디지틀 조선일보</h4>
 						<h5>2015. 05 - 2015. 12</h5>
 						<ul class="list-set keywords">
@@ -577,53 +557,11 @@ blockquote .name {
 							<li>MariaDB</li>
 						</ul>
 						<ul>
-							<li>인물, 드라마, 이슈에 대한 뉴스 기사들의 모음을 시간대 별로 보여주는 서비스.</li>
-							<li>서비스 페이지, 서비스의 CMS 툴 개발.</li>
+							<li>인물, 드라마, 이슈에 대한 뉴스 기사들의 모음을 시간대 별로 보여주는 서비스</li>
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>로케통</h3>
-						<h4>디지틀 조선일보</h4>
-						<h5>2015. 03 - 2015. 05</h5>
-						<ul class="list-set keywords">
-							<li>Spring</li>
-							<li>MyBatis</li>
-							<li>jQuery</li>
-							<li>MariaDB</li>
-						</ul>
-						<ul>
-							<li>관광청과 연계된 관광정보, 지역소식, 이벤트 사이트.</li>
-							<li>게시판 공통모듈과 관리자 사이트를 개발하였음.</li>
-						</ul>
-					</section>
-					<section class="section-sub section-sub-project">
-						<h3>조선 닷컴 태블릿 웹뷰 개발</h3>
-						<h4>디지틀 조선일보</h4>
-						<h5>2014. 09 - 2014. 12</h5>
-						<ul class="list-set keywords">
-							<li>PHP</li>
-							<li>jQuery</li>
-						</ul>
-						<ul>
-							<li>태블릿 앱의 웹 뷰 페이지 개발</li>
-							<li>화면 이동을 위한 플리킹, 페럴렉스 스크롤링 스크립트 개발</li>
-						</ul>
-					</section>
-					<section class="section-sub section-sub-project">
-						<h3>성애병원 웹 사이트 개발</h3>
-						<h4>디지틀 조선일보</h4>
-						<h5>2014. 02 - 2015. 12</h5>
-						<ul class="list-set keywords">
-							<li>Spring</li>
-							<li>Oracle</li>
-						</ul>
-						<ul>
-							<li>병원 홈페이지, 관리자 페이지 개발</li>
-							<li>병원 내부 시스템과 연동된 진료 예약 페이지 개발</li>
-						</ul>
-					</section>
-					<section class="section-sub section-sub-project">
-						<h3>조선닷컴 기자 블로그 개발</h3>
+						<h3>조선닷컴 기자 블로그</h3>
 						<h4>디지틀 조선일보</h4>
 						<h5>2013. 06 - 2015. 12</h5>
 						<ul class="list-set keywords">
@@ -638,7 +576,7 @@ blockquote .name {
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>텍스토어 개발</h3>
+						<h3>텍스토어</h3>
 						<h4>디지틀 조선일보</h4>
 						<h5>2013. 02 - 2013. 06</h5>
 						<ul class="list-set keywords">
@@ -652,7 +590,7 @@ blockquote .name {
 						</ul>
 					</section>
 					<section class="section-sub section-sub-project">
-						<h3>사내 자바스크립트 라이브러리 개발</h3>
+						<h3>사내 자바스크립트 라이브러리</h3>
 						<h4>디지틀 조선일보</h4>
 						<h5>2012. 02 - 2015. 12</h5>
 						<ul class="list-set keywords">

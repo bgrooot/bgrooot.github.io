@@ -1,0 +1,95 @@
+body {
+    background-image: url(https://www.getpapercss.com/img/geometry2.png);
+    margin-top: 3rem;
+}
+
+.numbers-container {
+    max-width: 90%;
+    margin:0 auto;
+    margin-bottom: 2rem;
+}
+
+.numbers-container .row {
+    margin: 0;
+    margin-bottom: -.1rem;
+    justify-content: center;
+}
+
+.numbers-container .col:before {
+    content: '';
+    float: left;
+    padding-top: 100%;
+}
+
+.numbers-container .col {
+    padding: 0;
+    margin-right: -.1rem;
+}
+
+.numbers-container .col button {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-size: 15vw;
+    padding-top: 2vw;
+    padding-bottom: 0;
+    background-color: white;
+}
+
+.numbers-container .col button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.numbers-container .col button:focus, .numbers-container .col button:hover {
+    border: 2px solid #41403e;
+}
+
+.modal-photo-wrap {
+    text-align: center;
+}
+
+.success-video {
+    max-height: 80vh;
+    max-width: 100%;
+}
+
+.question-area {
+    text-align: center;
+}
+
+.question-area .question-label {
+    font-size: 5vw;
+}
+
+.question-area .question-number {
+    margin: 0 auto;
+    padding: 5vw 0 0 0;
+    font-size: 20vw;
+}
+
+@media print {
+    .numbers-container {
+        max-width: 70%;
+        margin: 0 auto;
+        margin-bottom: 5rem;
+    }
+
+    .numbers-container .col button {
+        font-size: 7vw;
+        box-shadow: none;
+    }
+
+    .question-area {
+        display: none;
+    }
+    
+    .col-2 {
+        flex: 0 0 16.66667%;
+        max-width: 16.66667%;
+    }
+
+    .col-4 {
+         flex: 0 0 33.33333%;
+         max-width: 33.33333%;
+     }
+}

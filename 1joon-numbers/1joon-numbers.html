@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1joon-numbers</title>
+  <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+  <link rel="stylesheet" href="1joon-numbers.css">
+  <script src="confetti.min.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};loadClient()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+  </head>
+<body>
+<div class="numbers-area"></div>
+<div class="row question-area">
+    <div class="col col-12 question-label">Find number</div>
+    <div class="col col-3 border border-primary question-number">1</div>
+</div>
+<input class="modal-state" id="success-modal" type="checkbox">
+<div class="modal">
+   <label class="modal-bg" for="success-modal">&nbsp;</label>
+   <div class="modal-body">
+       <label class="btn-close" for="success-modal">X</label>
+       <h4>Congraturations!</h4>
+       <p class='modal-photo-wrap'></p>
+   </div>
+</div>
+<script>
+let successed = false;
+
+const showModal = function() {
+    document.getElementById('success-modal').checked = true;
+};
+
+const showModalByPhoto = function(photo) {
+    if (photo.className.indexOf('video') > -1) {
+        showModal();
+    } else {
+        if (!photoPool.isStop()) {
+            photo.addEventListener('load', showModal);
+        } else {
+            showModal();
+        }
+    }
+};
+
+const getPhotoHTML = function(photo) {
+    const url = photo.baseUrl + '=w512-h512';
+    if (photo.mimeType.indexOf('video') > -1) {
+        return '<video controls class="success-photo success-video" poster="' + url + '"><source src="' + url + '-dv">';
+    } else {
+        return '<img class="success-photo success-image" src="' + url + '">';
+    }
+}
+
+const appendSuccessPhoto = function(photo) {
+    const photoWrap = document.querySelector('.modal-photo-wrap');
+    if (!photoWrap.hasChildNodes()) {
+        const photoElement = createElement(getPhotoHTML(photo));
+        photoWrap.appendChild(photoElement);
+        return photoElement;
+    } else {
+        return document.querySelector('.success-photo');
+    }
+};
+
+const photoPool =  function() {
+    const self = this,
+          maxSize = 500;
+
+    let albumId,
+        photoPool = [],
+        stop = false;
+
+    const getPhoto = function() {
+        return photoPool[Math.floor(Math.random() * photoPool.length)];
+    };
+
+    const addPhoto = function(token) {
+        gapi.client.request({
+             path: 'https://photoslibrary.googleapis.com/v1/mediaItems:search',
+             method: 'POST',
+             body: {
+                 'albumId': albumId,
+                 //'albumId': 'AHFOjbPv-wxlNuZQGJFw1PnPzBB1kloBKHIT-7_SLwWhRbc1mRbotZ7Muf_9zwhLiAjVvPq44QIA',
+                 'pageToken': token,
+                 'pageSize': 100
+                 //"filters": {
+                 //   "mediaTypeFilter": {
+                 //     "mediaTypes": [
+                 //       "VIDEO"
+                 //     ]
+                 //   }
+                 // }
+             }
+         }).then(function(response) {
+             photoPool = photoPool.concat(response.result.mediaItems);
+             if (!successed && photoPool.length < maxSize) {
+                 addPhoto(response.result.nextPageToken);
+             } else {
+                 appendSuccessPhoto(getPhoto());
+                 stop = true;
+             }
+         });
+    };
+
+    const setAlbumId = function() {
+        gapi.client.request({
+             path: 'https://photoslibrary.googleapis.com/v1/sharedAlbums',
+             method: 'GET'
+         }).then(function(response) {
+             albumId = response.result.sharedAlbums[0].id;
+         }).then(addPhoto);
+    };
+
+    return {
+
+        setAlbumId: function() {
+            setAlbumId();
+        },
+
+
+        addPhoto: function(token) {
+            addPhoto(token);
+        },
+
+        getPhoto: function() {
+            return getPhoto();
+        },
+
+        isStop: function() {
+            return stop;
+        }
+    }
+}();
+
+const loadClient = function() {
+    gapi.load('client:auth2', function() {
+        gapi.client.init({
+            clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
+            scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+        }).then(function() {
+            const GoogleAuth = gapi.auth2.getAuthInstance();
+            if (GoogleAuth.isSignedIn && GoogleAuth.isSignedIn.get()) {
+                photoPool.setAlbumId();
+            } else {
+                GoogleAuth.signIn({
+                    scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+                });
+
+                GoogleAuth.isSignedIn.listen(photoPool.setAlbumId);
+            }
+        });
+    });
+};
+
+const createElement = function(html) {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = html;
+    return wrapper.firstChild;
+};
+
+const isClicked = function(element) {
+    return element.className.indexOf('clicked') > -1;
+}
+
+const checkSuccess = function() {
+    const button = Array.from(document.querySelectorAll('button')),
+          clickedButton = button.filter(isClicked);
+
+    if (button.length === clickedButton.length && !successed) {
+        setTimeout(function() {
+            confetti.start();
+            photo = appendSuccessPhoto(photoPool.getPhoto());
+            showModalByPhoto(photo);
+
+            successed = true;
+        }, 500);
+    }
+};
+
+const initRandomNumberPool = function(size) {
+    let iterCount = Math.ceil(size * size / 9);
+    let randomPool = [];
+
+    while (iterCount-- > 0) {
+        let number = 10;
+        while (--number > 0) {
+            randomPool.push(number);
+        }
+    }
+
+    return {
+
+        getNumber: function() {
+            const idx = Math.floor(Math.random() * randomPool.length),
+                  random = randomPool[idx];
+
+            randomPool.splice(idx, 1);
+            return random;
+        }
+    }
+};
+
+const colorRandomPool = function() {
+    const colorPool = ['#ff5e5e', '#5d5bff', '#fff600', '#74ff6a', '#ff8c00', 
+                        '#ff44a4', '#f23fff', '#63bfff', '#9e9e9e', '#7b4242'];
+    let colorMap = {};
+
+    const takeColor = function(number) {
+        const idx = Math.floor(Math.random() * colorPool.length),
+              color = colorPool[idx];
+
+        colorPool.splice(idx, 1);
+        colorMap[number] = color;
+
+        return color;
+    };
+
+    return {
+
+        getColor: function(number) {
+            return colorMap[number] || takeColor(number);
+        }
+    }
+};
+
+const initColorRandomPoolMap = function() {
+
+    let colorRandomPoolMap = {};
+
+    return {
+ 
+        getColorRandomPool: function(target) {
+            const container = target.parentNode.parentNode.parentNode,
+                  key = container.getAttribute('data-id'),
+                  colorPool = colorRandomPoolMap[key];
+ 
+            if (!colorPool) {
+                colorRandomPoolMap[key] = colorRandomPool();
+            }
+ 
+            return colorRandomPoolMap[key];
+        }
+    };
+};
+
+const existNumber = function(number) {
+    return Array.from(document.querySelectorAll('button')).find(function(button) {
+        return button.innerText == number && button.className.indexOf('clicked') === -1;
+    });
+};
+
+const colorRandomPoolMap = initColorRandomPoolMap();
+
+const clickNumber = function(event) {
+    const target = event.target,
+          number = target.innerText,
+          colorRandomPool = colorRandomPoolMap.getColorRandomPool(target);
+
+    if (number != question.get()) {
+        return;
+    }
+
+    if (isClicked(target)) {
+        target.style.backgroundColor = 'white';
+        target.classList.remove('clicked');
+    } else {
+        target.style.backgroundColor = colorRandomPool.getColor(number);
+        target.className = target.className + ' clicked';
+    }
+
+    checkSuccess();
+
+    if (!existNumber(number)) {
+        question.set();
+    }
+};
+
+const createNumbers = function(size, count) {
+    while (count-- > 0) {
+        createNumber(size, count);
+    }
+};
+
+const createNumber = function(size, count) {
+    const container = createElement('<div class="numbers-container">'),
+          rowHTML = '<div class="row">',
+          colHTML = '<div class="col"><button class="btn-large"><\/button><\/div>',
+          randomPool = initRandomNumberPool(size);
+
+    let rowSize = size; 
+    while (rowSize-- > 0) {
+
+        const row = createElement(rowHTML);
+        let colSize = size;
+
+        while (colSize-- > 0) {
+            const col = createElement(colHTML)
+                  button = col.querySelector('button');
+
+            col.className = col.className + ' col-' + Math.floor(12 / size);
+            button.innerText = randomPool.getNumber();
+            button.addEventListener('click', clickNumber);
+            row.appendChild(col);
+        }
+
+        container.appendChild(row);
+    }
+
+    container.setAttribute('data-id', count);
+    document.querySelector('.numbers-area').appendChild(container);
+};
+
+const getParam = function(param) {
+    const valArr = location.href.split(param + "=");
+    if (valArr[0] !== location.href) {
+        return valArr[1].split('&')[0]
+    }
+
+    return undefined;
+};
+
+let size = getParam('size') || 3, 
+    count = getParam('count') || 1;
+
+createNumbers(size, count);
+
+const question = function(pool) {
+    const randomPool = pool;
+    let question;
+
+    return {
+
+        set: function() {
+            question = randomPool.getNumber();
+            if (question) {
+                document.querySelector('.question-number').innerText = question;
+            }
+        },
+
+        get: function() {
+            return question;
+        }
+    };
+
+}(initRandomNumberPool(1));
+
+question.set();
+</script>
+</body>
+</html>
