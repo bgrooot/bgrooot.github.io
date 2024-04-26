@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Running Out Of Coins. | Feed]]></title><description><![CDATA[ ]]></description><link>https://bgrooot.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 26 Apr 2024 09:27:19 GMT</lastBuildDate><item><title><![CDATA[내가 겪은 메모리 누수 이야기 - 두 번째]]></title><description><![CDATA[…]]></description><link>https://bgrooot.github.io/memory-leak-the-second/</link><guid isPermaLink="false">https://bgrooot.github.io/memory-leak-the-second/</guid><pubDate>Tue, 01 Dec 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;블로그를 날려먹었다가 복구해서 이미지가 깨져있습니다 ㅠㅠ&lt;/strong&gt;&lt;br&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Running Out Of Coins. | Feed]]></title><description><![CDATA[ ]]></description><link>https://bgrooot.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Fri, 26 Apr 2024 09:33:39 GMT</lastBuildDate><item><title><![CDATA[내가 겪은 메모리 누수 이야기 - 두 번째]]></title><description><![CDATA[…]]></description><link>https://bgrooot.github.io/memory-leak-the-second/</link><guid isPermaLink="false">https://bgrooot.github.io/memory-leak-the-second/</guid><pubDate>Tue, 01 Dec 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;strong&gt;블로그를 날려먹었다가 복구해서 이미지가 깨져있습니다 ㅠㅠ&lt;/strong&gt;&lt;br&gt;
 &lt;em&gt;(사내 위키에 썼었던 글을 옮깁니다.)&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;실험 결과로서 타임아웃을 줄이는 것이 메모리와 관계가 있다는 것은 알았지만 왜 그런지 궁금하여 조사해 본 결과를 정리해 보았습니다. (원래 스프링 시큐리티의 구조를 간단히 설명하는 글을 저도 공부하면서 써볼까 했는데 시간이 오래 걸려 미루었습니다...)&lt;/p&gt;
 &lt;h3 id=&quot;filter-chain&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#filter-chain&quot; aria-label=&quot;filter chain permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Filter Chain&lt;/h3&gt;
@@ -70,38 +70,38 @@
 &lt;li&gt;SecurityContextHolder 클리어.&lt;/li&gt;
 &lt;li&gt;저장되어 있던 SecurityContextHolder를 SecurityContextRepository에 저장.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;    &lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ServletRequest&lt;/span&gt; req&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ServletResponse&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;FilterChain&lt;/span&gt; chain&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
-                &lt;span class=&quot;token keyword&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;IOException&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ServletException&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;java&quot;&gt;&lt;pre class=&quot;language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token class-name&quot;&gt;ServletRequest&lt;/span&gt; req&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ServletResponse&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;FilterChain&lt;/span&gt; chain&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;IOException&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;ServletException&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
+
+    &lt;span class=&quot;token class-name&quot;&gt;HttpRequestResponseHolder&lt;/span&gt; holder &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;HttpRequestResponseHolder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            response&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token class-name&quot;&gt;SecurityContext&lt;/span&gt; contextBeforeChainExecution &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; repo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;loadContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;holder&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;SecurityContextHolder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;contextBeforeChainExecution&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+        chain&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getResponse&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;SecurityContext&lt;/span&gt; contextAfterChainExecution &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SecurityContextHolder&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// Crucial removal of SecurityContextHolder contents - do this before anything&lt;/span&gt;
+        &lt;span class=&quot;token comment&quot;&gt;// else.&lt;/span&gt;
+        &lt;span class=&quot;token class-name&quot;&gt;SecurityContextHolder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;clearContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        repo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;saveContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;contextAfterChainExecution&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getResponse&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        request&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;removeAttribute&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;FILTER_APPLIED&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
         &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
         &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
         &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
-
-        &lt;span class=&quot;token class-name&quot;&gt;HttpRequestResponseHolder&lt;/span&gt; holder &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;HttpRequestResponseHolder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;request&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-                response&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;token class-name&quot;&gt;SecurityContext&lt;/span&gt; contextBeforeChainExecution &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; repo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;loadContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;holder&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;token keyword&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;token class-name&quot;&gt;SecurityContextHolder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;contextBeforeChainExecution&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-            chain&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getResponse&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-        &lt;span class=&quot;token keyword&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;token class-name&quot;&gt;SecurityContext&lt;/span&gt; contextAfterChainExecution &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;SecurityContextHolder&lt;/span&gt;
-                    &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-            &lt;span class=&quot;token comment&quot;&gt;// Crucial removal of SecurityContextHolder contents - do this before anything&lt;/span&gt;
-            &lt;span class=&quot;token comment&quot;&gt;// else.&lt;/span&gt;
-            &lt;span class=&quot;token class-name&quot;&gt;SecurityContextHolder&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;clearContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-            repo&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;saveContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;contextAfterChainExecution&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getRequest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-                    holder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getResponse&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-            request&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;removeAttribute&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token constant&quot;&gt;FILTER_APPLIED&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-
-            &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
-            &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
-            &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;
-        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;기본적으로 &lt;code class=&quot;language-text&quot;&gt;SecurityContextRepository&lt;/code&gt;는 HttpSession을 사용하는 &lt;code class=&quot;language-text&quot;&gt;HttpSessionSecurityContextRepository&lt;/code&gt;으로 설정되어 Session에 저장하게 됩니다. 요약하자면, 인증 필터들이 수행되기 전에 인증 정보를 세션에서 꺼내서 설정 해주고 필터가 수행되면 다시 세션에 저장해 줍니다. 그렇다면… 세션에 설정한다는 것이 어떤 의미를 가지고 있을까요?&lt;/p&gt;
 &lt;h3 id=&quot;session&quot; style=&quot;position:relative;&quot;&gt;&lt;a href=&quot;#session&quot; aria-label=&quot;session permalink&quot; class=&quot;anchor before&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Session&lt;/h3&gt;
 &lt;p&gt;나무위키에는 아래와 같이 설명하고 있습니다.&lt;/p&gt;
@@ -207,30 +207,28 @@
 &lt;p&gt;Heap 메모리가 차는 6분 전에 세션이 만료되기 때문에 TPS가 급감하는 현상이 나타나지 않았습니다.&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 560px; &quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 533px; &quot;
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/5c4953a1b73effbab5697a83793f2e49/2e367/session-timeout-5m-tps.png&quot;
+    href=&quot;/static/3c94e63fa75cc1469d0f003320c603d0/a1aa0/session-timeout-5m-tps.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
   &gt;
     &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 42.857142857142854%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABZUlEQVQoz11Sy1LDMAzM//8CM+VRQgc4wI9wAS70wJRHm3fqOLbjPNpFstO05bCj1Upay3GCu/AGz0+PeLgPsVjM8fb6guXHO6RIAVjsBw3szBi1i4wdo/c12yrkVQkhCgS34RXC8Brz+SVmswusVksyGtC2tYNtJYytHFQjYJrK6V1XO66NQG0qlLLElg2FriCUR1ELpNsMcZ4gKVLEhHUW4yeN8JVs8BmvHeeejLDOfS0qEupNENFcwCQvM+TckEXYkJhSzoYRDWwISemNv2n4N/OG8WiSi9ybk849Aa8+MPqaVhfQjUTfK/SkMbqWo6IrKnfNxkpYAutujvSh9zVLswEnuxEtfS8uHHL38R3Xk/Yfe45jHx8SuBM6X/Sb+vxcO9lmPHAYb3YwZt7S5kHPL0abHaNHZ73m+Ek+9Vo58UNuDRk2poamF24o0Yp+C02/Cb2807R0kTXF0RxrZqoduVYSfxurrbF8OP+wAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 42.857142857142854%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAABYlAAAWJQFJUiTwAAABg0lEQVQoz2VS207CQBDt//+CCURRhET9C180vpCIoBTojd5beqXbLRxnt20AfTg9c87OzkwnqzyOR3h5nuL5aYLR7QDvb68wDRWhbwFgODUlcDoAx7LDQXonik9NITUnHaYxon0AZTy5w+h+iOn0AYPhDWazDyrEwViKNA9QlJSYOEiyAHtCuLdRFBFK8rMipDMPmr1CkARtwc1OheHq0B0NG3sLzdGhGitKIm1toZobLPUfLLRvfG6J9RXWpgrTNTBfz/G1XWCpLbGiO7pjQdGpgBc68CMXlr+Dam1gBw68yINLsAMXfhzADj1YFO+IvdiXcEOXJgwR0++KO5ZnQ6nrHEfeojgkhBQN7aapM0IOTsy54BYVraKqUtTyPMORvKY7ZyyjgvTpC4okdqHF0vu44efG/yAG4G1zhXcTNl2nfjLZvdc8u/Dzs1+fm4u4pumVumqDurpApzn7c9Zrdp0r8yhmtDLlUGb0DFJ6Bi0LSC9PJJfEpfAFC12mUl9D5Lf8C8dOqlyJQN8qAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;img
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;session timeout 5m tps&quot;
         title=&quot;session timeout 5m tps&quot;
-        src=&quot;/static/5c4953a1b73effbab5697a83793f2e49/b06ae/session-timeout-5m-tps.png&quot;
-        srcset=&quot;/static/5c4953a1b73effbab5697a83793f2e49/0d3e1/session-timeout-5m-tps.png 140w,
-/static/5c4953a1b73effbab5697a83793f2e49/908b1/session-timeout-5m-tps.png 280w,
-/static/5c4953a1b73effbab5697a83793f2e49/b06ae/session-timeout-5m-tps.png 560w,
-/static/5c4953a1b73effbab5697a83793f2e49/1e088/session-timeout-5m-tps.png 840w,
-/static/5c4953a1b73effbab5697a83793f2e49/2e367/session-timeout-5m-tps.png 1066w&quot;
-        sizes=&quot;(max-width: 560px) 100vw, 560px&quot;
+        src=&quot;/static/3c94e63fa75cc1469d0f003320c603d0/a1aa0/session-timeout-5m-tps.png&quot;
+        srcset=&quot;/static/3c94e63fa75cc1469d0f003320c603d0/0d3e1/session-timeout-5m-tps.png 140w,
+/static/3c94e63fa75cc1469d0f003320c603d0/908b1/session-timeout-5m-tps.png 280w,
+/static/3c94e63fa75cc1469d0f003320c603d0/a1aa0/session-timeout-5m-tps.png 533w&quot;
+        sizes=&quot;(max-width: 533px) 100vw, 533px&quot;
         style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
