@@ -1,22 +1,84 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>1joon-numbers</title>
-  <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
-  <link rel="stylesheet" href="1joon-numbers.css">
-  <script src="confetti.min.js"></script>
-  <script async defer src="https://apis.google.com/js/api.js"
-      onload="this.onload=function(){};loadClient()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
-  </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1joon-numbers</title>
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+    <link rel="stylesheet" href="1joon-numbers.css">
+    <script src="confetti.min.js"></script>
+    <script>
+    const loadClient = function() {
+        gapi.load('client:auth2', function() {
+            gapi.client.init({
+                clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
+                scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+            }).then(function() {
+                const GoogleAuth = gapi.auth2.getAuthInstance();
+                if (GoogleAuth.isSignedIn && GoogleAuth.isSignedIn.get()) {
+                    photoPool.setAlbumId();
+                } else {
+                    GoogleAuth.signIn({
+                        scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
+                    });
+
+                    GoogleAuth.isSignedIn.listen(photoPool.setAlbumId);
+                }
+            });
+        });
+    };
+    </script>
+    <script async defer src="https://apis.google.com/js/api.js"
+        onload="this.onload=loadClient()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+</head>
 <body>
+    <audio id="ding-dong-dang" src="audio/ding-dong-dang.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-1" src="audio/one.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-2" src="audio/two.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-3" src="audio/three.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-4" src="audio/four.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-5" src="audio/five.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-6" src="audio/six.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-7" src="audio/seven.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-8" src="audio/eight.m4a" crossOrigin="anonymous" preload="auto"></audio>
+    <audio id="number-9" src="audio/nine.m4a" crossOrigin="anonymous" preload="auto"></audio> 
 <div class="numbers-area"></div>
 <div class="row question-area">
     <div class="col col-12 question-label">Find number</div>
-    <div class="col col-3 border border-primary question-number">1</div>
+    <div class="col col-3 border border-primary question-number" data-mode="basic">1</div>
+    <div class="col col-4 advanced-button-wrap" data-mode="advanced">
+        <button class="btn-large start-btn">Start!</button>
+        <button class="btn-large play-btn hide">
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         viewBox="0 0 52.821 52.821" style="enable-background:new 0 0 52.821 52.821;" xml:space="preserve">
+    <g>
+        <path d="M51.82,19.074c-1.488-5.344-4.965-10.164-9.608-13.189C37.292,2.68,30.86,1.717,25.106,1.588
+            C17.071,1.404,6.893,4.49,2.94,12.152c-0.329,0.637,0.64,1.184,0.969,0.547c2.801-5.43,9.491-8.566,15.263-9.594
+            c6.209-1.104,12.998-0.236,18.873,1.955c6.134,2.287,10.393,7.537,12.486,13.611c2.33,6.758,1.04,13.488-2.679,19.424
+            c-7.678,12.252-26.522,16.229-37.982,6.943c-5.25-4.254-8.674-9.945-8.74-16.752c-0.039-4.012,0.743-8.492,2.746-12.012
+            c0.621-1.09,1.455-2.024,2.396-2.867c0.014-0.219,0.03-0.436,0.045-0.652c-0.109-0.139-0.202-0.289-0.25-0.475
+            c-0.005-0.021-0.004-0.037-0.009-0.059c-0.572,0.481-1.126,0.986-1.65,1.529c-2.291,2.371-3.194,5.66-3.832,8.801
+            c-1.268,6.24-0.515,12.074,3.063,17.346c3.063,4.514,7.787,8.715,13.131,10.182c6.42,1.762,13.123,1.613,19.198-1.108
+            c2.749-1.23,5.729-2.438,8.039-4.424c2.833-2.438,4.961-5.881,6.679-9.156C53.305,30.399,53.303,24.397,51.82,19.074z"/>
+        <path d="M17.736,31.85c0.103,1.15,0.121,3.08,1.325,3.598c0.051,0.066,0.105,0.127,0.167,0.174
+            c1.198,0.902,2.868-0.504,3.876-1.109c2.797-1.674,12.586-8.037,14.039-10.277c0.151-0.234,0.098-0.455-0.046-0.609
+            c-0.01-0.16-0.081-0.318-0.258-0.428c-1.622-0.992-8.87-4.297-10.89-5.045c-1.044-0.389-5.593-2.34-6.212-2.355
+            c-2.373-1.525-2.021,5.525-2.033,6.152C17.639,25.235,17.444,28.574,17.736,31.85z M20.96,25.033
+            c-0.088,0.039-0.162,0.102-0.217,0.182c-0.004-0.299-0.009-0.596-0.011-0.891c0.096,0.055,0.197,0.104,0.298,0.154
+            C21.009,24.66,20.984,24.846,20.96,25.033z M21.167,29.695c0.063-0.248,0.151-0.498,0.257-0.748
+            c1.583-0.371,3.088-1.146,4.634-1.645c0.754-0.207,1.509-0.414,2.259-0.633C25.981,27.764,23.595,28.74,21.167,29.695z
+             M24.587,25.762c-0.18,0.082-0.362,0.162-0.539,0.25c-0.158-0.098-0.319-0.174-0.483-0.244
+            C23.905,25.758,24.246,25.754,24.587,25.762z M24.108,24.285c0.023-0.014,0.048-0.025,0.074-0.037
+            c0.642,0.137,1.284,0.231,1.944,0.24c0.459,0.055,0.918,0.113,1.378,0.166c-0.044,0.016-0.088,0.029-0.133,0.045
+            C26.401,24.598,25.23,24.488,24.108,24.285z M28.874,23.106c-0.761-0.27-1.523-0.549-2.291-0.854
+            c-1.265-0.502-2.525-0.859-3.846-1.17c-0.413-0.096-0.753-0.26-1.052-0.465C24.175,21.008,26.571,21.971,28.874,23.106z
+             M22.896,22.258c-0.75-0.072-1.509-0.107-2.278-0.105c-0.026-0.297-0.056-0.592-0.085-0.889
+            C21.281,21.785,22.06,22.047,22.896,22.258z"/>
+        </button>
+    </div>
 </div>
 <input class="modal-state" id="success-modal" type="checkbox">
 <div class="modal">
@@ -29,6 +91,32 @@
 </div>
 <script>
 let successed = false;
+
+const elem = {
+    numberContainer: function() {
+        return document.querySelector('.numbers-container');
+    },
+
+    numberButton: function() {
+        return elem.numberContainer().querySelectorAll('button');
+    },
+
+    questionNumber: function() {
+        return document.querySelector('.question-number');
+    },
+
+    advancedButtonWrap: function() {
+        return document.querySelector('.advanced-button-wrap');
+    },
+
+    startButton: function() {
+        return document.querySelector('.start-btn');
+    },
+
+    playButton: function() {
+        return document.querySelector('.play-btn');
+    }
+};
 
 const showModal = function() {
     document.getElementById('success-modal').checked = true;
@@ -53,7 +141,7 @@ const getPhotoHTML = function(photo) {
     } else {
         return '<img class="success-photo success-image" src="' + url + '">';
     }
-}
+};
 
 const appendSuccessPhoto = function(photo) {
     const photoWrap = document.querySelector('.modal-photo-wrap');
@@ -61,12 +149,12 @@ const appendSuccessPhoto = function(photo) {
         const photoElement = createElement(getPhotoHTML(photo));
         photoWrap.appendChild(photoElement);
         return photoElement;
-    } else {
+    } else { 
         return document.querySelector('.success-photo');
     }
 };
 
-const photoPool =  function() {
+const photoPool = function() {
     const self = this,
           maxSize = 500;
 
@@ -84,7 +172,6 @@ const photoPool =  function() {
              method: 'POST',
              body: {
                  'albumId': albumId,
-                 //'albumId': 'AHFOjbPv-wxlNuZQGJFw1PnPzBB1kloBKHIT-7_SLwWhRbc1mRbotZ7Muf_9zwhLiAjVvPq44QIA',
                  'pageToken': token,
                  'pageSize': 100
                  //"filters": {
@@ -136,26 +223,6 @@ const photoPool =  function() {
     }
 }();
 
-const loadClient = function() {
-    gapi.load('client:auth2', function() {
-        gapi.client.init({
-            clientId: '908304384059-2aqsr7ol58aduv3kh2u8u4u3sek7609c.apps.googleusercontent.com',
-            scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
-        }).then(function() {
-            const GoogleAuth = gapi.auth2.getAuthInstance();
-            if (GoogleAuth.isSignedIn && GoogleAuth.isSignedIn.get()) {
-                photoPool.setAlbumId();
-            } else {
-                GoogleAuth.signIn({
-                    scope: 'https://www.googleapis.com/auth/photoslibrary.readonly'
-                });
-
-                GoogleAuth.isSignedIn.listen(photoPool.setAlbumId);
-            }
-        });
-    });
-};
-
 const createElement = function(html) {
     const wrapper = document.createElement('div');
     wrapper.innerHTML = html;
@@ -167,7 +234,7 @@ const isClicked = function(element) {
 }
 
 const checkSuccess = function() {
-    const button = Array.from(document.querySelectorAll('button')),
+    const button = Array.from(elem.numberButton()),
           clickedButton = button.filter(isClicked);
 
     if (button.length === clickedButton.length && !successed) {
@@ -175,20 +242,32 @@ const checkSuccess = function() {
             confetti.start();
             photo = appendSuccessPhoto(photoPool.getPhoto());
             showModalByPhoto(photo);
+            playAudio('ding-dong-dang');
 
             successed = true;
         }, 500);
     }
 };
 
+const playAudio = function(id) {
+    document.getElementById(id).play();
+};
+
 const initRandomNumberPool = function(size) {
-    let iterCount = Math.ceil(size * size / 9);
+    let iterCount = Math.floor(size / 9);
     let randomPool = [];
 
     while (iterCount-- > 0) {
         let number = 10;
         while (--number > 0) {
             randomPool.push(number);
+        }
+    }
+
+    if (randomPool.length < size) {
+        let remainderRandomPool = initRandomNumberPool(9);
+        while (randomPool.length < size) {
+            randomPool.push(remainderRandomPool.getNumber());
         }
     }
 
@@ -205,7 +284,7 @@ const initRandomNumberPool = function(size) {
 };
 
 const colorRandomPool = function() {
-    const colorPool = ['#ff5e5e', '#5d5bff', '#fff600', '#74ff6a', '#ff8c00', 
+    const colorPool = ['#ff5e5e', '#5d5bff', '#fff600', '#74ff6a', '#ff8c00',
                         '#ff44a4', '#f23fff', '#63bfff', '#9e9e9e', '#7b4242'];
     let colorMap = {};
 
@@ -232,24 +311,24 @@ const initColorRandomPoolMap = function() {
     let colorRandomPoolMap = {};
 
     return {
- 
+
         getColorRandomPool: function(target) {
             const container = target.parentNode.parentNode.parentNode,
                   key = container.getAttribute('data-id'),
                   colorPool = colorRandomPoolMap[key];
- 
+
             if (!colorPool) {
                 colorRandomPoolMap[key] = colorRandomPool();
             }
- 
+
             return colorRandomPoolMap[key];
         }
     };
 };
 
 const existNumber = function(number) {
-    return Array.from(document.querySelectorAll('button')).find(function(button) {
-        return button.innerText == number && button.className.indexOf('clicked') === -1;
+    return Array.from(elem.numberButton()).find(function(button) {
+        return button.innerText === number && button.className.indexOf('clicked') === -1;
     });
 };
 
@@ -260,7 +339,7 @@ const clickNumber = function(event) {
           number = target.innerText,
           colorRandomPool = colorRandomPoolMap.getColorRandomPool(target);
 
-    if (number != question.get()) {
+    if (number != question.get() || (mode === 'advanced' && !started)) {
         return;
     }
 
@@ -269,14 +348,29 @@ const clickNumber = function(event) {
         target.classList.remove('clicked');
     } else {
         target.style.backgroundColor = colorRandomPool.getColor(number);
-        target.className = target.className + ' clicked';
+        target.className += ' clicked';
     }
 
     checkSuccess();
 
     if (!existNumber(number)) {
         question.set();
+
+        if (mode === 'advanced') {
+            showQuestion();
+        }
     }
+};
+
+const playNumberAudio = function(event) {
+    const target = event.target;
+    if ((mode !== 'advanced' || !started || (mode === 'advanced' && target.innerText !== elem.questionNumber().innerText)) && !target.classList.contains('clicked')) {
+        playAudio('number-' + target.innerText);
+    } 
+};
+
+const playQuestionNumberAudio = function() {
+    playAudio('number-' + elem.questionNumber().innerText);
 };
 
 const createNumbers = function(size, count) {
@@ -289,21 +383,30 @@ const createNumber = function(size, count) {
     const container = createElement('<div class="numbers-container">'),
           rowHTML = '<div class="row">',
           colHTML = '<div class="col"><button class="btn-large"><\/button><\/div>',
-          randomPool = initRandomNumberPool(size);
+          randomPool = initRandomNumberPool(size * size);
 
-    let rowSize = size; 
+    let rowSize = size;
     while (rowSize-- > 0) {
 
         const row = createElement(rowHTML);
         let colSize = size;
 
         while (colSize-- > 0) {
-            const col = createElement(colHTML)
+            const col = createElement(colHTML),
                   button = col.querySelector('button');
 
-            col.className = col.className + ' col-' + Math.floor(12 / size);
+            colWidth = 100 / size + '%';
+            col.style.flex = '0 0 ' + colWidth;
+            col.style.maxWidth = colWidth;
+            col.className += ' col-' + Math.floor(12 / size);
+
+            buttonfontSize = 50 / size;
+            button.style.fontSize = buttonfontSize + 'vw';
+            button.style.paddingTop = buttonfontSize / 10 + 'vw';
             button.innerText = randomPool.getNumber();
+            button.addEventListener('click', playNumberAudio);
             button.addEventListener('click', clickNumber);
+
             row.appendChild(col);
         }
 
@@ -311,6 +414,7 @@ const createNumber = function(size, count) {
     }
 
     container.setAttribute('data-id', count);
+
     document.querySelector('.numbers-area').appendChild(container);
 };
 
@@ -323,10 +427,87 @@ const getParam = function(param) {
     return undefined;
 };
 
-let size = getParam('size') || 3, 
-    count = getParam('count') || 1;
+const hideElement = function(element) {
+    element.className += ' hide';
+};
+
+const showElement = function(element) {
+    element.classList.remove('hide');
+};
+
+let size = getParam('size') || 3,
+    count = getParam('count') || 1,
+    mode = getParam('mode') || 'basic',
+    showTime = getParam('show-time') || 1500,
+    font = getParam('font') || 'Neucha',
+    scroll = getParam('scroll') || true,
+    started = false;
+
+let hideQuestionTimeout;
+
+const showQuestion = function() {
+    clearTimeout(hideQuestionTimeout);
+    hideElement(elem.startButton());
+    
+    if (showTime > 0) {
+        showElement(elem.questionNumber());
+        hideElement(elem.advancedButtonWrap());
+        hideElement(elem.playButton());
+        
+        hideQuestionTimeout = setTimeout(function() {
+            hideElement(elem.questionNumber());
+            showElement(elem.advancedButtonWrap());
+            showElement(elem.playButton());
+        }, showTime);
+    } else {
+        showElement(elem.playButton());
+    }
+
+    playQuestionNumberAudio();
+};
+
+const initAdvancedMode = function() {
+    if (mode === 'basic') {
+        return;
+    }
+
+    elem.startButton().addEventListener('click', showQuestion);
+    elem.startButton().addEventListener('click', function() { started = true });
+    elem.playButton().addEventListener('click', playQuestionNumberAudio);
+
+}();
+
+const hideNotUsedModeElements = function() {
+
+    const modeElements = document.querySelectorAll('[data-mode]'),
+          usedModeElements = document.querySelectorAll('[data-mode="' + mode + '"]'),
+          notUsedModeElements = Array.from(modeElements).filter(function(element) {
+              return Array.from(usedModeElements).indexOf(element) === -1;
+          });
+
+     notUsedModeElements.forEach(hideElement);
+}();
+
+const addFontAttribute = function(elem) {
+    elem.setAttribute('data-font', font);
+};
 
 createNumbers(size, count);
+
+const setFontAttribute = function() {
+    
+    elem.numberButton().forEach(function(elem) { addFontAttribute(elem); });
+    addFontAttribute(elem.numberContainer());
+    addFontAttribute(elem.questionNumber());
+}();
+
+/*
+const setScrollingClass = function() {
+    if (scroll === 'false') {
+        document.querySelector('body').classList.add('stop-scrolling');
+    }
+}();
+*/
 
 const question = function(pool) {
     const randomPool = pool;
@@ -337,7 +518,7 @@ const question = function(pool) {
         set: function() {
             question = randomPool.getNumber();
             if (question) {
-                document.querySelector('.question-number').innerText = question;
+                elem.questionNumber().innerText = question;
             }
         },
 
@@ -346,9 +527,10 @@ const question = function(pool) {
         }
     };
 
-}(initRandomNumberPool(1));
+}(initRandomNumberPool(9));
 
 question.set();
+
 </script>
 </body>
 </html>

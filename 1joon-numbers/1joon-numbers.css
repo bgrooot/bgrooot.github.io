@@ -1,17 +1,48 @@
+@font-face {
+    font-family: OpticianSans;
+    src: url(https://cdn.jsdelivr.net/gh/anewtypeofinterference/Optician-Sans/Web-PS/Optician-Sans.woff2);
+}
+
+[data-font="OpticianSans"] {
+    font-family: OpticianSans;
+}
+
+.numbers-container[data-font="OpticianSans"] .col button {
+    height: 100%;
+    font-size: 15vw;
+    padding: 0;
+}
+
+.numbers-container[data-font="OpticianSans"] .row {
+    margin: 0 0 -.1rem;
+}
+
+.question-area .question-number[data-font="OpticianSans"] {
+    padding: 3vw;
+    font-size: 20vw;
+}
+
 body {
     background-image: url(https://www.getpapercss.com/img/geometry2.png);
-    margin-top: 3rem;
+    margin-top: 2rem;
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+.hide {
+    display: none;
 }
 
 .numbers-container {
-    max-width: 90%;
-    margin:0 auto;
-    margin-bottom: 2rem;
+    max-width: 80%;
+    margin: 0 auto 2rem;
 }
 
 .numbers-container .row {
-    margin: 0;
-    margin-bottom: -.1rem;
+    margin: 0 0 -.5rem;
     justify-content: center;
 }
 
@@ -28,19 +59,19 @@ body {
 
 .numbers-container .col button {
     width: 100%;
-    height: 100%;
+    height: 90%;
     margin: 0;
-    font-size: 15vw;
-    padding-top: 2vw;
-    padding-bottom: 0;
+    padding: 0;
     background-color: white;
 }
 
-.numbers-container .col button {
+
+
+.numbers-container .col button, .question-area button {
     -webkit-tap-highlight-color: transparent;
 }
 
-.numbers-container .col button:focus, .numbers-container .col button:hover {
+.numbers-container .col button:focus, .numbers-container .col button:hover, .question-area button:focus, .question-area button:hover {
     border: 2px solid #41403e;
 }
 
@@ -67,11 +98,30 @@ body {
     font-size: 20vw;
 }
 
+.advanced-button-wrap {
+    margin: 0 auto;
+    padding: 0;
+}
+
+.advanced-button-wrap .start-btn, .advanced-button-wrap .next-btn {
+    font-size: 10vw;
+}
+
+.advanced-button-wrap .play-btn, .advanced-button-wrap .play-btn:focus,  .advanced-button-wrap .play-btn:hover {
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+.advanced-button-wrap .play-btn svg {
+    width: 2.5em;
+    opacity: 0.8;
+}
+
 @media print {
     .numbers-container {
         max-width: 70%;
-        margin: 0 auto;
-        margin-bottom: 5rem;
+        margin: 0 auto 5rem;
     }
 
     .numbers-container .col button {
@@ -84,8 +134,8 @@ body {
     }
     
     .col-2 {
-        flex: 0 0 16.66667%;
-        max-width: 16.66667%;
+        flex: 0 0 20%;
+        max-width: 20%;
     }
 
     .col-4 {
