@@ -42,7 +42,7 @@ const Func = {
 	readText: (text) => {
 		const utter = new SpeechSynthesisUtterance(text);
         utter.pitch = 1;
-        utter.rate = 0.25;
+        utter.rate = 1;
         Val.synth.speak(utter);
         return utter;
 	},
